@@ -1,6 +1,8 @@
 \documentclass[12pt]{article}
 
 \usepackage[T1]{fontenc}
+\usepackage{datetime}
+\newdateformat{mydate}{\twodigit{\THEDAY}.\twodigit{\THEMONTH}.\THEYEAR r.}
 
 \textheight 23.2 cm
 \textwidth 6.0 in
@@ -8,5 +10,26 @@
 \voffset = -2.4 cm
 
 \begin{document}
+		\begin{flushright}
+		{\mydate\today}\\
+	\end{flushright}
+	\vskip10ex
+	\begin{center}
+		\Large {\bf Analiza projektu\\}
+		\small { Krzysztof Smogór \\ Piotr Widomski  }
+	\end{center}
+	
+	\vskip15ex
+	\section{Streszczenie}
+	
+	\section{Słownik pojęć}
+	
+	\section{Wymaganie funkcjonalne}
+	
+	\section{Wymaganie niefunkcjonalne}
+	
+	\section{Analiza ryzyka}
+	
+	\section{Harmonogram projektu}
 	
 \end{document}
