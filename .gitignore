@@ -21,3 +21,8 @@
 *.mtc1
 *.out
 *.synctex.gz
+*.fls
+*.latexmk
+*.fdb_latexmk
+.vscode/*
+.vscode/settings.json
