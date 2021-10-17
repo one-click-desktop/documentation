@@ -43,20 +43,20 @@ maszynę wirtualną i pracować na niej przy pomocy protokołu zdalnego pulpitu 
 wirtualne mogą używać samego procesora lub procesora z bezpośrednim dostępem do GPU.
 \section{Słownik pojęć}
 \begin{itemize}
-	\item Aplikacja kliencka - aplikacja uruchamiana na komputerze użytkownika, która umożliwi komunikację z systemem oraz uruchomienie zewnętrznego programu implementującego protokół RDP
+	\item Aplikacja kliencka - aplikacja uruchamiana na komputerze użytkownika, która umożliwi komunikację z systemem oraz uruchomienie zewnętrznego programu implementującego protokół RDP.
 	\item Aplikacja nadzorca - aplikacja, która przetwarza zapytania od aplikacji klienckiej oraz komunikuje się z wszystkimi serwerami wirtualizacji. Na podstawie tych informacji buduje model zajętości każdego z serwerów wirtualizacji. decyduje kiedy trzeba uruchomić nowe maszyny wirtualne i na którym serwerze wirtualizacji. Dodatkowo decyduje, do której wirtualnej maszyny ma podłączyć się użytkownik proszący o utworzenie sesji.
-	\item Serwer wirtualizacji - komputer, który udostępnia swoje zasoby (CPU, GPU, pamięć, przestrzeń dyskową) w postaci uruchamianych na nim maszyn wirtualnych. Dodatkowo na tym komputerze będzie uruchomiana aplikacja, która będzie odpowiadać na pytania aplikacji nadzorczej oraz 
-	\item Maszyna wirtualna CPU - 
-	\item Maszyna wirtualna GPU - 
-	\item RDP - 
-	\item Sesja - 
-	\item Vagrant-box - 
-	\item Ansible playbook - 
-	\item Panel administratora - 
-	\item Konto użytkownika - 
-	\item Katalog uzytkownika - 
-	\item Konfiguracja stała - 
-	\item Konfiguracja zmienna - 
+	\item Serwer wirtualizacji - komputer, który udostępnia swoje zasoby (CPU, GPU, pamięć, przestrzeń dyskową) w postaci uruchamianych na nim maszyn wirtualnych. Dodatkowo na tym komputerze będzie uruchomiana aplikacja, która będzie odpowiadać na pytania aplikacji nadzorczej oraz wykonywać operacje na maszynach wirtualnych (uruchamianie i wyłączanie).
+	\item Maszyna wirtualna CPU - jest to maszyna wirtualna, która udostępnia użytkownikowi podstawowe zasoby (procesor, pamięć i przestrzeń dyskowa) przeznaczona raczej do pracy biurowej. Uruchamiana jest na pewnym serwerze wirtualizacji z liczba zasobów zdefiniowana wcześniej w konfiguracji.
+	\item Maszyna wirtualna GPU - tak jak maszyna wirtualna CPU tyle, że ma do dyspozycji przekazaną przez mechanizm GPU Passthrough kartę graficzną podłączona do serwera wirtualizacji.
+	\item RDP - protokół zdalnego dostępu do pulpitu od firmy Microsoft.
+	\item Sesja - jest to określenie jednorazowego dostępu do systemu przez użytkownika. Utworzenie sesji wiąże się z przypisaniem do użytkownika konkretnej maszyny wirtualnej, na której będzie pracować. Sesja kończy się w przypadku, gdy użytkownik poinformuje system o zakończeniu pracy lub gdy minie czas oczekiwania na odzyskanie połączenia po utracie połączenia.
+	\item Vagrant-box\footnote{\href{https://www.vagrantup.com/docs/boxes}{Dokumentacja i opis na stronie Vagranta}} - jest to przygotowany wcześniej obraz maszyny wirtualnej, któremu można zmieniać dostępne zasoby. Uruchamiają się bardzo powtarzalnie w środowisku programu Vagrant
+	\item Ansible playbook\footnote{\href{https://www.redhat.com/en/topics/automation/what-is-an-ansible-playbook#example-of-ansible-playbook}{Dokumentacja i opis na stronie Ansible'a}} - jest to pewien rodzaj skryptu konfiguracyjnego dla systemu operacyjnego, który można parametryzować i wykonywać przy starcie Vagrant-boxa.
+	\item Panel administratora - jest to strona internetowa, na której administrator może sprawdzić jakie serwery wirtualizacji znajdują się w systemie oraz stan ich zasobów (wolne, zajęte oraz całkowite). 
+	\item Konto użytkownika - jest to profil użytkownika w systemie, do którego ma dostęp na każdej maszynie wirtualnej. Używając przygotowanych wcześniej danych logowania może za ich pomocą logować się do maszyn wirtualnych. Będą one przechowywane w zewnętrznym (poza opisanym systemem) systemie katalogowym.
+	\item Katalog użytkownika - jest to prywatny folder dostępny dla użytkownika na każdej maszynie wirtualnej. Przechowywany będzie na zewnętrznym (poza opisanym systemem) dysku sieciowym.
+	\item Konfiguracja stała - jest to konfiguracja maszyny wirtualnej, która nie zmienia się w zależności od miejsca uruchomienia. Docelowo ta konfiguracja ma być zapisana w Vagrant-boxie. W potrzebie można ja także zdefiniować w odpowiednim Ansible playbooku.
+	\item Konfiguracja zmienna - jest to konfiguracja wirtualnej maszyny, która zmienia się w zależności od miejsca uruchomienia. Jest definiowana w odpowiednim Ansible playbooku uruchamianym przy każdym włączeniu maszyny.
 \end{itemize}
 
 \section{Wymaganie funkcjonalne}
@@ -67,7 +67,7 @@ wirtualne mogą używać samego procesora lub procesora z bezpośrednim dostępe
 	\begin{table}[h!]
 		\begin{tabular}{|p{0.08\textwidth}|p{0.17\textwidth}|p{0.375\textwidth}|p{0.375\textwidth}|}
 			\hline Aktor                                                                    & Nazwa                             & Opis                                                          & Odpowiedź systemu                                                                                                                                             \\ \hline
-			\multirow{10}{=}{\rotatebox{90}{Użytkownik}}                                    & Uzyskanie sesji do pracy          & Uzyskanie sesji do pracy na maszynie wirtualnej CPU lub GPU   & Do użytkownika zostaje przydzielona maszyna wirtualna oraz zestawione połączenie RDP. W przypadku, gdy utracił on połączenie, to przydzielana jest do niego poprzednio używana maszyna, jeżeli utrata połączenia wydarzyła się nie dawno (liczba minut określona w konfiguracji)                                                                     \\ \cline{2-4}
+			\multirow{10}{=}{\rotatebox{90}{Użytkownik}}                                    & Uzyskanie sesji do pracy          & Uzyskanie sesji do pracy na maszynie wirtualnej CPU lub GPU   & Do użytkownika zostaje przydzielona maszyna wirtualna oraz zestawione połączenie RDP. W przypadku, gdy utracił on połączenie, to przydzielana jest do niego poprzednio używana maszyna, jeżeli jego sesja nie została jeszcze umorzona.                                                                     \\ \cline{2-4}
 			                                                                                & Poznanie ilości dostępnych maszyn & Wyświetlanie szacowanej ilości dostępnych maszyn każdego typu & Użytkownikowi zostaje wyświetlona szacowana liczba dostępnych maszyn obliczona na podstawie informacji o dostępnych zasobach każdego z serwerów wirtualizacji \\ \hline
 			\multirow[b]{5}{=}{\rotatebox{90}{\parbox{1cm}{Serwer \newline wirtualizacji}}} & Zgłoszenie dostępnych zasobów     & Serwer zgłosza nadzorcy dostępne zasoby                       & Nadzorca wykorzystuje zgłoszone zasoby do wyliczania szacowanej liczny dostępnych maszyn oraz do balansowania obciążenia serwerów wirtualizacji               \\
 			\hline
@@ -111,6 +111,7 @@ wirtualne mogą używać samego procesora lub procesora z bezpośrednim dostępe
 	\end{table}
 \end{center}
 
+\newpage
 \section{Wymaganie niefunkcjonalne}
 
 \begin{center}
