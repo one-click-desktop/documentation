@@ -51,7 +51,7 @@ wirtualne mogą używać samego procesora lub procesora z bezpośrednim dostępe
 	\item RDP - protokół zdalnego dostępu do pulpitu od firmy Microsoft.
 	\item Sesja - jest to określenie jednorazowego dostępu do systemu przez użytkownika. Utworzenie sesji wiąże się z przypisaniem do użytkownika konkretnej maszyny wirtualnej, na której będzie pracować. Sesja kończy się w przypadku, gdy użytkownik poinformuje system o zakończeniu pracy lub gdy minie czas oczekiwania na odzyskanie połączenia po utracie połączenia.
 	\item Vagrant-box\footnote{\href{https://www.vagrantup.com/docs/boxes}{Dokumentacja i opis na stronie Vagranta}} - jest to przygotowany wcześniej obraz maszyny wirtualnej, któremu można zmieniać dostępne zasoby. Uruchamiają się bardzo powtarzalnie w środowisku programu Vagrant
-	\item Ansible playbook\footnote{\href{https://www.redhat.com/en/topics/automation/what-is-an-ansible-playbook#example-of-ansible-playbook}{Dokumentacja i opis na stronie Ansible'a}} - jest to pewien rodzaj skryptu konfiguracyjnego dla systemu operacyjnego, który można parametryzować i wykonywać przy starcie Vagrant-boxa.
+	\item Ansible playbook\footnote{\href{https://www.redhat.com/en/topics/automation/what-is-an-ansible-playbook#example-of-ansible-playbook}{Dokumentacja i opis na stronie Ansible}} - jest to pewien rodzaj skryptu konfiguracyjnego dla systemu operacyjnego, który można parametryzować i wykonywać przy starcie Vagrant-boxa.
 	\item Panel administratora - jest to strona internetowa, na której administrator może sprawdzić jakie serwery wirtualizacji znajdują się w systemie oraz stan ich zasobów (wolne, zajęte oraz całkowite). 
 	\item Konto użytkownika - jest to profil użytkownika w systemie, do którego ma dostęp na każdej maszynie wirtualnej. Używając przygotowanych wcześniej danych logowania może za ich pomocą logować się do maszyn wirtualnych. Będą one przechowywane w zewnętrznym (poza opisanym systemem) systemie katalogowym.
 	\item Katalog użytkownika - jest to prywatny folder dostępny dla użytkownika na każdej maszynie wirtualnej. Przechowywany będzie na zewnętrznym (poza opisanym systemem) dysku sieciowym.
@@ -61,7 +61,7 @@ wirtualne mogą używać samego procesora lub procesora z bezpośrednim dostępe
 
 \section{Wymaganie funkcjonalne}
 \subsection{Nadzorca}
-\includegraphics[width=\textwidth]{../diagrams/use_cases/overseer.drawio.png}
+\includegraphics[width=\textwidth]{../diagrams/use_cases/overseer.png}
 
 \begin{center}
 	\begin{table}[h!]
@@ -78,7 +78,7 @@ wirtualne mogą używać samego procesora lub procesora z bezpośrednim dostępe
 \pagebreak
 
 \subsection{Serwer wirtualizacji}
-\includegraphics[width=\textwidth]{../diagrams/use_cases/virtualisation_server.drawio.png}
+\includegraphics[width=\textwidth]{../diagrams/use_cases/virtualisation_server.png}
 
 \begin{center}
 	\begin{table}[h!]
@@ -98,7 +98,7 @@ wirtualne mogą używać samego procesora lub procesora z bezpośrednim dostępe
 \pagebreak
 
 \subsection{Panel administratora}
-\includegraphics[width=\textwidth]{../diagrams/use_cases/admin_panel.drawio.png}
+\includegraphics[width=\textwidth]{../diagrams/use_cases/admin_panel.png}
 
 \begin{center}
 	\begin{table}[h!]
