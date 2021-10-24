@@ -1,0 +1,9 @@
+Proces startu serwera wirtualizacji
+
+Proces opisuje przyjęcie nowego serwera wirtualizacji do systemu.
+Serwer bez działającego nadzorcy nie może pracować.
+Oznacza to, że jesli przy starcie wystarczająco wiele razy nie wykryje brokera wiadomości
+lub nadzorcy po drugiej stronie kolejek to sie wyłączy.
+Jeżeli jednak znajdzie kogos po drugiej stronie to serwer podłączy sie do wszytskich kolejek wspólnych
+oraz przekaże informacje nadzorcom o kolejce bezpośredniej.
+Gdy komunikacja będzie ustanowiona bezwarunkowo wyśle stan swojego pustego modelu do nadzorców.
