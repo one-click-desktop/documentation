@@ -1,0 +1,4 @@
+Kończenie sesji
+
+Zdarzenie kończenia sesji oznacza powiadomienie konkretnego serwera wirtualnego aby wyłaczył konkretną maszynę.
+Serwer może odmówic z powodów różnic modelu. Wtedy wyśle tylko informacje o jego zmianie.
