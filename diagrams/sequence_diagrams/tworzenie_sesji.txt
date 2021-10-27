@@ -1,0 +1,14 @@
+Tworzenie sesji
+
+celem tego ciagu komuniakcji jest odnalezienie istniejącej juz sesji lub stworzenie nowej.
+Zakładamy, że w systemie zawsze jest jakas wolna maszyna.
+Inaczej zgłaszamy uzytkownikowi błąd.
+
+Po prośbie użytkownika nadzorca znajduje wolna maszynę i prosi konkretny serwer wirtualizacji aby spróbował utworzyć sesje dla pewnego uzytkownika.
+Gdy to sie uda, ten wysyła zbiorczą kolejką do nadzorców informacje o zmianie modelu.
+W przeciwnym wypadku msuimy powtórzyć próbę.
+O powtórzeniu zdecyduje otrzymany stan o danej maszynie (m.in. czy sesja do niej przypisana jest do tego użytkownika)
+
+Może się zdarzyć także aulowanie wyszukiwanie przez uzytkownika.
+Wtedy jeżeli maszyna jest już przydzielona uzytkownikowi, to serwer jest powiadamiany o anulowaniu sesji, aby ją anulował.
+Jeżeli nie została jeszcze utworzona, to nadzorca dopilnuje aby więcej nie szukać sesji lub wyłaczy ją w miare potrzeby jak wyżej.

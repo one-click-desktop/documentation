@@ -1,0 +1,11 @@
+Uzyskanie sesji
+
+Proces opisuje prosbe klienta o ustanowienie dla niego sesji.
+Gdy taka sesja juz istnieje, to od razu jest przekazywana.
+W przeciwnym razie nadzorca zaglądając do modelu systemu znajduje jakąś wolna maszyne i informuje serwer wirtualizacji o próbie utworzenia sesji.
+Gdy nie znajdzie wolnej maszyny, to zwraca blad do uzytkownika (w sensie jest to niezpodziewane zdarzenie, bo zawsze bedzie jakis zapas).
+Może się zdarzyć, że model jest nieaktualny i nie mozna utworzyc sesji z ta maszyną.
+Wtedy prosba zostaje odrzucona, ale zmiana modelu powinna zaraz nadejść (co zaincjalizuje powtorzenie proby utworzenie sesji).
+
+Dodatkowow uzyskanie sesji przez uzytkownika ma byc zrealizowana asynchonicznie.
+Praktycznie beda 2 endpointy: prosba o sesje oraz pytanie czy sesja juz istnieje.

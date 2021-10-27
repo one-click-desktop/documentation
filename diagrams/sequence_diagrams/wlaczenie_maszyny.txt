@@ -1,0 +1,5 @@
+Włączenie maszyny
+
+Nadzorca może poprosić konkretny serwer wirtualizacji aby utworzył maszynę o konkretnej nazwie.
+Jeżeli maszyna nie istnieje, to zrobi to i odeśle powiadomienie zbiorcza kolejką o zmianie modelu.
+Wpw. nie zrobi nic.

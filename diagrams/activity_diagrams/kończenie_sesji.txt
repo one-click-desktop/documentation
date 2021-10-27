@@ -1,0 +1,6 @@
+Kończenie sesji
+
+Proces ma za zadanie zakończyć sesję i wyłaczyć skojarzoną z nią maszynę.
+Wykonywany jest w sytuacji, gdy użytkownik odłączy sie od systemu lub utraci połączenie oraz minie pewien ustalony czas bez jego ponownego podłączenia się.
+Ważne jest aby zmiane modelu inicjalizował serwer wirtualizacji pomimo tego, że o momencie wyłaczenia decyduje nadzorca.
+Powoduje to, że system w zależności od konfiguracji nadzorców będzie spójnie decydować o momencie wyłączenia.
