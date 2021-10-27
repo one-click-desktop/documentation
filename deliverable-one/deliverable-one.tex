@@ -20,13 +20,45 @@
 \newdateformat{mydate}{\twodigit{\THEDAY}.\twodigit{\THEMONTH}.\THEYEAR r.}
 \usepackage{enumitem}
 \usepackage{footnote}
-\makesavenoteenv{tabular}
-\makesavenoteenv{table}
 \setlist{
 	noitemsep,
 	listparindent=\parindent,
 	parsep=0pt,
 }
+\makesavenoteenv{tabular}
+\makesavenoteenv{table}
+
+\usepackage{xparse}
+
+\ExplSyntaxOn
+\bool_new:N \g_fifikinz_first_rev_bool
+\cs_new:Nn \fifikinz_revision:nnn {
+	% We only want to start a new row after an existing row (i.e., just
+	% not the first row).  Once we pass the first row, set our flag to
+	% `false' so it will insert \\ on subsequent calls.
+	\bool_if:NTF \g_fifikinz_first_rev_bool {
+		\bool_gset_false:N \g_fifikinz_first_rev_bool
+	} { \\ }
+	#1 & #2 & \ignorespaces#3\unskip
+}
+
+\NewDocumentEnvironment { Revisions } { } {
+	% The first revision will be, well, the first revision.
+	\bool_gset_true:N \g_fifikinz_first_rev_bool
+	
+	% make our table look a little nicer
+	\renewcommand\arraystretch{1.5}
+	
+	\section*{Historia \space zmian}
+	\begin{tabular}{crp{.8\linewidth}}
+	} { \end{tabular} \bigskip }
+
+\NewDocumentCommand \Revision { m m +m } {
+	% Using \NewDocumentCommand allows some advanced syntax for
+	% parameters.  See `texdoc xparse' for more details.
+	\fifikinz_revision:nnn {#1} {#2} {#3}
+}
+\ExplSyntaxOff
 
 \textheight 23.2 cm
 \textwidth 6.0 in
@@ -50,12 +82,34 @@
 		\vskip2ex
 		\small { Autorzy: Krzysztof Smogór, Piotr Widomski\\  }
 		\small { Promotor: Dr inż. Marek Kozłowski\\ }
-		\small { Wersja 1.3 }
+		\small { Wersja 1.4 }
 	\end{center}
 \end{titlepage}
 
 \abstract
+Dokument ma za zadanie zapoznać czytelnika z ogólna postacią systemu.
+Wstępnie go opisuje oraz definiuje pojęcia, na których będzie pracować system.
+Następnie można znaleźć opis wymagań funkcjonalnych wraz z diagramami przypadków użycia.
+Dokładnie zostały zdefiniowane wymagania niefunkcjonalne systemu w postaci tabel.
+Do tego wszystkiego można zapoznać się z analiza ryzyka dla projektu oraz harmonogramem w postaci diagramu Gantta.
 
+\begin{Revisions}
+	\Revision{1.0}{13.10.2021r.}{
+		Pierwsza wersja.
+	}
+	\Revision{1.1}{16.10.2021r.}{
+		Dodanie diagramów przykładów użycia i tabel wymagań niefunkcjonalnych.
+	}
+	\Revision{1.2}{17.10.2021r.}{
+		Dodanie słownika definicji oraz analizy ryzyka.
+	}
+	\Revision{1.3}{18.10.2021r.}{
+		Poprawki diagramów przykładów użycia.
+	}
+	\Revision{1.4}{27.10.2021r.}{
+		Ogólne poprawki dokumentu.
+	}
+\end{Revisions}
 
 \tableofcontents
 
