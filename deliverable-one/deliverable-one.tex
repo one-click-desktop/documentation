@@ -19,6 +19,9 @@
 \usepackage{array}
 \newdateformat{mydate}{\twodigit{\THEDAY}.\twodigit{\THEMONTH}.\THEYEAR r.}
 \usepackage{enumitem}
+\usepackage{footnote}
+\makesavenoteenv{tabular}
+\makesavenoteenv{table}
 \setlist{
 	noitemsep,
 	listparindent=\parindent,
@@ -68,14 +71,14 @@ System udostępnia panel administracyjny w postaci strony WWW umożliwiający po
 
 \section{Słownik pojęć}
 \begin{itemize}
-	\item Aplikacja kliencka - aplikacja uruchamiana na komputerze użytkownika, która umożliwi komunikację z systemem oraz uruchomienie zewnętrznego programu implementującego protokół RDP.
-	\item Aplikacja nadzorcza (Nadzorca) - aplikacja, która przetwarza zapytania od aplikacji klienckiej oraz komunikuje się ze wszystkimi serwerami wirtualizacji. Na podstawie tych informacji buduje model zajętości każdego z serwerów wirtualizacji oraz decyduje kiedy trzeba, i na którym serwerze, uruchomić nowe maszyny wirtualne i do której wirtualnej maszyny ma podłączyć się użytkownik proszący o utworzenie sesji.
+	\item Aplikacja kliencka - aplikacja okienkowa uruchamiana na komputerze użytkownika, która umożliwi komunikację z systemem oraz uruchomienie zewnętrznego programu implementującego protokół RDP.
+	\item Aplikacja nadzorcza (Nadzorca) - aplikacja, która przetwarza zapytania od aplikacji klienckiej oraz komunikuje się ze wszystkimi serwerami wirtualizacji. Na podstawie tych informacji buduje model zajętości każdego z serwerów wirtualizacji oraz decyduje kiedy, i na którym serwerze, trzeba uruchomić nowe maszyny wirtualne i do której wirtualnej maszyny ma podłączyć się użytkownik proszący o utworzenie sesji.
 	\item Serwer wirtualizacji - komputer, który udostępnia swoje zasoby (CPU, GPU, pamięć, przestrzeń dyskową) w postaci uruchamianych na nim maszyn wirtualnych. Dodatkowo na tym komputerze będzie uruchomiona aplikacja, która będzie odpowiadać na pytania aplikacji nadzorczej oraz wykonywać operacje na maszynach wirtualnych (uruchamianie i wyłączanie), która dalej będzie utożsamiana z serwerem wirtualizacji.
-	\item Maszyna wirtualna CPU - jest to maszyna wirtualna, która udostępnia użytkownikowi podstawowe zasoby (procesor, pamięć i przestrzeń dyskowa) przeznaczona raczej do pracy biurowej. Uruchamiana jest na pewnym serwerze wirtualizacji z liczbą zasobów zdefiniowaną wcześniej w konfiguracji.
+	\item Maszyna wirtualna CPU - maszyna systemowa emulująca lub para-emulująca sprzęt i służąca do uruchamiania systemu operacyjnego. Udostępnia użytkownikowi podstawowe zasoby (procesor, pamięć i przestrzeń dyskowa). Uruchamiana jest na serwerze wirtualizacji z liczbą zasobów określoną w konfiguracji. Maszyna wirtualna będzie uruchamiać system operacyjny GNU/Linux (ArchLinux).
 	\item Maszyna wirtualna GPU - maszyna analogiczna do maszyny wirtualnej CPU tyle, że ma do dyspozycji przekazaną przez mechanizm GPU Passthrough kartę graficzną podłączona do serwera wirtualizacji.
-	\item RDP - protokół zdalnego dostępu do pulpitu od firmy Microsoft.
+	\item RDP - protokół zdalnego dostępu do pulpitu od firmy Microsoft\footnote{\href{https://docs.microsoft.com/en-us/troubleshoot/windows-server/remote/understanding-remote-desktop-protocol}{Dokumnetacja protokołu RDP od Microsoft}}. Maszyny wirtualne będą uruchamiać serwer RDP(XRDP\footnote{\href{http://xrdp.org/}{Strona projektu XRDP}}) aby umożliwić użytkownikowi zdalną pracę.
 	\item Sesja - jest to określenie jednorazowego dostępu do systemu przez użytkownika. Utworzenie sesji wiąże się z przypisaniem do użytkownika konkretnej maszyny wirtualnej, na której będzie pracować. Sesja kończy się w przypadku, gdy użytkownik poinformuje system o zakończeniu pracy lub gdy minie czas oczekiwania na odzyskanie połączenia jego utracie.
-	\item Vagrant-box\footnote{\href{https://www.vagrantup.com/docs/boxes}{Dokumentacja i opis na stronie Vagranta}} - jest to przygotowany wcześniej obraz maszyny wirtualnej, któremu można zmieniać dostępne zasoby. Uruchamiają się bardzo powtarzalnie w środowisku programu Vagrant
+	\item Vagrant-box\footnote{\href{https://www.vagrantup.com/docs/boxes}{Dokumentacja i opis na stronie Vagranta}} - jest to przygotowany wcześniej obraz maszyny wirtualnej, któremu można zmieniać dostępne zasoby. Uruchamiają się bardzo powtarzalnie w środowisku programu Vagrant.
 	\item Ansible playbook\footnote{\href{https://www.redhat.com/en/topics/automation/what-is-an-ansible-playbook\#example-of-ansible-playbook}{Dokumentacja i opis na stronie Ansible'a}} - jest to pewien rodzaj skryptu konfiguracyjnego dla systemu operacyjnego, który można parametryzować i wykonywać przy starcie Vagrant-boxa.
 	\item Panel administratora - jest to aplikacja internetowa, na której administrator może sprawdzić jakie serwery wirtualizacji znajdują się w systemie oraz stan ich zasobów (wolne, zajęte oraz całkowite).
 	\item Konto użytkownika - jest to profil użytkownika w systemie, do którego ma dostęp na każdej maszynie wirtualnej. Używając przygotowanych wcześniej danych logowania może za ich pomocą logować się do maszyn wirtualnych. Będą one przechowywane w zewnętrznym (poza opisanym systemem) systemie katalogowym.
@@ -145,7 +148,7 @@ System udostępnia panel administracyjny w postaci strony WWW umożliwiający po
 	\begin{table}[h!]
 		\begin{tabular}{|p{0.2\textwidth}|p{0.2\textwidth}|p{0.6\textwidth}|}
 			\hline Grupa wymagań                            & Nr wymagania & Opis                                                                                                                                                                    \\ \hline
-			\multirow[t]{8}{=}{Użytkowanie (Usability)}     & 1            & Aplikacja kliencka ma działać na systemach operacyjnych GNU/Linux oraz MS Windows                                                                                       \\ \cline{2-3}
+			\multirow[t]{8}{=}{Użytkowanie (Usability)}     & 1            & Aplikacja kliencka ma działać na systemach operacyjnych MS Windows(Windows 10) oraz GNU/Linux(ArchLinux). Dodatkowo aplikacja na systemach GNU/Linux wymaga zainstalowanego klienta RDP zgodnego z XRDP\footnote{\href{https://github.com/neutrinolabs/xrdp\#overview}{Lista działających klientów RDP według twórców XRDP}}.                                                                                      \\ \cline{2-3}
 			                                                & 2            & Aplikacja kliencka musi udostępniać możliwość użycia własnego klienta RDP do nawiązania połączenia z maszyną wirtualną                                                  \\ \cline{2-3}
 			                                                & 3            & Maszyny wirtualne muszą mieć dostęp do systemu przechowującego konta użytkowników wraz z ich katalogami domowymi                                                        \\ \hline
 			\multirow[t]{7}{=}{Niezawodność (Reliability)}  & 4            & System musi być odporny na awarie poszczególnych serwerów wirtualizacji i kontynuować działanie w sposób niezauważalny dla użytkowników nie używających danego serwera. \\ \cline{2-3}
