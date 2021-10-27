@@ -19,11 +19,46 @@
 \usepackage{array}
 \newdateformat{mydate}{\twodigit{\THEDAY}.\twodigit{\THEMONTH}.\THEYEAR r.}
 \usepackage{enumitem}
+\usepackage{footnote}
 \setlist{
 	noitemsep,
 	listparindent=\parindent,
 	parsep=0pt,
 }
+\makesavenoteenv{tabular}
+\makesavenoteenv{table}
+
+\usepackage{xparse}
+
+\ExplSyntaxOn
+\bool_new:N \g_fifikinz_first_rev_bool
+\cs_new:Nn \fifikinz_revision:nnn {
+	% We only want to start a new row after an existing row (i.e., just
+	% not the first row).  Once we pass the first row, set our flag to
+	% `false' so it will insert \\ on subsequent calls.
+	\bool_if:NTF \g_fifikinz_first_rev_bool {
+		\bool_gset_false:N \g_fifikinz_first_rev_bool
+	} { \\ }
+	#1 & #2 & \ignorespaces#3\unskip
+}
+
+\NewDocumentEnvironment { Revisions } { } {
+	% The first revision will be, well, the first revision.
+	\bool_gset_true:N \g_fifikinz_first_rev_bool
+	
+	% make our table look a little nicer
+	\renewcommand\arraystretch{1.5}
+	
+	\section*{Historia \space zmian}
+	\begin{tabular}{crp{.8\linewidth}}
+	} { \end{tabular} \bigskip }
+
+\NewDocumentCommand \Revision { m m +m } {
+	% Using \NewDocumentCommand allows some advanced syntax for
+	% parameters.  See `texdoc xparse' for more details.
+	\fifikinz_revision:nnn {#1} {#2} {#3}
+}
+\ExplSyntaxOff
 
 \textheight 23.2 cm
 \textwidth 6.0 in
@@ -31,32 +66,73 @@
 \voffset = -2.4 cm
 
 \begin{document}
-\begin{flushright}
-	{\mydate\today}\\
-\end{flushright}
-\vskip10ex
-\begin{center}
-	\Large {\bf Analiza projektu\\}
-	\small { Krzysztof Smogór \\ Piotr Widomski  }
-\end{center}
 
-\vskip15ex
-\section{Streszczenie}
-Celem projeku jest stworzenie systemu do zdalnej pracy opartego na architekturze rozproszonej.
-System będzie umożliwiać tworzenie,
-konfigurację i zarządzanie maszynami wirtualnymi. Użytkownik będzie mógł uzyskać działającą
-maszynę wirtualną i pracować na niej przy pomocy protokołu zdalnego pulpitu (RDP). Maszyny
-wirtualne mogą używać samego procesora lub procesora z bezpośrednim dostępem do GPU.
+\begin{titlepage}
+	\begin{flushright}
+		{\mydate\today}\\
+	\end{flushright}
+	\vskip30ex
+
+	\begin{center}
+		\Large {\bf{
+				System do zdalnej pracy w środowisku graficznym wykorzystujący maszyny wirtualne QEMU z akceleracja sprzętową\\
+			}}
+		\vskip2ex
+		\bf{Analiza projektu\\}
+		\vskip2ex
+		\small { Autorzy: Krzysztof Smogór, Piotr Widomski\\  }
+		\small { Promotor: Dr inż. Marek Kozłowski\\ }
+		\small { Wersja 1.4 }
+	\end{center}
+\end{titlepage}
+
+\abstract
+Dokument ma za zadanie zapoznać czytelnika z ogólna postacią systemu.
+Wstępnie go opisuje oraz definiuje pojęcia, na których będzie pracować system.
+Następnie można znaleźć opis wymagań funkcjonalnych wraz z diagramami przypadków użycia.
+Dokładnie zostały zdefiniowane wymagania niefunkcjonalne systemu w postaci tabel.
+Do tego wszystkiego można zapoznać się z analiza ryzyka dla projektu oraz harmonogramem w postaci diagramu Gantta.
+
+\begin{Revisions}
+	\Revision{1.0}{13.10.2021r.}{
+		Pierwsza wersja.
+	}
+	\Revision{1.1}{16.10.2021r.}{
+		Dodanie diagramów przykładów użycia i tabel wymagań niefunkcjonalnych.
+	}
+	\Revision{1.2}{17.10.2021r.}{
+		Dodanie słownika definicji oraz analizy ryzyka.
+	}
+	\Revision{1.3}{18.10.2021r.}{
+		Poprawki diagramów przykładów użycia.
+	}
+	\Revision{1.4}{27.10.2021r.}{
+		Ogólne poprawki dokumentu.
+	}
+\end{Revisions}
+
+\tableofcontents
+
+\newpage
+
+
+\section{Opis systemu}
+Tworzony system ma za zadanie umożliwiać zdalną pracę za pomocą protokołu zdalnego pulpitu. System skierowany jest w stronę firm zatrudniających wielu pracowników, które chcą scentralizować pracę zdalną swoich pracowników. Użytkownikiem końcowym są pracownicy, którzy za pomocą okienkowej aplikacji klienckiej mogą uzyskać sesję do pracy zdalnej, podczas której łączą się za pomocą protokołu zdalnego pulpitu z maszyną wirtualną uruchamiającą obraz systemu GNU/Linux. Uruchamianie i zarządzanie maszynami jest zadaniem aplikacji działającej na rzeczywistej maszynie, która udostępnia swoje zasoby maszynom wirtualnym. Aplikacje te działają niezależnie od siebie i nie ma teoretycznego ograniczenia na ich liczbę w systemie. Przydzielaniem aplikacją użytkowników, oraz ich autoryzacją, zajmuje się aplikacja nadzorcza. Ilość jej instancji również jest teoretycznie nieograniczona, co umożliwia balansowanie obciążeniem.
+
+System zakłada dwa typy maszyn wirtualnych: maszyny wykorzystujące jedynie procesor maszyny, na której pracuje, oraz takie, które mają bezpośredni dostęp do karty graficznej maszyny. Do używania systemu użytkownik musi posiadać konto w systemie katalogowym, który umożliwia użytkownikom dostęp do własnego folderu domowego na każdej maszynie. System katalogowy nie jest ujęty w obrębie systemu, ale jego poprawna konfiguracja jest wymagana do użytkowania systemu.
+
+System udostępnia panel administracyjny w postaci strony WWW umożliwiający podgląd obciążenia i stanu systemu. Całość komunikacji jest szyfrowana pod warunkiem dostarczenia prawidłowych certyfikatów TSL/SSL.
+
 \section{Słownik pojęć}
 \begin{itemize}
-	\item Aplikacja kliencka - aplikacja uruchamiana na komputerze użytkownika, która umożliwi komunikację z systemem oraz uruchomienie zewnętrznego programu implementującego protokół RDP.
-	\item Aplikacja nadzorcza (Nadzorca) - aplikacja, która przetwarza zapytania od aplikacji klienckiej oraz komunikuje się ze wszystkimi serwerami wirtualizacji. Na podstawie tych informacji buduje model zajętości każdego z serwerów wirtualizacji oraz decyduje kiedy trzeba, i na którym serwerze, uruchomić nowe maszyny wirtualne i do której wirtualnej maszyny ma podłączyć się użytkownik proszący o utworzenie sesji.
+	\item Aplikacja kliencka - aplikacja okienkowa uruchamiana na komputerze użytkownika, która umożliwi komunikację z systemem oraz uruchomienie zewnętrznego programu implementującego protokół RDP.
+	\item Aplikacja nadzorcza (Nadzorca) - aplikacja, która przetwarza zapytania od aplikacji klienckiej oraz komunikuje się ze wszystkimi serwerami wirtualizacji. Na podstawie tych informacji buduje model zajętości każdego z serwerów wirtualizacji oraz decyduje kiedy, i na którym serwerze, trzeba uruchomić nowe maszyny wirtualne i do której wirtualnej maszyny ma podłączyć się użytkownik proszący o utworzenie sesji.
 	\item Serwer wirtualizacji - komputer, który udostępnia swoje zasoby (CPU, GPU, pamięć, przestrzeń dyskową) w postaci uruchamianych na nim maszyn wirtualnych. Dodatkowo na tym komputerze będzie uruchomiona aplikacja, która będzie odpowiadać na pytania aplikacji nadzorczej oraz wykonywać operacje na maszynach wirtualnych (uruchamianie i wyłączanie), która dalej będzie utożsamiana z serwerem wirtualizacji.
-	\item Maszyna wirtualna CPU - jest to maszyna wirtualna, która udostępnia użytkownikowi podstawowe zasoby (procesor, pamięć i przestrzeń dyskowa) przeznaczona raczej do pracy biurowej. Uruchamiana jest na pewnym serwerze wirtualizacji z liczbą zasobów zdefiniowaną wcześniej w konfiguracji.
+	\item Maszyna wirtualna CPU - maszyna systemowa emulująca lub para-emulująca sprzęt i służąca do uruchamiania systemu operacyjnego. Udostępnia użytkownikowi podstawowe zasoby (procesor, pamięć i przestrzeń dyskowa). Uruchamiana jest na serwerze wirtualizacji z liczbą zasobów określoną w konfiguracji. Maszyna wirtualna będzie uruchamiać system operacyjny GNU/Linux (ArchLinux).
 	\item Maszyna wirtualna GPU - maszyna analogiczna do maszyny wirtualnej CPU tyle, że ma do dyspozycji przekazaną przez mechanizm GPU Passthrough kartę graficzną podłączona do serwera wirtualizacji.
-	\item RDP - protokół zdalnego dostępu do pulpitu od firmy Microsoft.
+	\item RDP - protokół zdalnego dostępu do pulpitu od firmy Microsoft\footnote{\href{https://docs.microsoft.com/en-us/troubleshoot/windows-server/remote/understanding-remote-desktop-protocol}{Dokumnetacja protokołu RDP od Microsoft}}. Maszyny wirtualne będą uruchamiać serwer RDP(XRDP\footnote{\href{http://xrdp.org/}{Strona projektu XRDP}}) aby umożliwić użytkownikowi zdalną pracę.
 	\item Sesja - jest to określenie jednorazowego dostępu do systemu przez użytkownika. Utworzenie sesji wiąże się z przypisaniem do użytkownika konkretnej maszyny wirtualnej, na której będzie pracować. Sesja kończy się w przypadku, gdy użytkownik poinformuje system o zakończeniu pracy lub gdy minie czas oczekiwania na odzyskanie połączenia jego utracie.
-	\item Vagrant-box\footnote{\href{https://www.vagrantup.com/docs/boxes}{Dokumentacja i opis na stronie Vagranta}} - jest to przygotowany wcześniej obraz maszyny wirtualnej, któremu można zmieniać dostępne zasoby. Uruchamiają się bardzo powtarzalnie w środowisku programu Vagrant
+	\item Vagrant-box\footnote{\href{https://www.vagrantup.com/docs/boxes}{Dokumentacja i opis na stronie Vagranta}} - jest to przygotowany wcześniej obraz maszyny wirtualnej, któremu można zmieniać dostępne zasoby. Uruchamiają się bardzo powtarzalnie w środowisku programu Vagrant.
 	\item Ansible playbook\footnote{\href{https://www.redhat.com/en/topics/automation/what-is-an-ansible-playbook\#example-of-ansible-playbook}{Dokumentacja i opis na stronie Ansible'a}} - jest to pewien rodzaj skryptu konfiguracyjnego dla systemu operacyjnego, który można parametryzować i wykonywać przy starcie Vagrant-boxa.
 	\item Panel administratora - jest to aplikacja internetowa, na której administrator może sprawdzić jakie serwery wirtualizacji znajdują się w systemie oraz stan ich zasobów (wolne, zajęte oraz całkowite).
 	\item Konto użytkownika - jest to profil użytkownika w systemie, do którego ma dostęp na każdej maszynie wirtualnej. Używając przygotowanych wcześniej danych logowania może za ich pomocą logować się do maszyn wirtualnych. Będą one przechowywane w zewnętrznym (poza opisanym systemem) systemie katalogowym.
@@ -77,11 +153,12 @@ wirtualne mogą używać samego procesora lub procesora z bezpośrednim dostępe
 			                                                                                & Poznanie ilości dostępnych maszyn & Wyświetlanie szacowanej ilości dostępnych maszyn każdego typu & Użytkownikowi zostaje wyświetlona szacowana liczba dostępnych maszyn obliczona na podstawie informacji o dostępnych zasobach każdego z serwerów wirtualizacji                                                                           \\ \hline
 			\multirow[b]{5}{=}{\rotatebox{90}{\parbox{1cm}{Serwer \newline wirtualizacji}}} & Zgłoszenie dostępnych zasobów     & Serwer zgłasza nadzorcy dostępne zasoby                       & Nadzorca wykorzystuje zgłoszone zasoby do wyliczania szacowanej liczny dostępnych maszyn oraz do balansowania obciążenia serwerów wirtualizacji                                                                                         \\
 			\hline
+			\multirow[b]{6}{=}{\rotatebox{90}{\parbox{1cm}{Panel \newline administratora}}} & Podgląd stanu modelu    & Nadzorca udostępnia panelowi administratora stan zasobów systemu.                       & Panel administratora wykorzystuje uzyskane dane to wygenerowania raportu o stanie systemu dla administratora. wirtualizacji     \newline                                                                                    \\
+			\hline
 		\end{tabular}
 	\end{table}
 \end{center}
 
-\newpage
 
 \subsection{Serwer wirtualizacji}
 \includegraphics[width=\textwidth]{../diagrams/use_cases/virtualisation_server.png}
@@ -106,13 +183,12 @@ wirtualne mogą używać samego procesora lub procesora z bezpośrednim dostępe
 \newpage
 
 \subsection{Panel administratora}
-\includegraphics[width=\textwidth]{../diagrams/use_cases/admin_panel.png}
+\centering{\includegraphics[width=0.4\textwidth]{../diagrams/use_cases/admin_panel.png}}
 \begin{center}
 	\begin{table}[h!]
 		\begin{tabular}{|p{0.08\textwidth}|p{0.17\textwidth}|p{0.375\textwidth}|p{0.375\textwidth}|}
 			\hline Aktor                                                                    & Nazwa                                  & Opis                                                              & Odpowiedź systemu                                                                                                                                                    \\ \hline
-			\multirow{7}{=}{\rotatebox{90}{Administrator}}                                  & Podgląd zasobów serwerów wirtualizacji & Wyświetlanie wolnych oraz zajętych zasobów serwerów wirtualizacji & Wyświetlenie zasobów poszczególnych serwerów wirtualizacji, liczby zajętych maszyn oraz szacowanej liczby wolnych maszyn \newline\newline                            \\ \hline
-			\multirow[b]{6}{=}{\rotatebox{90}{\parbox{1cm}{Serwer \newline wirtualizacji}}} & Zgłoszenie dostępnych zasobów          & Serwer zgłosza panelowi administratora dostępne zasoby            & Panel administratora wykorzystuje zgłoszone zasoby do wyliczania szacowanej liczny dostępnych maszyn oraz wyświetlania zasobów poszczególnych serwerów wirtualizacji \\
+			\multirow{7}{=}{\rotatebox{90}{Administrator}}                                  & Podgląd zasobów serwerów wirtualizacji & Wyświetlanie wolnych oraz zajętych zasobów serwerów wirtualizacji & Wyświetlenie zasobów poszczególnych serwerów wirtualizacji, liczby zajętych maszyn oraz szacowanej liczby wolnych maszyn \newline\newline                            \\
 			\hline
 		\end{tabular}
 	\end{table}
@@ -126,7 +202,7 @@ wirtualne mogą używać samego procesora lub procesora z bezpośrednim dostępe
 	\begin{table}[h!]
 		\begin{tabular}{|p{0.2\textwidth}|p{0.2\textwidth}|p{0.6\textwidth}|}
 			\hline Grupa wymagań                            & Nr wymagania & Opis                                                                                                                                                                    \\ \hline
-			\multirow[t]{8}{=}{Użytkowanie (Usability)}     & 1            & Aplikacja kliencka ma działać na systemach operacyjnych GNU/Linux oraz MS Windows                                                                                       \\ \cline{2-3}
+			\multirow[t]{8}{=}{Użytkowanie (Usability)}     & 1            & Aplikacja kliencka ma działać na systemach operacyjnych MS Windows(Windows 10) oraz GNU/Linux(ArchLinux). Dodatkowo aplikacja na systemach GNU/Linux wymaga zainstalowanego klienta RDP zgodnego z XRDP\footnote{\href{https://github.com/neutrinolabs/xrdp\#overview}{Lista działających klientów RDP według twórców XRDP}}.                                                                                      \\ \cline{2-3}
 			                                                & 2            & Aplikacja kliencka musi udostępniać możliwość użycia własnego klienta RDP do nawiązania połączenia z maszyną wirtualną                                                  \\ \cline{2-3}
 			                                                & 3            & Maszyny wirtualne muszą mieć dostęp do systemu przechowującego konta użytkowników wraz z ich katalogami domowymi                                                        \\ \hline
 			\multirow[t]{7}{=}{Niezawodność (Reliability)}  & 4            & System musi być odporny na awarie poszczególnych serwerów wirtualizacji i kontynuować działanie w sposób niezauważalny dla użytkowników nie używających danego serwera. \\ \cline{2-3}
@@ -197,7 +273,7 @@ wirtualne mogą używać samego procesora lub procesora z bezpośrednim dostępe
 
 	      Czas rozwoju systemu jest bardzo ograniczony. Aby pomimo tego ograniczenia działał on w sposób akceptowalny powinniśmy skupić się na dobrym przedyskutowaniu i opisaniu kluczowych modułów systemu. W czasie projektu należy pilnować aby nie dodawać nadmiarowych funkcjonalności do systemu. W czasie implementacji krytyczne będzie dokładne zaplanowanie aplikacji pod kątem testowania automatycznego. Ułatwi to wyłapywanie prostych błędów jeszcze we wczesnej fazie projektu.\\
 	      Wartość: wysoka
-   	\newpage
+	      \newpage
 	\item Ograniczone doświadczenie twórców systemu - pewne
 
 	      Tutaj jedynym sposobem na ograniczenie ryzyka jest rozważna implementacja.\\
@@ -219,6 +295,6 @@ wirtualne mogą używać samego procesora lub procesora z bezpośrednim dostępe
 
 
 \section{Harmonogram projektu}
-\includegraphics[width=\textwidth]{resources/harmonogram.png}
+\includegraphics[width=\textwidth]{resources/gantt.pdf}
 
 \end{document}
