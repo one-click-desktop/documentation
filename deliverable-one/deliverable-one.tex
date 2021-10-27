@@ -31,22 +31,41 @@
 \voffset = -2.4 cm
 
 \begin{document}
-\begin{flushright}
-	{\mydate\today}\\
-\end{flushright}
-\vskip10ex
-\begin{center}
-	\Large {\bf Analiza projektu\\}
-	\small { Krzysztof Smogór \\ Piotr Widomski  }
-\end{center}
 
-\vskip15ex
-\section{Streszczenie}
-Celem projeku jest stworzenie systemu do zdalnej pracy opartego na architekturze rozproszonej.
-System będzie umożliwiać tworzenie,
-konfigurację i zarządzanie maszynami wirtualnymi. Użytkownik będzie mógł uzyskać działającą
-maszynę wirtualną i pracować na niej przy pomocy protokołu zdalnego pulpitu (RDP). Maszyny
-wirtualne mogą używać samego procesora lub procesora z bezpośrednim dostępem do GPU.
+\begin{titlepage}
+	\begin{flushright}
+		{\mydate\today}\\
+	\end{flushright}
+	\vskip30ex
+
+	\begin{center}
+		\Large {\bf{
+				System do zdalnej pracy w środowisku graficznym wykorzystujący maszyny wirtualne QEMU z akceleracja sprzętową\\
+			}}
+		\vskip2ex
+		\bf{Analiza projektu\\}
+		\vskip2ex
+		\small { Autorzy: Krzysztof Smogór, Piotr Widomski\\  }
+		\small { Promotor: Dr inż. Marek Kozłowski\\ }
+		\small { Wersja 1.3 }
+	\end{center}
+\end{titlepage}
+
+\abstract
+
+
+\tableofcontents
+
+\newpage
+
+
+\section{Opis systemu}
+Tworzony system ma za zadanie umożliwiać zdalną pracę za pomocą protokołu zdalnego pulpitu. System skierowany jest w stronę firm zatrudniających wielu pracowników, które chcą scentralizować pracę zdalną swoich pracowników. Użytkownikiem końcowym są pracownicy, którzy za pomocą okienkowej aplikacji klienckiej mogą uzyskać sesję do pracy zdalnej, podczas której łączą się za pomocą protokołu zdalnego pulpitu z maszyną wirtualną uruchamiającą obraz systemu GNU/Linux. Uruchamianie i zarządzanie maszynami jest zadaniem aplikacji działającej na rzeczywistej maszynie, która udostępnia swoje zasoby maszynom wirtualnym. Aplikacje te działają niezależnie od siebie i nie ma teoretycznego ograniczenia na ich liczbę w systemie. Przydzielaniem aplikacją użytkowników, oraz ich autoryzacją, zajmuje się aplikacja nadzorcza. Ilość jej instancji również jest teoretycznie nieograniczona, co umożliwia balansowanie obciążeniem.
+
+System zakłada dwa typy maszyn wirtualnych: maszyny wykorzystujące jedynie procesor maszyny, na której pracuje, oraz takie, które mają bezpośredni dostęp do karty graficznej maszyny. Do używania systemu użytkownik musi posiadać konto w systemie katalogowym, który umożliwia użytkownikom dostęp do własnego folderu domowego na każdej maszynie. System katalogowy nie jest ujęty w obrębie systemu, ale jego poprawna konfiguracja jest wymagana do użytkowania systemu.
+
+System udostępnia panel administracyjny w postaci strony WWW umożliwiający podgląd obciążenia i stanu systemu. Całość komunikacji jest szyfrowana pod warunkiem dostarczenia prawidłowych certyfikatów TSL/SSL.
+
 \section{Słownik pojęć}
 \begin{itemize}
 	\item Aplikacja kliencka - aplikacja uruchamiana na komputerze użytkownika, która umożliwi komunikację z systemem oraz uruchomienie zewnętrznego programu implementującego protokół RDP.
@@ -197,7 +216,7 @@ wirtualne mogą używać samego procesora lub procesora z bezpośrednim dostępe
 
 	      Czas rozwoju systemu jest bardzo ograniczony. Aby pomimo tego ograniczenia działał on w sposób akceptowalny powinniśmy skupić się na dobrym przedyskutowaniu i opisaniu kluczowych modułów systemu. W czasie projektu należy pilnować aby nie dodawać nadmiarowych funkcjonalności do systemu. W czasie implementacji krytyczne będzie dokładne zaplanowanie aplikacji pod kątem testowania automatycznego. Ułatwi to wyłapywanie prostych błędów jeszcze we wczesnej fazie projektu.\\
 	      Wartość: wysoka
-   	\newpage
+	      \newpage
 	\item Ograniczone doświadczenie twórców systemu - pewne
 
 	      Tutaj jedynym sposobem na ograniczenie ryzyka jest rozważna implementacja.\\
