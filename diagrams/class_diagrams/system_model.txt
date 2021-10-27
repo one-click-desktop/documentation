@@ -1,0 +1,11 @@
+Model systemu
+
+Struktura danych ma za zadanie opisać aktualny stan systemu.
+W skład systemu wchodzą informację o:
+1. Dostępnych serwerach wirtualizacji
+2. Dostępnych zasobach na serwerach
+3. Aktualnie działających maszynach, ich typach oraz zajmowanych przez nie zasobach
+4. Aktualnie trawających sesjach z użytkownikami.
+
+na podstawie modelu trzeba zdecydować jakie maszyny trzeba uruchomić/wyłaczyć
+oraz poszukać pewnej wolnej maszyny dla nowego klienta.

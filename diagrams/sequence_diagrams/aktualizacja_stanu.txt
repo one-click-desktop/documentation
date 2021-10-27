@@ -1,0 +1,5 @@
+Aktualizacja stanu
+
+Nadzorca może w każdej chwili poprosić wszystkie serwery wirtualizacji
+o aktualny stan ich częsci systemu poprzez wspólna kolejkę nadzorca->servery.
+Serwery muszą bezwarunkowo odpowiedzieć aktualnym stanem do wspólnej kolejki zwrotnej.

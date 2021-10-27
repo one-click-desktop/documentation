@@ -1,0 +1,5 @@
+Wyłączenie maszyny
+
+Nadzorca może poprosić konkretny serwer wirtualizacji aby wyłaczył konkretną maszynę wirtualną.
+Jeżeli maszyna jest w odpowiednim stanie, to zrobi to i odeśle powiadomienie zbiorcza kolejką o zmianie modelu.
+Wpw. nie zrobi nic.
