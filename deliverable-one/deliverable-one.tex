@@ -99,11 +99,12 @@ System udostępnia panel administracyjny w postaci strony WWW umożliwiający po
 			                                                                                & Poznanie ilości dostępnych maszyn & Wyświetlanie szacowanej ilości dostępnych maszyn każdego typu & Użytkownikowi zostaje wyświetlona szacowana liczba dostępnych maszyn obliczona na podstawie informacji o dostępnych zasobach każdego z serwerów wirtualizacji                                                                           \\ \hline
 			\multirow[b]{5}{=}{\rotatebox{90}{\parbox{1cm}{Serwer \newline wirtualizacji}}} & Zgłoszenie dostępnych zasobów     & Serwer zgłasza nadzorcy dostępne zasoby                       & Nadzorca wykorzystuje zgłoszone zasoby do wyliczania szacowanej liczny dostępnych maszyn oraz do balansowania obciążenia serwerów wirtualizacji                                                                                         \\
 			\hline
+			\multirow[b]{6}{=}{\rotatebox{90}{\parbox{1cm}{Panel \newline administratora}}} & Podgląd stanu modelu    & Nadzorca udostępnia panelowi administratora stan zasobów systemu.                       & Panel administratora wykorzystuje uzyskane dane to wygenerowania raportu o stanie systemu dla administratora. wirtualizacji     \newline                                                                                    \\
+			\hline
 		\end{tabular}
 	\end{table}
 \end{center}
 
-\newpage
 
 \subsection{Serwer wirtualizacji}
 \includegraphics[width=\textwidth]{../diagrams/use_cases/virtualisation_server.png}
@@ -128,13 +129,12 @@ System udostępnia panel administracyjny w postaci strony WWW umożliwiający po
 \newpage
 
 \subsection{Panel administratora}
-\includegraphics[width=\textwidth]{../diagrams/use_cases/admin_panel.png}
+\centering{\includegraphics[width=0.4\textwidth]{../diagrams/use_cases/admin_panel.png}}
 \begin{center}
 	\begin{table}[h!]
 		\begin{tabular}{|p{0.08\textwidth}|p{0.17\textwidth}|p{0.375\textwidth}|p{0.375\textwidth}|}
 			\hline Aktor                                                                    & Nazwa                                  & Opis                                                              & Odpowiedź systemu                                                                                                                                                    \\ \hline
-			\multirow{7}{=}{\rotatebox{90}{Administrator}}                                  & Podgląd zasobów serwerów wirtualizacji & Wyświetlanie wolnych oraz zajętych zasobów serwerów wirtualizacji & Wyświetlenie zasobów poszczególnych serwerów wirtualizacji, liczby zajętych maszyn oraz szacowanej liczby wolnych maszyn \newline\newline                            \\ \hline
-			\multirow[b]{6}{=}{\rotatebox{90}{\parbox{1cm}{Serwer \newline wirtualizacji}}} & Zgłoszenie dostępnych zasobów          & Serwer zgłosza panelowi administratora dostępne zasoby            & Panel administratora wykorzystuje zgłoszone zasoby do wyliczania szacowanej liczny dostępnych maszyn oraz wyświetlania zasobów poszczególnych serwerów wirtualizacji \\
+			\multirow{7}{=}{\rotatebox{90}{Administrator}}                                  & Podgląd zasobów serwerów wirtualizacji & Wyświetlanie wolnych oraz zajętych zasobów serwerów wirtualizacji & Wyświetlenie zasobów poszczególnych serwerów wirtualizacji, liczby zajętych maszyn oraz szacowanej liczby wolnych maszyn \newline\newline                            \\
 			\hline
 		\end{tabular}
 	\end{table}
@@ -241,6 +241,6 @@ System udostępnia panel administracyjny w postaci strony WWW umożliwiający po
 
 
 \section{Harmonogram projektu}
-\includegraphics[width=\textwidth]{resources/harmonogram.png}
+\includegraphics[width=\textwidth]{resources/gantt.pdf}
 
 \end{document}
