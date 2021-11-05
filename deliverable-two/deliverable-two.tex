@@ -5,65 +5,47 @@
 %\usepackage[polish]{babel}
 \usepackage[T1]{fontenc}
 
+\usepackage{subfiles}
+
 \textheight 23.2 cm
 \textwidth 6.0 in
 \hoffset = -0.5 in
 \voffset = -2.4 cm
 
-\begin{document}	
-	
+\begin{document}
+
 \section{BLa bla bla - wymagane punkty jak z deliverable-one (MODULARNOSC!!!)}
 
 \section{Architektura systemu}
 
+\subfile{sections/architecture/architecture.tex}
+
 \section{Opis tworzonych modułów}
 
-\subsection{Nadzorca}
-
-\subsection{Serwer wirtualizacji}
-
-\subsection{Aplikacja kliencka}
-
-\subsection{Panel administratora}
+\subfile{sections/modules/modules.tex}
 
 \section{Opis zewnętrznie dostarczonych modułów}
 
-\subsection{Broker wiadomości - RabbitMQ}
-
-\subsection{Dysk sieciowy}
-
-\subsection{System katalogowy}
+\subfile{sections/external-modules/external-modules.tex}
 
 \section{Komunikacja}
 
-\subsection{Komunikacja użytkownika z systemem - REST API}
-
-\subsection{Komunikacja wewnątrz systemu - broker wiadomości}
+\subfile{sections/communication/communication.tex}
 
 \section{Diagramy}
 
-\subsection{Diagramy stanów}
-
-\subsection{Diagramy aktywności}
-
-\subsection{Diagramy klas}
-
-\subsection{Diagramy sekwencji}
+\subfile{sections/diagrams/diagrams.tex}
 
 \section{Interfejs użytkownika}
 
-\subsection{Aplikacja kliencka}
-
-\subsection{Panel administratora}
+\subfile{sections/user-interface/user-interface.tex}
 
 \section{Zewnętrzne narzędzia}
 
-\subsection{Ansible}
-
-\subsection{Vagrant}
-
-\subsection{libvirt}
+\subfile{sections/external-tools/external-tools.tex}
 
 \section{Wybrana technologia}
+
+\subfile{sections/technology/technology.tex}
 
 \end{document}
