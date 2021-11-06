@@ -1,11 +1,35 @@
 \documentclass[../../deliverable-two.tex]{subfiles}
 
 \begin{document}
+\label{architecture}
 
-System z założenia może skalować w dwóch wymiarach, to znaczy:
+Przedstawiony system składa się z następujących modułów:
+\begin{itemize}
+	\item nadzorcy,
+	\item serwer wirtualizacji,
+	\item aplikacji klienckiej,
+	\item panelu administratora,
+	\item systemu katalogowego,
+	\item dysku współdzielonego.
+\end{itemize}
+Schematyczny obraz systemu przedstawia poniższy rysunek.
+
+\begin{figure}[!h]
+	
+	\centering\includegraphics[width=\screenswidth]{../../../diagrams/architecture.png}
+	
+	\vskip-1.5ex
+	
+	\caption{\footnotesize Schematyczna architektura systemu}
+	\label{obrazek}
+\end{figure}
+
+Z założenia system powinien móc skalować się w dwóch wymiarach, to znaczy:
 \begin{enumerate}
-	\item zwiększanie liczby serwerów wirtualnych - liczba sesji dla użytkowników
-	\item zwiększenie liczby nadzorców - liczba obsługiwanych klientów jednocześnie
+	\item Zwiększanie liczby serwerów wirtualnych - zwiększenie liczby sesji dla użytkowników.
+	\item Zwiększenie liczby nadzorców - zwiększenie liczby obsługiwanych klientów jednocześnie.
 \end{enumerate}
+
+Szczegółowe opisy poszczególnych modułów będą omówione w następnych rozdziałach: \nameref{modules} oraz \nameref{external-modules}.
 
 \end{document}
