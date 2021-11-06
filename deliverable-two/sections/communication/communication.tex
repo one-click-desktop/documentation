@@ -25,7 +25,15 @@ Całość specyfikacji API umieszczona jest w osobnym pliku. Poniżej znajduje s
 
 \subsection{Komunikacja wewnątrz systemu - broker wiadomości}
 
-Do komunikacji wewnątrz systemowej użyty jest broker wiadomości RabbitMQ. Umożliwia on wysyłanie asynchronicznych wiadomości do wielu odbiorców jednocześnie. Dzięki temu żaden z modułów nie musi znać dokładnej liczby oraz adresów modułów, z którymi chce się komunikować.
-Wewnątrz systemu działa dwóch brokerów wiadomości. Jeden, główny, służy do komunikacji pomiędzy nadzorcami i serwerami wirtualizacji. Obsługuje on kanał, którego nadawcami są nadzorcy, a odbiorcami serwery wirtualizacji oraz kanał z odwrotną komunikacją. Wiadomości wysyłane przez nadzorcę do wszystkich serwerów wysyłane są pierwszą z kolejek,
+Komunikacja wewnątrz systemu opiera się na kolejkach opisanych w \nameref{external-modules}. W celu uniknięcia wyścigów i utrzymania spójności modelu systemu pomiędzy nadzorcami ustalone są następujące zasady:
+\begin{itemize}
+    \item Nadzorca może zmienić stan systemu jedynie w reakcji na odpowiedź serwera wirtualizacji. Odpowiedzi te wysyłane są do wszystkich serwerów wirtualizacji, dzięki czemu każdy nadzorca ma taki sam model systemu.
+    \item Wiadomości procesowane są przez serwer wirtualizacji w sposób atomowy. Pojedyncza wiadomość musi zostać w pełni obsłużona zanim program przejdzie do obsługi kolejnej.
+    \item Serwer wirtualizacji odpowiada na wiadomości wysyłając nowy stan maszyn. Jeżeli żądanie nie może być spełnione z powodu błędnego żądania, to serwer nie odpowiada na żądanie. Wyjątkiem jest żądanie o wysłanie aktualnego stanu maszyn.
+    \item Z powodu asynchroniczności wiadomości moduły nie oczekują na odpowiedź. W przypadku nadzorcy przetwarzanie 'odpowiedzi' zostanie uruchomione przez zmianę modelu.
+    \item Do monitorowania utrzymania połączenia z brokerem użyty jest wbudowany mechanizm, który umożliwia wywołanie odpowiedniej procedury, gdy moduł nie wyśle wiadomości o podtrzymaniu połączenia przez określony czas. Używając tego nadzorcy wykrywają, kiedy poszczególne serwery wirtualizacji przestaną działać, a serwery wirtualizacji - kiedy wszyscy nadzorcy przestaną działać.
+\end{itemize}
+
+Opisane wyżej założenia pozwalają uniknąć problemu hazardów i wyścigów. Jeżeli wiele nadzorców wyśle do serwera wirtualizacji tą samą prośbę, np. o stworzenie sesji na konkretnej maszynie, to z atomowości obsługi sesja zostanie stworzona tylko dla pierwszego z nich. Serwer wirtualizacji wyśle wiadomość o aktualizacji stanu maszyn i zignoruje pozostałe prośby. Nadzorcy otrzymają zmianę stanów, co spowoduje wywołanie odpowiednich procedur. Dla pierwszego będzie to dalsza część procesu tworzenia sesji, a pozostali nadzorcy pozostaną w procesie wyszukiwania maszyny do sesji.
 
 \end{document}
