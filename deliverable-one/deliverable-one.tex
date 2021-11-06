@@ -45,10 +45,10 @@
 \NewDocumentEnvironment { Revisions } { } {
 	% The first revision will be, well, the first revision.
 	\bool_gset_true:N \g_fifikinz_first_rev_bool
-	
+
 	% make our table look a little nicer
 	\renewcommand\arraystretch{1.5}
-	
+
 	\section*{Historia \space zmian}
 	\begin{tabular}{crp{.8\linewidth}}
 	} { \end{tabular} \bigskip }
@@ -148,12 +148,12 @@ System udostępnia panel administracyjny w postaci strony WWW umożliwiający po
 \begin{center}
 	\begin{table}[h!]
 		\begin{tabular}{|p{0.08\textwidth}|p{0.17\textwidth}|p{0.375\textwidth}|p{0.375\textwidth}|}
-			\hline Aktor                                                                    & Nazwa                             & Opis                                                          & Odpowiedź systemu                                                                                                                                                                                                                       \\ \hline
-			\multirow{14}{=}{\rotatebox{90}{Użytkownik}}                                    & Uzyskanie sesji do pracy          & Uzyskanie sesji do pracy na maszynie wirtualnej CPU lub GPU   & Do użytkownika zostaje przydzielona maszyna wirtualna oraz zestawione połączenie RDP. W przypadku, gdy utracił on połączenie, to przydzielana jest do niego poprzednio używana maszyna, jeżeli jego sesja nie została jeszcze umorzona. \\ \cline{2-4}
-			                                                                                & Poznanie ilości dostępnych maszyn & Wyświetlanie szacowanej ilości dostępnych maszyn każdego typu & Użytkownikowi zostaje wyświetlona szacowana liczba dostępnych maszyn obliczona na podstawie informacji o dostępnych zasobach każdego z serwerów wirtualizacji                                                                           \\ \hline
-			\multirow[b]{5}{=}{\rotatebox{90}{\parbox{1cm}{Serwer \newline wirtualizacji}}} & Zgłoszenie dostępnych zasobów     & Serwer zgłasza nadzorcy dostępne zasoby                       & Nadzorca wykorzystuje zgłoszone zasoby do wyliczania szacowanej liczny dostępnych maszyn oraz do balansowania obciążenia serwerów wirtualizacji                                                                                         \\
+			\hline Aktor                                                                    & Nazwa                             & Opis                                                              & Odpowiedź systemu                                                                                                                                                                                                                       \\ \hline
+			\multirow{14}{=}{\rotatebox{90}{Użytkownik}}                                    & Uzyskanie sesji do pracy          & Uzyskanie sesji do pracy na maszynie wirtualnej CPU lub GPU       & Do użytkownika zostaje przydzielona maszyna wirtualna oraz zestawione połączenie RDP. W przypadku, gdy utracił on połączenie, to przydzielana jest do niego poprzednio używana maszyna, jeżeli jego sesja nie została jeszcze umorzona. \\ \cline{2-4}
+			                                                                                & Poznanie ilości dostępnych maszyn & Wyświetlanie szacowanej ilości dostępnych maszyn każdego typu     & Użytkownikowi zostaje wyświetlona szacowana liczba dostępnych maszyn obliczona na podstawie informacji o dostępnych zasobach każdego z serwerów wirtualizacji                                                                           \\ \hline
+			\multirow[b]{5}{=}{\rotatebox{90}{\parbox{1cm}{Serwer \newline wirtualizacji}}} & Zgłoszenie dostępnych zasobów     & Serwer zgłasza nadzorcy dostępne zasoby                           & Nadzorca wykorzystuje zgłoszone zasoby do wyliczania szacowanej liczny dostępnych maszyn oraz do balansowania obciążenia serwerów wirtualizacji                                                                                         \\
 			\hline
-			\multirow[b]{6}{=}{\rotatebox{90}{\parbox{1cm}{Panel \newline administratora}}} & Podgląd stanu modelu    & Nadzorca udostępnia panelowi administratora stan zasobów systemu.                       & Panel administratora wykorzystuje uzyskane dane to wygenerowania raportu o stanie systemu dla administratora. wirtualizacji     \newline                                                                                    \\
+			\multirow[b]{6}{=}{\rotatebox{90}{\parbox{1cm}{Panel \newline administratora}}} & Podgląd stanu modelu              & Nadzorca udostępnia panelowi administratora stan zasobów systemu. & Panel administratora wykorzystuje uzyskane dane to wygenerowania raportu o stanie systemu dla administratora. wirtualizacji     \newline                                                                                                \\
 			\hline
 		\end{tabular}
 	\end{table}
@@ -187,8 +187,8 @@ System udostępnia panel administracyjny w postaci strony WWW umożliwiający po
 \begin{center}
 	\begin{table}[h!]
 		\begin{tabular}{|p{0.08\textwidth}|p{0.17\textwidth}|p{0.375\textwidth}|p{0.375\textwidth}|}
-			\hline Aktor                                                                    & Nazwa                                  & Opis                                                              & Odpowiedź systemu                                                                                                                                                    \\ \hline
-			\multirow{7}{=}{\rotatebox{90}{Administrator}}                                  & Podgląd zasobów serwerów wirtualizacji & Wyświetlanie wolnych oraz zajętych zasobów serwerów wirtualizacji & Wyświetlenie zasobów poszczególnych serwerów wirtualizacji, liczby zajętych maszyn oraz szacowanej liczby wolnych maszyn \newline\newline                            \\
+			\hline Aktor                                   & Nazwa                                  & Opis                                                              & Odpowiedź systemu                                                                                                                         \\ \hline
+			\multirow{7}{=}{\rotatebox{90}{Administrator}} & Podgląd zasobów serwerów wirtualizacji & Wyświetlanie wolnych oraz zajętych zasobów serwerów wirtualizacji & Wyświetlenie zasobów poszczególnych serwerów wirtualizacji, liczby zajętych maszyn oraz szacowanej liczby wolnych maszyn \newline\newline \\
 			\hline
 		\end{tabular}
 	\end{table}
@@ -201,17 +201,17 @@ System udostępnia panel administracyjny w postaci strony WWW umożliwiający po
 \begin{center}
 	\begin{table}[h!]
 		\begin{tabular}{|p{0.2\textwidth}|p{0.2\textwidth}|p{0.6\textwidth}|}
-			\hline Grupa wymagań                            & Nr wymagania & Opis                                                                                                                                                                    \\ \hline
-			\multirow[t]{8}{=}{Użytkowanie (Usability)}     & 1            & Aplikacja kliencka ma działać na systemach operacyjnych MS Windows(Windows 10) oraz GNU/Linux(ArchLinux). Dodatkowo aplikacja na systemach GNU/Linux wymaga zainstalowanego klienta RDP zgodnego z XRDP\footnote{\href{https://github.com/neutrinolabs/xrdp\#overview}{Lista działających klientów RDP według twórców XRDP}}.                                                                                      \\ \cline{2-3}
-			                                                & 2            & Aplikacja kliencka musi udostępniać możliwość użycia własnego klienta RDP do nawiązania połączenia z maszyną wirtualną                                                  \\ \cline{2-3}
-			                                                & 3            & Maszyny wirtualne muszą mieć dostęp do systemu przechowującego konta użytkowników wraz z ich katalogami domowymi                                                        \\ \hline
-			\multirow[t]{7}{=}{Niezawodność (Reliability)}  & 4            & System musi być odporny na awarie poszczególnych serwerów wirtualizacji i kontynuować działanie w sposób niezauważalny dla użytkowników nie używających danego serwera. \\ \cline{2-3}
-			                                                & 5            & Awaria nadzorcy może spowodować uniemożliwienie rozpoczęcia nowych sesji, ale nie może przerwać istniejących sesji                                                      \\ \hline
-			\multirow[t]{10}{=}{Wydajność (Performance)}    & 6            & Łącznie zużywane zasoby przez maszyny wirtualne na poszczególnym serwerze wirtualizacji nie mogą przekroczyć wcześniej zdefiniowanych limitów                           \\ \cline{2-3}
-			                                                & 7            & Nadzorca musi balansować obciążenie serwerów wirtualizacji                                                                                                              \\ \cline{2-3}
-			                                                & 8            & W systemie zawsze musi istnieć jedna działająca maszyna wirtualna nie połączona z żadną sesją, aby można było ją szybko przydzielić użytkownikowi                       \\ \cline{2-3}
-			                                                & 9            & Zwolnione maszyny wirtualne, które nie są wykorzystywane jako zapas, muszą być wyłączane                                                                                \\ \hline
-			\multirow[t]{3}{=}{Utrzymanie (Supportability)} & 10           & Możliwe jest działanie więcej niż jednego nadzorcy w systemie, w celu zwiększenie dostępności lub przeprowadzenia prac utrzymaniowych                                   \\
+			\hline Grupa wymagań                            & Nr wymagania & Opis                                                                                                                                                                                                                                                                                                                          \\ \hline
+			\multirow[t]{8}{=}{Użytkowanie (Usability)}     & 1            & Aplikacja kliencka ma działać na systemach operacyjnych MS Windows(Windows 10) oraz GNU/Linux(ArchLinux). Dodatkowo aplikacja na systemach GNU/Linux wymaga zainstalowanego klienta RDP zgodnego z XRDP\footnote{\href{https://github.com/neutrinolabs/xrdp\#overview}{Lista działających klientów RDP według twórców XRDP}}. \\ \cline{2-3}
+			                                                & 2            & Aplikacja kliencka musi udostępniać możliwość użycia własnego klienta RDP do nawiązania połączenia z maszyną wirtualną                                                                                                                                                                                                        \\ \cline{2-3}
+			                                                & 3            & Maszyny wirtualne muszą mieć dostęp do systemu przechowującego konta użytkowników wraz z ich katalogami domowymi                                                                                                                                                                                                              \\ \hline
+			\multirow[t]{7}{=}{Niezawodność (Reliability)}  & 4            & System musi być odporny na awarie poszczególnych serwerów wirtualizacji i kontynuować działanie w sposób niezauważalny dla użytkowników nie używających danego serwera.                                                                                                                                                       \\ \cline{2-3}
+			                                                & 5            & Awaria nadzorcy może spowodować uniemożliwienie rozpoczęcia nowych sesji, ale nie może przerwać istniejących sesji                                                                                                                                                                                                            \\ \hline
+			\multirow[t]{10}{=}{Wydajność (Performance)}    & 6            & Łącznie zużywane zasoby przez maszyny wirtualne na poszczególnym serwerze wirtualizacji nie mogą przekroczyć wcześniej zdefiniowanych limitów                                                                                                                                                                                 \\ \cline{2-3}
+			                                                & 7            & Nadzorca musi balansować obciążenie serwerów wirtualizacji                                                                                                                                                                                                                                                                    \\ \cline{2-3}
+			                                                & 8            & W systemie zawsze musi istnieć jedna działająca maszyna wirtualna nie połączona z żadną sesją, aby można było ją szybko przydzielić użytkownikowi                                                                                                                                                                             \\ \cline{2-3}
+			                                                & 9            & Zwolnione maszyny wirtualne, które nie są wykorzystywane jako zapas, muszą być wyłączane                                                                                                                                                                                                                                      \\ \hline
+			\multirow[t]{3}{=}{Utrzymanie (Supportability)} & 10           & Możliwe jest działanie więcej niż jednego nadzorcy w systemie, w celu zwiększenie dostępności lub przeprowadzenia prac utrzymaniowych                                                                                                                                                                                         \\
 			\hline
 		\end{tabular}
 	\end{table}
