@@ -24,5 +24,9 @@
 *.fls
 *.latexmk
 *.fdb_latexmk
+*.sta
+*.hst
+*.ver
 .vscode/*
 .vscode/settings.json
+deliverable-*/sections/**/*.pdf

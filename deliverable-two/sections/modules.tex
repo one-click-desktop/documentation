@@ -1,0 +1,37 @@
+\documentclass[../deliverable-two.tex]{subfiles}
+
+\begin{document}
+\label{modules}
+
+\subsection{Nadzorca}
+
+Aplikacja mająca za zadanie obsługiwać komunikację z aplikacjami klienckimi oraz wysyłać polecenia do serwerów wirtualizacji. Udostępnia \hyperref[communication:api]{REST API} służące do komunikacji z aplikacjami klienckimi. do komunikacji z serwerami wirtualizacji wykorzystuje \hyperref[external-modules:broker]{kolejki}.
+
+Nadzorca przechowuje wewnętrznie model systemu zawierający informację o działających serwerach wirtualizacji i stanie ich maszyn. Na podstawie tego modelu moduł stwierdza, do której maszyny przypisać nowo utworzoną sesję. Wewnętrzne procesy skupione są wokół zmian modelu. Jeżeli proces wysłał do serwera wirtualizacji prośbę o zmianę stanu, to dalsze procesowanie odbywa się, gdy stan modelu został zaktualizowany, i na podstawie jego stanu podejmowane są decyzje.
+
+Dzięki zastosowaniu \hyperref[external-modules:broker]{kolejek} oraz \hyperref[communication:broker]{zasad komunikacji} w systemie może istnieć więcej niż jeden nadzorca. Instancje nadzorców działają niezależnie od siebie i przechowują identyczny model systemu. Dzięki temu uzyskujemy retencje i możemy zmniejszyć obciążenie poszczególnych nadzorców.
+
+\subsection{Serwer wirtualizacji}
+
+Zadaniem serwera wirtualizacji jest uruchamianie i zarządzanie maszynami wirtualnymi, z którymi łączy się użytkownik systemu. Komunikuje się ona z nadzorcami i wykonuje operacje na maszynach wirtualnych zgodnie z żądaniami.
+Serwer wirtualizacji jest częścią systemu, która przechowuje realne zasoby udostępniane użytkownikom.
+System zaprojektowany jest w taki sposób aby teoretycznie nie było ograniczenia na liczbę serwerów wirtualizacji działających jednocześnie.
+
+\subsection{Aplikacja kliencka}
+
+Aplikacja okienkowa umożliwiająca użytkownikowi autoryzację, uzyskanie sesji oraz automatyczne rozpoczęcie połączenia. Komunikuje się z nadzorcą za pomocą \hyperref[communication:api]{REST API}.
+
+Proces uzyskania sesji z perspektywy aplikacji klienckiej zawiera:
+\begin{enumerate}
+    \item Uzyskanie informacji o dostępnych typach i liczbie maszyn
+    \item Wybór typu maszyny
+    \item Oczekiwanie na utworzenie sesji
+    \item Nawiązanie połączenia RDP
+    \item Utrzymanie i monitorowanie stanu połączenia.
+\end{enumerate}
+
+\subsection{Panel administratora}
+
+Prosta aplikacja internetowa umożliwiająca administratorowi systemu podgląd stanu zużycia zasobów serwerów wirtualizacji.
+
+\end{document}

@@ -1,0 +1,51 @@
+\documentclass[../deliverable-two.tex]{subfiles}
+
+\begin{document}
+\label{external-modules}
+
+\subsection{Broker wiadomości}
+\label{external-modules:broker}
+
+Komunikacje wewnątrz systemu, czyli pomiędzy serwerami wirtualizacji oraz nadzorcami, będzie realizowali poprzez kolejki wiadomości.
+Wiadomości będą przekazywane pomiędzy modułami przez brokera, którego nie będziemy implementować.
+Zdecydowaliśmy się na skorzystanie z systemu RabbitMQ, który zapewni niezawodność komunikacji pomiędzy modułami.
+Pozostaje jednak problem hazardu oraz wyścigów, które zostaną wyeliminowane w logice komunikacji nadzorcy oraz serwera wirtualizacji.
+
+Aby system mógł funkcjonować zdefiniowane zostaną kolejki:
+\begin{enumerate}[label=(\Roman*)]
+	\item \label{external-modules:broker:queue-virtsrv} Kolejka kończąca się na każdym z serwerów wirtualizacji i dla każdego z nich wiadomości sa powielane.
+	      Służy ona do wysyłania próśb od nadzorców do serwerów wirtualizacji.
+	\item \label{external-modules:broker:queue-overseers} Kolejka kończąca się na każdym z nadzorców i dla każdego z nich wiadomości są powielane.
+	      Służy ona do wysyłania informacji do nadzorców o zmianie stanu w serwerze wirtualizacji.
+	      Dodatkowo może służyć do wymiany danych pomiędzy nadzorcami.
+	\item \label{external-modules:broker:queue-exclusive} Kolejka kończąca się wyłącznie na pojedynczym serwerze wirtualizacji.
+	      Liczba kolejek zgadza się z liczbą serwerów wirtualizacji aktywnych w systemie.
+	      Służą one do sprawdzania, czy serwer wirtualizacji nadal pracuje po drugiej stronie.
+	      Skorzystamy z funkcjonalności kolejek na wyłączność(Exclusive Queue\footnote{\href{https://www.rabbitmq.com/queues.html\#exclusive-queues}{Opis zachowania kolejek na wyłączność}}).
+	      Każda z nich powinna mieć nazwę jaka przedstawi się serwer wirtualizacji.
+	\item \label{external-modules:broker:queue-users} Kolejka kończąca się na aktualnie podłączonym do maszyny wirtualnej kliencie.
+		  Podobnie jak powyżej kolejek istnieje tyle ile aktywnych użytkowników.
+		  Celem kolejki jest sprawdzenie, czy aplikacja kliencka nadal jest podłączona do wirtualnej maszyny (mechanizm Exclusive Queue).
+		  W celach bezpieczeństwa będą one definiowane na oddzielnym procesie brokera, który będzie można w razie potrzeby udostępnić poza sieć lokalną.
+\end{enumerate}
+
+Powyższe 4 grupy kolejek umożliwią prawidłowe działanie systemu.
+Każdy z modułów utworzy odpowiednie kolejki w trakcie uruchamiania.
+Jedynym wymogiem prawidłowego uruchomienia komunikacji jest dostępny dla wszystkich serwerów wirtualizacji oraz nadzorców proces brokera.
+
+\subsection{Dysk sieciowy}
+Usługa wspólnej przestrzeni dyskowej jest potrzebna do uzyskania niezależności wyboru maszyny wirtualnej od folderu użytkownika.
+Każda maszyna wirtualna powinna przy starcie otrzymać adres oraz dane dostępowe do takiego dysku sieciowego.
+Dane zostaną dostarczone poprzez wykonanie Ansible playbooka po uruchomieniu maszyny.
+
+W przypadku maszyn wirtualnych uruchamiających system Linux potrzebne są dane do połączenia przez protokół NFS, a przy systemie Windows dane do protokołu SAMBA.
+Niezależnie od protokołu dane nie mogą się różnić(struktura katalogów oraz zawartość plików).
+
+\subsection{System katalogowy}
+Usługa systemu katalogowego jest potrzebna do uzyskania niezależności wyboru maszyny wirtualnej od danych logowania do systemu uruchomionego na maszynie wirtualnej.
+Każda maszyna wirtualna powinna przy starcie otrzymać adres oraz dane dostępowe do takiego systemu katalogowego
+Dane zostaną dostarczone poprzez wykonanie Ansible playbooka po uruchomieniu maszyny.
+
+Aby system katalogowy był kompatybilny z systemami Windows oraz Linux uruchamianymi na maszynie wirtualnej skorzystamy z protokołu OpenLDAP do uzyskiwania danych o użytkownikach.
+
+\end{document}

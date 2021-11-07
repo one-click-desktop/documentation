@@ -1,0 +1,114 @@
+\documentclass[12pt]{article}
+
+\usepackage{polski}
+%\usepackage[utf8]{inputenc}
+%\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{footnote}
+\usepackage{hyperref}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{datetime}
+\usepackage{xparse}
+
+\newdateformat{mydate}{\twodigit{\THEDAY}.\twodigit{\THEMONTH}.\THEYEAR r.}
+
+\ExplSyntaxOn
+\bool_new:N \g_fifikinz_first_rev_bool
+\cs_new:Nn \fifikinz_revision:nnn {
+	% We only want to start a new row after an existing row (i.e., just
+	% not the first row).  Once we pass the first row, set our flag to
+	% `false' so it will insert \\ on subsequent calls.
+	\bool_if:NTF \g_fifikinz_first_rev_bool {
+		\bool_gset_false:N \g_fifikinz_first_rev_bool
+	} { \\ }
+	#1 & #2 & \ignorespaces#3\unskip
+}
+
+\NewDocumentEnvironment { Revisions } { } {
+	% The first revision will be, well, the first revision.
+	\bool_gset_true:N \g_fifikinz_first_rev_bool
+
+	% make our table look a little nicer
+	\renewcommand\arraystretch{1.5}
+
+	\section*{Historia \space zmian}
+	\begin{tabular}{crp{.8\linewidth}}
+	} { \end{tabular} \bigskip }
+
+\NewDocumentCommand \Revision { m m +m } {
+	% Using \NewDocumentCommand allows some advanced syntax for
+	% parameters.  See `texdoc xparse' for more details.
+	\fifikinz_revision:nnn {#1} {#2} {#3}
+}
+\ExplSyntaxOff
+
+\graphicspath{
+    {../screens}
+    {../diagrams}
+    {../api}
+}
+
+\def \screenswidth {0.6\textwidth}
+\def \screenswidthlesser {0.5\textwidth}
+
+\usepackage{subfiles}
+
+\textheight 23.2 cm
+\textwidth 6.0 in
+\hoffset = -0.5 in
+\voffset = -2.4 cm
+
+\begin{document}
+
+\subfile{sections/intro.tex}
+\pagebreak
+
+\section{Architektura systemu} % Krzysiu
+
+\subfile{sections/architecture.tex}
+\pagebreak
+
+\section{Opis tworzonych modułów} % Piotrek
+
+\subfile{sections/modules.tex}
+\pagebreak
+
+\section{Opis zewnętrznie dostarczonych modułów} % Krzysiu
+
+\subfile{sections/external-modules.tex}
+\pagebreak
+
+\section{Komunikacja} % Piotrek
+
+\subfile{sections/communication.tex}
+\pagebreak
+
+\section{Diagramy} % Krzysiu
+
+\subfile{sections/diagrams.tex}
+\pagebreak
+
+\section{Interfejs użytkownika} % Piotrek
+
+\subfile{sections/user-interface.tex}
+\pagebreak
+
+\section{Zewnętrzne narzędzia} % Krzysiu
+
+\subfile{sections/external-tools.tex}
+\pagebreak
+
+\section{Wybrana technologia} % Piotrek
+
+\subfile{sections/technology.tex}
+\pagebreak
+
+\section{Załączniki}
+
+\subfile{sections/attachments.tex}
+
+\end{document}

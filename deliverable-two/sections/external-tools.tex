@@ -1,0 +1,35 @@
+\documentclass[../deliverable-two.tex]{subfiles}
+
+\begin{document}
+\label{external-tools}
+
+\subsection{Ansible}
+Ansible zostanie wykorzystany w systemie do zaaplikowania zmiennej konfiguracji do każdej uruchamianej wirtualnej maszyny.
+Podstawowo playbook będzie zawierać informacje o:
+\begin{enumerate}
+	\item Dane dostępowe do dysku sieciowego oraz wykorzystany protokół
+	\item Dane dostępowe do usługi katalogowej
+\end{enumerate}
+Playbook można rozszerzać o potrzebne dane zależne od użycia.
+
+\subsection{Vagrant}
+Vagrant zostanie wykorzystany w celu łatwej parametryzacji oraz powtarzalnego tworzenia maszyn wirtualnych z przygotowanego wcześniej obrazu systemu.
+Głównie wykorzystany będzie mechanizm Vagrantboxów, które są obrazami wcześniej przygotowanego systemu operacyjnego.
+Aby system działał prawidłowo obraz systemu zamknięty w Vagrantboxie musi spełniać następujące warunki:
+\begin{enumerate}
+	\item Użytkownicy muszą być pobierani z usługi katalogowej.
+	\item Katalogi domowe użytkowników muszą być na dysku sieciowym.
+\end{enumerate}
+
+\subsection{Libvirt z QEMU}
+Libvirt połączony z QEMU będzie wykorzystany do zarządzania maszynami wirtualnymi uruchamianymi na serwerze wirtualizacji.
+Umożliwi on:
+\begin{enumerate}
+	\item Tworzenie maszyn wirtualnych.
+	\item Uruchamianie maszyn wirtualnych.
+	\item Przyporządkowanie zasobów maszynom wirtualnym (w tym kraty graficzne).
+	\item Wyłączanie maszyn wirtualnych.
+	\item Sprawdzanie, czy maszyna działa na serwerze wirtualizacji.
+\end{enumerate}
+
+\end{document}
