@@ -13,21 +13,25 @@ Pozostaje jednak problem hazardu oraz wyścigów, które zostaną wyeliminowane 
 
 Aby system mógł funkcjonować zdefiniowane zostaną kolejki:
 \begin{enumerate}[label=(\Roman*)]
-	\item \label{virtsrv} Kolejka kończąca się na każdym z serwerów wirtualizacji i dla każdego z nich wiadomości sa powielane.
+	\item \label{external-modules:broker:queue-virtsrv} Kolejka kończąca się na każdym z serwerów wirtualizacji i dla każdego z nich wiadomości sa powielane.
 	      Służy ona do wysyłania próśb od nadzorców do serwerów wirtualizacji.
-	\item \label{overseers} Kolejka kończąca się na każdym z nadzorców i dla każdego z nich wiadomości są powielane.
+	\item \label{external-modules:broker:queue-overseers} Kolejka kończąca się na każdym z nadzorców i dla każdego z nich wiadomości są powielane.
 	      Służy ona do wysyłania informacji do nadzorców o zmianie stanu w serwerze wirtualizacji.
 	      Dodatkowo może służyć do wymiany danych pomiędzy nadzorcami.
-	\item \label{exclusive} Kolejka kończąca się wyłącznie na pojedynczym serwerze wirtualizacji.
+	\item \label{external-modules:broker:queue-exclusive} Kolejka kończąca się wyłącznie na pojedynczym serwerze wirtualizacji.
 	      Liczba kolejek zgadza się z liczbą serwerów wirtualizacji aktywnych w systemie.
 	      Służą one do sprawdzania, czy serwer wirtualizacji nadal pracuje po drugiej stronie.
 	      Skorzystamy z funkcjonalności kolejek na wyłączność(Exclusive Queue\footnote{\href{https://www.rabbitmq.com/queues.html\#exclusive-queues}{Opis zachowania kolejek na wyłączność}}).
 	      Każda z nich powinna mieć nazwę jaka przedstawi się serwer wirtualizacji.
+	\item \label{external-modules:broker:queue-users} Kolejka kończąca się na aktualnie podłączonym do maszyny wirtualnej kliencie.
+		  Podobnie jak powyżej kolejek istnieje tyle ile aktywnych użytkowników.
+		  Celem kolejki jest sprawdzenie, czy aplikacja kliencka nadal jest podłączona do wirtualnej maszyny (mechanizm Exclusive Queue).
+		  W celach bezpieczeństwa będą one definiowane na oddzielnym procesie brokera, który będzie można w razie potrzeby udostępnić poza sieć lokalną.
 \end{enumerate}
 
-Powyższe 3 grupy kolejek umożliwią prawidłowe działanie systemu.
+Powyższe 4 grupy kolejek umożliwią prawidłowe działanie systemu.
 Każdy z modułów utworzy odpowiednie kolejki w trakcie uruchamiania.
-Jedynym wymogiem prawidłowego uruchomienia komunikacji jest dostępny przez wszystkie serwery wirtualizacji oraz nadzorców proces brokera.
+Jedynym wymogiem prawidłowego uruchomienia komunikacji jest dostępny dla wszystkich serwerów wirtualizacji oraz nadzorców proces brokera.
 
 \subsection{Dysk sieciowy}
 Usługa wspólnej przestrzeni dyskowej jest potrzebna do uzyskania niezależności wyboru maszyny wirtualnej od folderu użytkownika.
