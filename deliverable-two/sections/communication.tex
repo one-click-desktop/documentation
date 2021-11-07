@@ -4,6 +4,7 @@
 \label{communication}
 
 \subsection{Komunikacja użytkownika z systemem - REST API}
+\label{communication:api}
 
 Komunikacja aplikacji klienckiej oraz panelu administratora z systemem - nadzorcą - rozwiązana jest za pomocą REST API\footnote{\href{https://restfulapi.net/}{Opis REST API}}. Wiadomości wysyłane są za pomocą protokołu HTTPS\footnote{\href{https://datatracker.ietf.org/doc/html/rfc2818}{Specyfikacja protokołu HTTP Over TLS}}, który zapewnia ich szyfrowanie. W tym celu wymagane jest, aby na adres, pod którym udostępniony będzie system, wystawiony był odpowiedni certyfikat\footnote{\href{https://protonmail.com/blog/tls-ssl-certificate/}{Opis certyfikatu TLS/SSL}}, gwarantujący jego tożsamość. Podczas tworzenia systemu i testów możliwe jest użycie sztucznego, własnoręcznie podpisanego certyfikatu\footnote{\href{https://aboutssl.org/what-is-self-sign-certificate/}{Opis własnoręcznie podpisanego certyfikatu TLS/SSL}}.
 
@@ -22,6 +23,7 @@ Całość specyfikacji API umieszczona jest w osobnym pliku. Poniżej znajduje s
 \end{itemize}
 
 \subsection{Komunikacja wewnątrz systemu - broker wiadomości}
+\label{communication:broker}
 
 Komunikacja wewnątrz systemu opiera się na kolejkach opisanych w \nameref{external-modules}. W celu uniknięcia wyścigów i utrzymania spójności modelu systemu pomiędzy nadzorcami ustalone są następujące zasady:
 \begin{itemize}
