@@ -27,10 +27,10 @@ Całość specyfikacji API umieszczona jest w osobnym pliku. Poniżej znajduje s
 
 Komunikacja wewnątrz systemu opiera się na kolejkach opisanych w \nameref{external-modules}. W celu uniknięcia wyścigów i utrzymania spójności modelu systemu pomiędzy nadzorcami ustalone są następujące zasady:
 \begin{itemize}
-    \item Nadzorca może zmienić stan systemu jedynie w reakcji na odpowiedź serwera wirtualizacji. Odpowiedzi te wysyłane są do wszystkich serwerów wirtualizacji, dzięki czemu każdy nadzorca ma taki sam model systemu.
+    \item Nadzorca może zmienić stan systemu jedynie w reakcji na odpowiedź serwera wirtualizacji. Odpowiedzi te wysyłane są do wszystkich nadzorców, dzięki czemu każdy nadzorca ma taki sam model systemu.
     \item Wiadomości procesowane są przez serwer wirtualizacji w sposób atomowy. Pojedyncza wiadomość musi zostać w pełni obsłużona zanim program przejdzie do obsługi kolejnej.
     \item Serwer wirtualizacji odpowiada na wiadomości wysyłając nowy stan maszyn. Jeżeli żądanie nie może być spełnione z powodu błędnego żądania, to serwer nie odpowiada na żądanie. Wyjątkiem jest żądanie o wysłanie aktualnego stanu maszyn.
-    \item Z powodu asynchroniczności wiadomości moduły nie oczekują na odpowiedź. W przypadku nadzorcy przetwarzanie 'odpowiedzi' zostanie uruchomione przez zmianę modelu.
+    \item Z powodu asynchroniczności wiadomości moduły nie oczekują na odpowiedź. W przypadku nadzorcy przetwarzanie "odpowiedzi" zostanie uruchomione przez zmianę modelu.
     \item Do monitorowania utrzymania połączenia z brokerem użyty jest wbudowany mechanizm, który umożliwia wywołanie odpowiedniej procedury, gdy moduł nie wyśle wiadomości o podtrzymaniu połączenia przez określony czas. Używając tego nadzorcy wykrywają, kiedy poszczególne serwery wirtualizacji przestaną działać, a serwery wirtualizacji - kiedy wszyscy nadzorcy przestaną działać.
 \end{itemize}
 
