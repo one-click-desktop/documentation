@@ -4,6 +4,7 @@
 \label{external-modules}
 
 \subsection{Broker wiadomości}
+\label{external-modules:broker}
 
 Komunikacje wewnątrz systemu, czyli pomiędzy serwerami wirtualizacji oraz nadzorcami, będzie realizowali poprzez kolejki wiadomości.
 Wiadomości będą przekazywane pomiędzy modułami przez brokera, którego nie będziemy implementować.
@@ -13,15 +14,15 @@ Pozostaje jednak problem hazardu oraz wyścigów, które zostaną wyeliminowane 
 Aby system mógł funkcjonować zdefiniowane zostaną kolejki:
 \begin{enumerate}[label=(\Roman*)]
 	\item \label{virtsrv} Kolejka kończąca się na każdym z serwerów wirtualizacji i dla każdego z nich wiadomości sa powielane.
-	Służy ona do wysyłania próśb od nadzorców do serwerów wirtualizacji.
+	      Służy ona do wysyłania próśb od nadzorców do serwerów wirtualizacji.
 	\item \label{overseers} Kolejka kończąca się na każdym z nadzorców i dla każdego z nich wiadomości są powielane.
-	Służy ona do wysyłania informacji do nadzorców o zmianie stanu w serwerze wirtualizacji.
-	Dodatkowo może służyć do wymiany danych pomiędzy nadzorcami.
+	      Służy ona do wysyłania informacji do nadzorców o zmianie stanu w serwerze wirtualizacji.
+	      Dodatkowo może służyć do wymiany danych pomiędzy nadzorcami.
 	\item \label{exclusive} Kolejka kończąca się wyłącznie na pojedynczym serwerze wirtualizacji.
-	Liczba kolejek zgadza się z liczbą serwerów wirtualizacji aktywnych w systemie.
-	Służą one do sprawdzania, czy serwer wirtualizacji nadal pracuje po drugiej stronie.
-	Skorzystamy z funkcjonalności kolejek na wyłączność(Exclusive Queue\footnote{\href{https://www.rabbitmq.com/queues.html\#exclusive-queues}{Opis zachowania kolejek na wyłączność}}).
-	Każda z nich powinna mieć nazwę jaka przedstawi się serwer wirtualizacji.
+	      Liczba kolejek zgadza się z liczbą serwerów wirtualizacji aktywnych w systemie.
+	      Służą one do sprawdzania, czy serwer wirtualizacji nadal pracuje po drugiej stronie.
+	      Skorzystamy z funkcjonalności kolejek na wyłączność(Exclusive Queue\footnote{\href{https://www.rabbitmq.com/queues.html\#exclusive-queues}{Opis zachowania kolejek na wyłączność}}).
+	      Każda z nich powinna mieć nazwę jaka przedstawi się serwer wirtualizacji.
 \end{enumerate}
 
 Powyższe 3 grupy kolejek umożliwią prawidłowe działanie systemu.
