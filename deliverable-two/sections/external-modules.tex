@@ -23,9 +23,13 @@ Aby system mógł funkcjonować zdefiniowane zostaną kolejki:
 	      Służą one do sprawdzania, czy serwer wirtualizacji nadal pracuje po drugiej stronie.
 	      Skorzystamy z funkcjonalności kolejek na wyłączność(Exclusive Queue\footnote{\href{https://www.rabbitmq.com/queues.html\#exclusive-queues}{Opis zachowania kolejek na wyłączność}}).
 	      Każda z nich powinna mieć nazwę jaka przedstawi się serwer wirtualizacji.
+	\item \label{users} Kolejka kończąca się na aktualnie podłączonym do maszyny wirtualnej kliencie.
+		  Podobnie jak powyżej kolejek istnieje tyle ile aktywnych użytkowników.
+		  Celem kolejki jest sprawdzenie, czy aplikacja kliencka nadal jest podłączona do wirtualnej maszyny (mechanizm Exclusive Queue).
+		  W celach bezpieczeństwa będą one definiowane na oddzielnym procesie brokera, który będzie można w razie potrzeby udostępnić poza sieć lokalną.
 \end{enumerate}
 
-Powyższe 3 grupy kolejek umożliwią prawidłowe działanie systemu.
+Powyższe 4 grupy kolejek umożliwią prawidłowe działanie systemu.
 Każdy z modułów utworzy odpowiednie kolejki w trakcie uruchamiania.
 Jedynym wymogiem prawidłowego uruchomienia komunikacji jest dostępny przez wszystkie serwery wirtualizacji oraz nadzorców proces brokera.
 
