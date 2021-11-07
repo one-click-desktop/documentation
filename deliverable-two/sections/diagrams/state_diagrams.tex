@@ -8,7 +8,7 @@ Najważniejszym obiektem biznesowym w systemie jest maszyna wirtualna, do które
 
 \begin{figure}[!h]
 	
-	\centering\includegraphics[width=\screenswidth]{state_diagrams/virtual_machine.png}
+	\centering\includegraphics[width=\textwidth]{state_diagrams/virtual_machine.png}
 	
 	\vskip-1.5ex
 	
@@ -20,7 +20,7 @@ Maszyna aby być całkowicie uruchomiona musi być zaopatrzona we wszystkie konf
 Stan "Wolna" oznacza możliwość przypisania sesji do tej maszyny w razie potrzeby.
 Po rezerwacji użytkownik nie musi od razu się zalogować (posiada pewien czas na podłączenie się do systemu).
 Maszyna przy oczekiwaniu na podłączenie się użytkownika (również po zerwaniu połączenia) oczekuje w stanie "Oczekiwanie na wyłączenie maszyny".
-Gdy użytkownik pracuje na maszynie (wiemy o tym przez monitorowanie kolejki zdefiniowanej w \hyperref[users]{opisie kolejki użytkowników}) wtedy jest ona w stanie "Zajęta".
+Gdy użytkownik pracuje na maszynie (wiemy o tym przez monitorowanie kolejki zdefiniowanej w \hyperref[external-modules:broker:queue-users]{opisie kolejki użytkowników}) wtedy jest ona w stanie "Zajęta".
 \pagebreak
 
 \subsubsection{Serwer wirtualizacji}
@@ -29,7 +29,7 @@ Serwer wirtualizacji monitoruje zasoby zużywane przez uruchamiane no nim wirtua
 
 \begin{figure}[!h]
 	
-	\centering\includegraphics[width=\screenswidth]{state_diagrams/virtualisation_server.png}
+	\centering\includegraphics[width=0.8\textwidth]{state_diagrams/virtualisation_server.png}
 	
 	\vskip-1.5ex
 	
