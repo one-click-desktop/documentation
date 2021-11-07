@@ -11,6 +11,40 @@
 \usepackage{hyperref}
 \usepackage{hyperref}
 \usepackage{enumitem}
+\usepackage{datetime}
+\usepackage{xparse}
+
+\newdateformat{mydate}{\twodigit{\THEDAY}.\twodigit{\THEMONTH}.\THEYEAR r.}
+
+\ExplSyntaxOn
+\bool_new:N \g_fifikinz_first_rev_bool
+\cs_new:Nn \fifikinz_revision:nnn {
+	% We only want to start a new row after an existing row (i.e., just
+	% not the first row).  Once we pass the first row, set our flag to
+	% `false' so it will insert \\ on subsequent calls.
+	\bool_if:NTF \g_fifikinz_first_rev_bool {
+		\bool_gset_false:N \g_fifikinz_first_rev_bool
+	} { \\ }
+	#1 & #2 & \ignorespaces#3\unskip
+}
+
+\NewDocumentEnvironment { Revisions } { } {
+	% The first revision will be, well, the first revision.
+	\bool_gset_true:N \g_fifikinz_first_rev_bool
+
+	% make our table look a little nicer
+	\renewcommand\arraystretch{1.5}
+
+	\section*{Historia \space zmian}
+	\begin{tabular}{crp{.8\linewidth}}
+	} { \end{tabular} \bigskip }
+
+\NewDocumentCommand \Revision { m m +m } {
+	% Using \NewDocumentCommand allows some advanced syntax for
+	% parameters.  See `texdoc xparse' for more details.
+	\fifikinz_revision:nnn {#1} {#2} {#3}
+}
+\ExplSyntaxOff
 
 \graphicspath{
     {../screens}
@@ -29,7 +63,8 @@
 
 \begin{document}
 
-\section{BLa bla bla - wymagane punkty jak z deliverable-one (MODULARNOSC!!!)}
+\subfile{sections/intro.tex}
+\pagebreak
 
 \section{Architektura systemu} % Krzysiu
 
@@ -70,5 +105,9 @@
 
 \subfile{sections/technology.tex}
 \pagebreak
+
+\section{Załączniki}
+
+\subfile{sections/attachments.tex}
 
 \end{document}
