@@ -63,7 +63,8 @@
 
 \section{Testy integracyjne}
 
-\subsection {Testy integracji z libvirtem oraz Vagrantem}
+\subsection {Testy integracji z libvirtem oraz vagrantem}
+
 Przy integracji systemu z libvirtem oraz vagrantem musielismy sprawdzic następujące funkcjonalności:
 \begin{enumerate}
 	\item Włączanie maszyn poprzez vagranta
@@ -72,7 +73,19 @@ Przy integracji systemu z libvirtem oraz vagrantem musielismy sprawdzic następu
 	\item Pobranie adresu IP uruchomionej maszyny wirtualnej
 \end{enumerate}
 
+Aby testy miały sens potrzebowaliśmy konfiguracji XML do tworzenia maszyn \textit{transient} oraz gotowego lekkiego vagrant-boxa przy tworzeniu maszyn \textit{persistence}.
+Przy testach libvirta wykorzystaliśmy obraz live ArchLinuxa, którego uruchamiamy w minimalnie przygotowanej konfiguracji.
+Do testów vagranta skorzystaliśmy z lekkiego obrazu "generic/alpine38".
+Przy testach konfiguracji sieciowej utworzyliśmy bridge sieciowy, który jest uwzględniony w konfiguracji uruchamianych maszyn wirtualnych.
+
 Aby upewnić się, że wszystko działa prawidłowo skorzystaliśmy z mechaniki testów jednostkowych NUnit przy jednocześnie uruchomionym daemonie libvirta.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{res/virtsrvlib-test}
+	\caption{Lista testów sprawdzających integrację z libvirtem i vagrantem}
+	\label{fig:virtsrvlib-test}
+\end{figure}
 
 \subsection{Testy integracyjne z RabbitMQ}
 Podczas tworzenia projektu wydzieliliśmy osobny moduł, którego celem jest obłożenie biblioteki API RabbitMQ w interfejs, który umożliwi wygodne użytkowanie brokera z poziomu głównych modułów systemu. Jako iż biblioteka ta nie posiada wewnętrznej logiki, a jedynie wywołuje odpowiednie funkcje brokera wiadomości, przetestowana została z użyciem testów integracyjnych. Testowana funkcjonalność obejmowała:
@@ -83,6 +96,7 @@ Podczas tworzenia projektu wydzieliliśmy osobny moduł, którego celem jest ob�
 	\item Wysyłanie wiadomości do konkretnych odbiorców
 	\item Wykrywanie braku odbiorców
 \end{enumerate}
+
 W tym celu wykorzystaliśmy metodę analogiczną do testów z libvirtem, czyli mechaniki testów jednostkowych NUnit przy jednocześnie uruchomionym brokerze RabbitMQ.
 
 \section{Testy E2E}
