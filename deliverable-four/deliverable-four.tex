@@ -118,6 +118,10 @@ Podczas tworzenia projektu wydzieliliśmy osobny moduł, którego celem jest ob�
 
 W tym celu wykorzystaliśmy metodę analogiczną do testów z libvirtem, czyli mechaniki testów jednostkowych NUnit przy jednocześnie uruchomionym brokerze RabbitMQ.
 
+\subsection {Wymierne efekty testów}
+W wypadku testów integracyjnych zauważyliśmy wymierne efekty w czasie integracji.
+Przy integrowaniu modułów nadzorcy i serwera wirtualizacji komunikacja i zarządzanie maszynami wirtualnymi zaczęło działać praktycznie przy pierwszym uruchomieniu.
+
 \section{Testy E2E}
 Aplikacja kliencka oraz panel administratora posiadają proste testy E2E, z wykorzystaniem platformy Cypress, spełniające równocześnie po części rolę testów UI. Testy te skupiają się na pojedynczych ekranach aplikacji oraz jej działaniu z perspektywy użytkownika.
 
