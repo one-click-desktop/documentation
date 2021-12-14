@@ -64,8 +64,26 @@
 \section{Testy integracyjne}
 
 \section{Testy E2E}
+Aplikacja kliencka oraz panel administratora posiadają proste testy E2E, z wykorzystaniem platformy Cypress, spełniające równocześnie po części rolę testów UI. Testy te skupiają się na pojedynczych ekranach aplikacji oraz jej działaniu z perspektywy użytkownika.
+
+Planujemy dodanie testów E2E realizujących wielokrokowe scenariusze testowe, zaczynające się od zalogowania do aplikacji.
 
 \section{Scenariusze akceptacyjne}
 
 \section{Aktualny stan testów}
+Na ten moment następujące elementy systemu posiadają testy automatyczne (wraz z typem testów):
+\begin{itemize}
+	\item Aplikacja kliencka (testy jednostkowe, UI, proste E2E)
+	\item Panel administratora (testy jednostkowe, UI, proste E2E)
+	\item Moduł serwera wirtualizacji (testy integracyjne libvirt)
+	\item Biblioteka modelu systemu (testy jednostkowe)
+	\item Biblioteka brokera wiadomości (testy integracyjne)
+\end{itemize}
+Testy jednostkowe do modułów:
+\begin{itemize}
+	\item Nadzorca
+	\item Serwer wirtualizacji
+\end{itemize}
+są w trakcie powstawania.
+
 \end{document}
