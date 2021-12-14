@@ -124,6 +124,122 @@ Aplikacja kliencka oraz panel administratora posiadają proste testy E2E, z wyko
 Planujemy dodanie testów E2E realizujących wielokrokowe scenariusze testowe, zaczynające się od zalogowania do aplikacji.
 
 \section{Scenariusze akceptacyjne}
+Planujemy wykonać następujące testy akceptacyjne:
+
+\subsection {Serwer wirtualizacji wyłącza się przy braku komunikacji z jakimkolwiek nadzorcą}
+Przy starcie samodzielnego serwera wirtualizacji i wykryciu braku komunikacji z jakimkolwiek nadzorcą (poprzez brokera wiadomości) serwer powinien się wyłączyć z błędem.
+
+Kroki:
+\begin{enumerate}
+	\item Włącz serwer wirtualizacji.
+	\item Wyświetl błąd i zakończ działanie.
+\end{enumerate}
+
+\subsection {Serwer wirtualizacji wyłącza się przy utracie komunikacji z nadzorcami}
+Po poprawnym starcie systemu z 1 nadzorca oraz 1 serwerem wirtualizacji serwer powinien wyłączyć się po wyłączeniu się ostatniego nadzorcy.
+
+Kroki:
+\begin{enumerate}
+	\item Włącz brokera wiadomości wewnętrznego oraz zewnętrznego.
+	\item Włącz aplikację nadzorcy.
+	\item Włącz aplikację serwera wirtualizacji.
+	\item Poczekaj na prawidłowy start systemu.
+	\item Wyłącz nadzorcę lub brokery wiadomości.
+	\item Poczekaj na wykrycie braku nadzorców (brak otrzymanych wiadomości)
+	\item Wyświetl błąd i zakończ działanie.
+\end{enumerate}
+
+\subsection{Typowe użycie systemu przez użytkownika}
+Użytkownik podłącza się do systemu składającego się z 1 nadzorcy oraz 1 serwera wirtualizacji, gdzie działa przynajmniej jedna wolna maszyna.
+Powinien prawidłowo otrzymać sesje oraz po odłączeniu się maszyna powinna zostać wyłączona po 15 minutach(czas konfigurowalny)
+
+Kroki:
+\begin{enumerate}
+	\item Włącz brokera wiadomości wewnętrznego oraz zewnętrznego.
+	\item Włącz aplikację nadzorcy.
+	\item Włącz aplikację serwera wirtualizacji.
+	\item Poczekaj na uruchomienie przynajmniej jednej maszyny wirtualnej.
+	\item Poproś o sesję poprzez aplikację kliencką.
+	\item Podłącz się poprzez RDP do uzyskanej maszyny.
+	\item Zakończ sesję z poziomu aplikacji.
+	\item Po określonym czasie maszyna powinna się wyłączyć.
+\end{enumerate}
+
+\subsection{Typowe użycie systemu przez użytkownika przy awarii nadzorcy}
+Użytkownik podłącza się do systemu składającego się z 2 nadzorców oraz 1 serwera wirtualizacji, gdzie działa przynajmniej jedna wolna maszyna.
+Powinien prawidłowo otrzymać sesje oraz po odłączeniu się i awarii nadzorcy, z którym rozmawiał, przy szybkim powrocie powinien uzyskać swoja poprzednia maszynę.
+
+Kroki:
+\begin{enumerate}
+	\item Włącz brokera wiadomości wewnętrznego oraz zewnętrznego.
+	\item Włącz dwie aplikacje nadzorców.
+	\item Włącz aplikację serwera wirtualizacji.
+	\item Poczekaj na uruchomienie przynajmniej jednej maszyny wirtualnej.
+	\item Poproś o sesję poprzez aplikację kliencką.
+	\item Podłącz się poprzez RDP do uzyskanej maszyny.
+	\item Zakończ sesję z poziomu aplikacji.
+	\item Wyłącz tego nadzorcę, z którym klient się komunikował.
+	\item Poproś ponownie o sesję poprzez aplikację kliencką(powinien uzyskać tą sama maszynę)
+	\item Podłącz się poprzez RDP do uzyskanej maszyny.
+\end{enumerate}
+
+\subsection {Podłączenie nowego serwera wirtualizacji w czasie działania systemu}
+W trakcie działania systemu nowy serwer wirtualizacji powinien zostać włączony do modelu nadzorców.
+
+Kroki:
+\begin{enumerate}
+	\item Włącz brokera wiadomości wewnętrznego oraz zewnętrznego.
+	\item Włącz aplikację nadzorcy.
+	\item Włącz aplikację serwera wirtualizacji.
+	\item Poczekaj na prawidłowy start systemu.
+	\item Włącz kolejna instancje serwera wirtualizacji.
+	\item Poczekaj na aktualizację modelu.
+	\item Sprawdź w panelu administratora, że dwa serwery sa w modelu.
+\end{enumerate}
+
+\subsection {Podłączenie nowego nadzorcy w czasie działania systemu}
+W trakcie działania systemu nowy nadzorca powinien posiadać taki sam model jak aktualnie działający
+
+Kroki:
+\begin{enumerate}
+	\item Włącz brokera wiadomości wewnętrznego oraz zewnętrznego.
+	\item Włącz aplikację nadzorcy.
+	\item Włącz aplikację serwera wirtualizacji.
+	\item Poczekaj na prawidłowy start systemu.
+	\item Włącz kolejna instancje nadzorcy.
+	\item Poczekaj na aktualizację modelu.
+	\item Sprawdź model na pierwszym nadzorcy poprzez panel administratora.
+	\item Sprawdź model na drugim nadzorcy poprzez panel administratora.
+\end{enumerate}
+
+\subsection {Odnotowanie utraty serwera wirtualizacji}
+W trakcie działania systemu, przy utracie serwera wirtualizacji, nadzorcy powinni usunąć go z modelu.
+
+Kroki:
+\begin{enumerate}
+	\item Włącz brokera wiadomości wewnętrznego oraz zewnętrznego.
+	\item Włącz aplikację nadzorcy.
+	\item Włącz dwie aplikacje serwera wirtualizacji.
+	\item Poczekaj na prawidłowy start systemu.
+	\item Wyłącz jeden z serwerów wirtualizacji.
+	\item Poczekaj na odnotowanie straty.
+	\item Sprawdź model poprzez panel administratora.
+\end{enumerate}
+
+\subsection {Odnotowanie utraty serwera wirtualizacji}
+W trakcie działania systemu nadzorca powinien odnotować brak komunikacji z serwerami wirtualizacji poprzez wspólna kolejkę.
+W efekcie powinien wyczyścić model.
+
+Kroki:
+\begin{enumerate}
+	\item Włącz brokera wiadomości wewnętrznego oraz zewnętrznego.
+	\item Włącz aplikację nadzorcy.
+	\item Włącz aplikację serwera wirtualizacji.
+	\item Poczekaj na prawidłowy start systemu.
+	\item Wyłącz serwer wirtualizacji.
+	\item Poczekaj na odnotowanie straty.
+	\item Sprawdź model poprzez panel administratora.
+\end{enumerate}
 
 \section{Aktualny stan testów}
 Na ten moment następujące elementy systemu posiadają testy automatyczne (wraz z typem testów):
