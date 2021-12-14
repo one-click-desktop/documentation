@@ -61,6 +61,25 @@
 
 \section{Testy jednostkowe}
 
+\subsection{Testy jednostkowe frontendu}
+
+Do testowania aplikacji klienckiej oraz panelu administratora wykorzystaliśmy testy jednostkowe. Testowane były zarówno serwisy, jak i komponenty odpowiadające za widoki. Dzięki testowaniu komponentów w zakresie DOMa uzyskaliśmy testowanie UI, które dopełnione zostało testami E2E.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{res/client-test}
+	\caption{Podsumowanie testów jednostkowych aplikacji klienckiej}
+	\label{fig:client-test}
+\end{figure}
+
+\subsection{Biblioteka modelu systemu}
+
+Klasy implementujące model systemu wydzielone zostały do osobnej biblioteki, która importowana jest do modułów jako pakiet nuget. Biblioteka ta zawiera proste klasy, służące do przechowywania informacji o stanie systemu. Do przetestowania jej użyliśmy testów jednostkowych, które badają poprawność działania funkcji udostępnianych przez klasy.
+
+\subsection{Moduł nadzorcy oraz serwera wirtualizacji}
+
+Moduły te są głównymi elementami systemu. Testowanie ich zostanie przeprowadzone za pomocą testów jednostkowych. Testowane będą wszystkie serwisy, z zastosowaniem mocków.
+
 \section{Testy integracyjne}
 
 \subsection {Testy integracji z libvirtem oraz vagrantem}
