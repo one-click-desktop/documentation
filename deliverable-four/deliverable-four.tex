@@ -74,6 +74,17 @@ Przy integracji systemu z libvirtem oraz vagrantem musielismy sprawdzic następu
 
 Aby upewnić się, że wszystko działa prawidłowo skorzystaliśmy z mechaniki testów jednostkowych NUnit przy jednocześnie uruchomionym daemonie libvirta.
 
+\subsection{Testy integracyjne z RabbitMQ}
+Podczas tworzenia projektu wydzieliliśmy osobny moduł, którego celem jest obłożenie biblioteki API RabbitMQ w interfejs, który umożliwi wygodne użytkowanie brokera z poziomu głównych modułów systemu. Jako iż biblioteka ta nie posiada wewnętrznej logiki, a jedynie wywołuje odpowiednie funkcje brokera wiadomości, przetestowana została z użyciem testów integracyjnych. Testowana funkcjonalność obejmowała:
+\begin{enumerate}
+	\item Tworzenie punktów wymiany (exchange)
+	\item Tworzenie kolejek i podłączanie ich do punktów wymiany
+	\item Wysyłanie i odbieranie wiadomości (wraz z zaimplementowanym mechanizmem deserializacji)
+	\item Wysyłanie wiadomości do konkretnych odbiorców
+	\item Wykrywanie braku odbiorców
+\end{enumerate}
+W tym celu wykorzystaliśmy metodę analogiczną do testów z libvirtem, czyli mechaniki testów jednostkowych NUnit przy jednocześnie uruchomionym brokerze RabbitMQ.
+
 \section{Testy E2E}
 Aplikacja kliencka oraz panel administratora posiadają proste testy E2E, z wykorzystaniem platformy Cypress, spełniające równocześnie po części rolę testów UI. Testy te skupiają się na pojedynczych ekranach aplikacji oraz jej działaniu z perspektywy użytkownika.
 
@@ -96,5 +107,6 @@ Testy jednostkowe do modułów:
 	\item Serwer wirtualizacji
 \end{itemize}
 są w trakcie powstawania.
+Powstaną również testy E2E, które również realizować część scenariuszy akceptacyjnych.
 
 \end{document}
