@@ -63,6 +63,17 @@
 
 \section{Testy integracyjne}
 
+\subsection {Testy integracji z libvirtem oraz Vagrantem}
+Przy integracji systemu z libvirtem oraz vagrantem musielismy sprawdzic następujące funkcjonalności:
+\begin{enumerate}
+	\item Włączanie maszyn poprzez vagranta
+	\item Wyłączanie maszyn poprzez vagranta
+	\item Sprawdzanie czy maszyna jest uruchomiona poprzez libvirta
+	\item Pobranie adresu IP uruchomionej maszyny wirtualnej
+\end{enumerate}
+
+Aby upewnić się, że wszystko działa prawidłowo skorzystaliśmy z mechaniki testów jednostkowych NUnit przy jednocześnie uruchomionym daemonie libvirta.
+
 \section{Testy E2E}
 Aplikacja kliencka oraz panel administratora posiadają proste testy E2E, z wykorzystaniem platformy Cypress, spełniające równocześnie po części rolę testów UI. Testy te skupiają się na pojedynczych ekranach aplikacji oraz jej działaniu z perspektywy użytkownika.
 
