@@ -1,0 +1,80 @@
+\documentclass[../wstep.tex]{subfiles}
+
+\begin{document}
+
+\begin{table}[H]
+    \caption[Opis skrócony]{Analiza ryzyka}
+    \label{risk-analysis}
+    \centering
+    \begin{tabular}{| p{0.5\textwidth} | p{0.5\textwidth} |}
+        \hline
+        Mocne strony
+        \begin{itemize}
+            \item Łatwa skalowalność pod względem liczby sesji w systemie
+            \item Wiele rozwiązań Open Source
+            \item Elastyczność pod względem konfiguracji
+            \item Tańsze rozwiązanie niż kupno stacji roboczych
+        \end{itemize}
+         &
+        Słabości
+        \begin{itemize}
+            \item System trudny w konfiguracji
+            \item Potrzeba wymiany sprzętu komputerowego
+            \item Krótki czas rozwoju systemu
+            \item Ograniczenie doświadczenie twórców systemu
+            \item Małe prawdopodobieństwo wsparcia projektu po zakończeniu prac
+        \end{itemize}
+        \\ \hline
+
+        Okazje
+        \begin{itemize}
+            \item Grupa docelowa to firmy z dużą ilością stacji roboczych
+            \item Zwiększenie zapotrzebowania na prace zdalną na rynku pracy
+        \end{itemize}
+         &
+
+        Zagrożenia
+        \begin{itemize}
+            \item Istnienie konkurencji ugruntowanej na rynku
+            \item System w dużej mierze oparty o oprogramowanie rozwijane przez inne organizacje
+        \end{itemize}
+        \\ \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Omówienie zagrożeń}
+
+\begin{itemize}
+    \item System trudny w konfiguracji - wysoko prawdopodobne
+
+          Można temu zaradzić poprzez udostępnienie dokładnej dokumentacji lub ścisłą współprace z klientem przy wdrażaniu systemu. \\
+          Wartość: duża
+    \item Potrzeba wymiany sprzętu komputerowego - średnio prawdopodobne
+
+          Klient może potrzebować wymienić aktualne stacje robocze na terminale oraz zainwestować w sprzęt serwerowy. Jednak gdy klientami będą firmy, które mają dużo pracowników pracujących spoza biura, lub dopiero tych pracowników pozyskują, to kupno terminali i serwerów powinno być bardziej zachęcające niż kupno stacji roboczych.\\
+          Wartość: średnia.
+    \item Krótki czas rozwoju systemu - wysoko prawdopodobne
+
+          Czas rozwoju systemu jest bardzo ograniczony. Aby pomimo tego ograniczenia działał on w sposób akceptowalny powinniśmy skupić się na dobrym przedyskutowaniu i opisaniu kluczowych modułów systemu. W czasie projektu należy pilnować aby nie dodawać nadmiarowych funkcjonalności do systemu. W czasie implementacji krytyczne będzie dokładne zaplanowanie aplikacji pod kątem testowania automatycznego. Ułatwi to wyłapywanie prostych błędów jeszcze we wczesnej fazie projektu.\\
+          Wartość: wysoka
+          \newpage
+    \item Ograniczone doświadczenie twórców systemu - pewne
+
+          Jedynym sposobem na ograniczenie ryzyka jest rozważna implementacja.\\
+          Wartość: średnia
+    \item Małe prawdopodobieństwo wsparcia projektu po zakończeniu prac - wysoko prawdopodobne
+
+          Trudno teraz przewidzieć co się stanie z projektem po zakończeniu prac. Jednak prawdopodobnie twórcy systemu zajmą się innymi projektami. Można jedynie dokładnie komentować kod i pokrywać jak najwięcej jego części testami. Wtedy inne osoby będą w stanie szukać błędów albo próbować w taki sposób uzupełnić brakującą wiedzę o systemie.\\
+          Wartość: niska
+    \item Istnienie konkurencji ugruntowanej na rynku - bardzo prawdopodobne
+
+          Konkurencyjne systemy oferujące podobne rozwiązania są już dobrze ugruntowane na rynku i przetestowane. Nasz system może spróbować konkurować jedynie z nimi ceną implementacji oraz elastycznością.\\
+          Wartość: średnia
+    \item System w dużej mierze oparty o oprogramowanie rozwijane przez inne organizacje - nisko prawdopodobne
+
+          W czasie życia systemu mogą pojawić się błędy w oprogramowaniu nie rozwijanym w ramach naszego systemu. naprawa takich błędów może trwać bardzo długo. Pewnym sposobem wsparcia takiego systemu jest własnoręczne poprawiania błędów w zewnętrznym oprogramowaniu i zgłaszanie ich do odpowiedniej organizacji. Do czasu zastosowania poprawki jest możliwość korzystania z wersji, na którą nanieśliśmy własną poprawkę.\\
+          Wartość: wysoka
+
+\end{itemize}
+
+\end{document}
