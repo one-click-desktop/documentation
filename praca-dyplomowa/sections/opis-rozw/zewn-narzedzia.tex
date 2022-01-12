@@ -1,0 +1,35 @@
+\documentclass[../opis-rozwiazania.tex]{subfiles}
+
+\begin{document}
+
+\subsection{Ansible}
+Ansible został wykorzystany w systemie do zaaplikowania zmiennej konfiguracji do każdej uruchamianej wirtualnej maszyny.
+Podstawowo playbook będzie zawierać informacje o:
+\begin{enumerate}
+    \item danych dostępowych do dysku sieciowego oraz wykorzystanym protokole,
+    \item danych dostępowych do usługi katalogowej.
+\end{enumerate}
+Playbook można rozszerzać o potrzebne dane zależne od użycia.
+
+\subsection{Vagrant}
+Vagrant został wykorzystany w celu łatwej parametryzacji oraz powtarzalnego tworzenia maszyn wirtualnych z przygotowanego wcześniej obrazu systemu.
+
+Wykorzystywany jest głównie mechanizm Vagrant-boxów, które są obrazami wcześniej przygotowanego systemu operacyjnego.
+Aby system działał prawidłowo obraz systemu zamknięty w Vagrantboxie musi spełniać następujące warunki:
+\begin{enumerate}
+    \item Użytkownicy muszą być pobierani z usługi katalogowej.
+    \item Katalogi domowe użytkowników muszą być na dysku sieciowym.
+    \item Musi istnieć serwer RDP
+\end{enumerate}
+
+\subsection{Libvirt z QEMU}
+Libvirt połączony z QEMU jest wykorzystany do zarządzania maszynami wirtualnymi uruchamianymi na serwerze wirtualizacji.
+Umożliwia on:
+\begin{enumerate}
+    \item Tworzenie maszyn wirtualnych.
+    \item Uruchamianie maszyn wirtualnych.
+    \item Przyporządkowanie zasobów maszynom wirtualnym (w tym krat graficznych).
+    \item Wyłączanie maszyn wirtualnych.
+    \item Sprawdzanie, czy maszyna o danej nazwie już działa.
+\end{enumerate}
+\end{document}

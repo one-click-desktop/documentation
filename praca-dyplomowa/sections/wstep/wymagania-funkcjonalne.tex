@@ -1,0 +1,74 @@
+\documentclass[../wstep.tex]{subfiles}
+
+\begin{document}
+
+\subsection{Nadzorca}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{../diagrams/use_cases/overseer.png}
+    \caption{Przypadki użycia aplikacji nadzorczej}
+\end{figure}
+
+\begin{table}[H]
+    \caption[Opis skrócony]{Przypadki użycia aplikacji nadzorczej}
+    \label{use-case-nadzorca}
+    \centering
+    \begin{tabular}{|p{0.08\textwidth}|p{0.17\textwidth}|p{0.375\textwidth}|p{0.375\textwidth}|}
+        \hline Aktor                                                                    & Nazwa                             & Opis                                                              & Odpowiedź systemu                                                                                                                                                                                                                       \\ \hline
+        \multirow{14}{=}{\rotatebox{90}{Użytkownik}}                                    & Uzyskanie sesji do pracy          & Uzyskanie sesji do pracy na maszynie wirtualnej CPU lub GPU       & Do użytkownika zostaje przydzielona maszyna wirtualna oraz zestawione połączenie RDP. W przypadku, gdy utracił on połączenie, to przydzielana jest do niego poprzednio używana maszyna, jeżeli jego sesja nie została jeszcze umorzona. \\ \cline{2-4}
+                                                                                        & Poznanie ilości dostępnych maszyn & Wyświetlanie szacowanej ilości dostępnych maszyn każdego typu     & Użytkownikowi zostaje wyświetlona szacowana liczba dostępnych maszyn obliczona na podstawie informacji o dostępnych zasobach każdego z serwerów wirtualizacji                                                                           \\ \hline
+        \multirow[b]{5}{=}{\rotatebox{90}{\parbox{1cm}{Serwer \newline wirtualizacji}}} & Zgłoszenie dostępnych zasobów     & Serwer zgłasza nadzorcy dostępne zasoby                           & Nadzorca wykorzystuje zgłoszone zasoby do wyliczania szacowanej liczny dostępnych maszyn oraz do balansowania obciążenia serwerów wirtualizacji                                                                                         \\
+        \hline
+        \multirow[b]{5}{=}{\rotatebox{90}{\parbox{1cm}{Panel \newline administratora}}} & Podgląd stanu modelu              & Nadzorca udostępnia panelowi administratora stan zasobów systemu. & Panel administratora wykorzystuje uzyskane dane to wygenerowania raportu o stanie systemu dla administratora. wirtualizacji     \newline                                                                                                \\
+        \hline
+    \end{tabular}
+\end{table}
+
+
+\subsection{Serwer wirtualizacji}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{../diagrams/use_cases/virtualisation_server.png}
+    \caption{Przypadki użycia aplikacji nadzorczej}
+\end{figure}
+
+
+\begin{table}[H]
+    \caption[Opis skrócony]{Przypadki użycia serwera wirtualizacji}
+    \label{use-case-virtsrv}
+    \centering
+    \begin{tabular}{|p{0.08\textwidth}|p{0.17\textwidth}|p{0.375\textwidth}|p{0.375\textwidth}|}
+        \hline Aktor                                    & Nazwa                                 & Opis                                                                                                                         & Odpowiedź systemu                                                                                                                \\ \hline
+        \multirow{5}{=}{\rotatebox{90}{Użytkownik}}     & Nawiązanie połączenia z maszyną       & Użytkownik nawiązuje połączenie z maszyną wirtualną                                                                          & Maszyna wirtualna zostaje zajęta przez użytkownika; serwer wirtualizacji rozpoczyna monitorowanie, czy sesja wciąż trwa \newline \\ \hline
+        \multirow{13}{=}{\rotatebox{90}{Nadzorca}}      & Poproś o zgłoszenie zasobów           & Nadzorca wysyła do wszystkich serwerów wirtualizacji prośbę o zgłoszenie swoich używanych i wolnych zasobów                  & Serwer wirtualizacji informuje nadzorcę o stanie swoich zasobów                                                                  \\ \cline{2-4}
+                                                        & Stwórz nową wirtualna maszynę         & Nadzorca prosi serwer wirtualizacji o stworzenie nowej wirtualnej maszyny dla danego użytkownika na wybranym typie maszyny   & Serwer wirtualizacji tworzy wirtualna maszynę i udostępnia możliwość połączenia się z nią                                        \\ \cline{2-4}
+                                                        & Wyłącz konkretna wirtualna maszynę    & Nadzorca prosi serwer wirtualizacji aby wyłączył konkretna wirtualna maszynę.                                                & Serwer wirtualizacji wyłącza konkretna wirtualna maszynę oraz pilnuje aby na pewno się wyłączyła.                                \\ \hline
+        \multirow{11}{=}{\rotatebox{90}{Administrator}} & Zmień obraz maszyn wirtualnych        & Zmiana obrazu źródłowego maszyn wirtualnych                                                                                  & Zdefiniowany przez administratora vagrant-box jest używany przez serwery wirtualizacji                                           \\ \cline{2-4}
+                                                        & Zmień konfigurację maszyn wirtualnych & Zmiana zmiennej konfiguracji maszyn wirtualnych                                                                              & Zmodyfikowany ansible playbook jest używany przez serwery wirtualizacji                                                          \\ \cline{2-4}
+                                                        & Zdefiniuj zasoby maszyn wirtualnych   & Zmiana ilości zasobów przydzielanych na każdy z typów maszyn wirtualnych oraz łączną ilość zasobów przeznaczonych na maszyny & Zmodyfikowana konfiguracja zasobów będzie wykorzystywana przez serwer wirtualizacji przy kolejnym uruchomieniu                   \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Panel administratora}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{../diagrams/use_cases/admin_panel.png}
+    \caption{Przypadki użycia aplikacji nadzorczej}
+\end{figure}
+
+\begin{table}[H]
+    \caption[Opis skrócony]{Przypadki użycia panelu administratora}
+    \label{use-case-admin-panel}
+    \centering
+    \begin{tabular}{|p{0.08\textwidth}|p{0.17\textwidth}|p{0.375\textwidth}|p{0.375\textwidth}|}
+        \hline Aktor                                   & Nazwa                                  & Opis                                                              & Odpowiedź systemu                                                                                                                         \\ \hline
+        \multirow{7}{=}{\rotatebox{90}{Administrator}} & Podgląd zasobów serwerów wirtualizacji & Wyświetlanie wolnych oraz zajętych zasobów serwerów wirtualizacji & Wyświetlenie zasobów poszczególnych serwerów wirtualizacji, liczby zajętych maszyn oraz szacowanej liczby wolnych maszyn \newline\newline \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\end{document}
