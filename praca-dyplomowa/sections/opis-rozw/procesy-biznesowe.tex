@@ -1,0 +1,64 @@
+\documentclass[../opis-rozwiazania.tex]{subfiles}
+
+\begin{document}
+
+\label{diagrams:activity_diagrams}
+
+\subsection{Uzyskanie sesji}
+
+Proces opisuje prośbę klienta o ustanowienie dla niego sesji. Sesja może już istnieć lub zostać utworzona.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{../diagrams/activity_diagrams/uzyskanie_sesji.png}
+    \caption{Diagram aktywności dla uzyskania sesji}
+    \label{start_session}
+\end{figure}
+
+W przypadku gdy sesja już istnieje zostaje one zwrócona użytkownikowi.
+W przeciwnym razie nadzorca, na podstawie modelu systemu, wybiera pewną wolna maszynę i wysyła do serwera wirtualizacji, na którym działa wybrana maszyna, prośbę o utworzenie sesji. Możliwość działanie wielu nadzorców wymaga, aby proces ten był powtarzalny, czyli dla konkretnego stanu modelu wybrana musi zostać ta sama maszyna.
+Gdy nie znajdzie wolnej maszyny, to zgłasza błąd do użytkownika.
+Z założenia taka sytuacja może zajść jedynie, gdy wszystkie maszyny zostały zajęte i brakuje zasobów na utworzenie nowych. Wynika to z tego, że system zawsze powinien trzymać pewien zapas wolnych maszyn.
+Może się zdarzyć, że model jest nieaktualny i nie można utworzyć sesji z wcześniej wybraną maszyną.
+Taka prośba zostaje odrzucona przez serwer wirtualizacji, ale zmiana modelu w nadzorcy, wywołana odświeżeniem modelu, spowoduje powtórzenie procesu, tym razem wybierając inną maszynę.
+
+Uzyskanie sesji przez użytkownika zrealizowane jest asynchronicznie.
+Użytkownik oddzielnym zapytaniem prosi o uzyskanie sesji, po czym używając otrzymanego identyfikatora sesji prosi o jej dane.
+Obiekt jest w pełni utworzona, gdy odpowiedź nadzorcy sesję w stanie gotowym oraz adres maszyny do połączenia.
+
+\subsection{Kończenie sesji}
+
+Proces ma za zadanie zakończyć sesję oraz wyłączyć skojarzoną z nią wirtualna maszynę w celu zwolnienia zasobów.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../diagrams/activity_diagrams/kończenie_sesji.png}
+    \caption{Diagram aktywności dla zakończenia sesji}
+    \label{finish_session}
+\end{figure}
+
+Proces rozpoczyna się w momencie, gdy użytkownik odłączy się od systemu lub utraci połączenie. Po upłynięciu ustalonego czasu, jeżeli użytkownik nie podłączył się ponownie, maszyna zostaje wyłączona.
+serwer wirtualizacji informuję nadzorcę o utracie połączenia lub odłączeniu się użytkownika poprzez zmianę model.
+Decyzję o wyłączeniu maszyny podejmuje nadzorca.
+Powoduje to, że zmiana konfiguracji nadzorców będzie oznaczać spójną reakcje całego systemu.
+Dodatkowo umożliwia to w perspektywie czasu utworzenie bardziej złożonego algorytmu zarządzania zasobami. % ? co to znaczy?
+
+\subsection{Rozpoczęcie pracy serwera wirtualizacji}
+
+Proces opisuje przyjęcie nowego serwera wirtualizacji do systemu.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../diagrams/activity_diagrams/serwer_start.png}
+    \caption{Diagram aktywności dla rozpoczęcia pracy serwera wirtualizacji}
+    \label{start_virtsrv}
+\end{figure}
+
+Serwer wirtualizacji bez działającego nadzorcy nie jest w stanie obsługiwać użytkowników.
+Oznacza to, że jeśli przy starcie nie wykryje brokera wiadomości
+lub nadzorcy po drugiej stronie kolejek\footnote{\href{https://www.rabbitmq.com/confirms.html}{Mechanizm potwierdzenia wykonania zadania}} to się wyłączy.
+Jeżeli jednak komunikacja z nadzorcą jest możliwa, to serwer podłączy się do \hyperref[modules:broker:queue-virtsrv]{wspólnych kolejek}
+oraz przekaże informacje nadzorcom o \hyperref[modules:broker:queue-exclusive]{kolejce bezpośredniej}.
+Gdy komunikacja będzie ustanowiona bezwarunkowo wyśle stan swojego modelu do nadzorców.
+
+\end{document}
