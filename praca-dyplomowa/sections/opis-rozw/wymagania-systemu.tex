@@ -83,5 +83,11 @@ Dla każdej maszyny z osobna należy dane dostępowe do komunikacji z konfigurow
 \subsubsection{Zmienne dla serwera wirtualizacji}
 Playbook dla serwera wirtualizacji wykona wszystkie kroki opisane w \ref{system_requirements.virtsrv_rquirements}.
 Aby tego dokonać należy zdefiniować dane dla tworzonego interfejsu typu bridge.
+Należy zdefiniować nazwę interfejsu sieciowego, który zostanie połączony do nowo tworzonego urządzenia bridge.
+Skrypt nada mu nazwę, która także trzeba zdefiniować.
+Playbook korzysta z \href{https://networkmanager.dev/}{NetworkManagera} do zmiany konfiguracji, więc trzeba podać nazwę \textit{connection} (jednostka logiczna w NetworkManagerze) skojarzonego z początkowo wybranym interfejsem sieciowym.
+
+\subsubsection{Zmienne dla nadzorcy}
+Aby uruchomić nadzorce wystarczą wspólne wymagania dla wszystkich grup.
 	
 \end{document}
