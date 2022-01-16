@@ -1,0 +1,87 @@
+\documentclass[../opis-rozwiazania.tex]{subfiles}
+
+\begin{document}
+\label{system_requirements}
+	
+System do poprawnej pracy wymaga konfiguracji środowiska na wielu płaszczyznach.
+	
+\subsection{Komunikacja sieciowa między modułami}
+System składa się przynajmniej z:
+\begin{enumerate}
+	\item Przynajmniej jednego nadzorcy.
+	\item Serwerów wirtualizacji (może być ich 0).
+	\item Maszyny wirtualne uruchamiane na serwerach wirtualizacji.
+	\item Serwera HTTP udostępniającego panel administracyjny.
+	\item Brokera wiadomości do komunikacji wewnętrznej.
+	\item Brokera wiadomości do komunikacje zewnętrznej (może być tym samym brokerem co wewnętrzny).
+	\item Dowolnej liczby aplikacji klienckich.
+\end{enumerate}
+
+\subsubsection{Dostępność wewnętrznego brokera}
+Broker wewnętrzny powinien być dostępny dla każdego nadzorcy oraz każdego serwera wirtualizacji.
+Jest to wymagane do prawidłowej komunikacji pomiędzy nadzorcami a serwerami wirtualizacji.
+
+\subsubsection{Dostępność zewnętrznego brokera}
+Broker zewnętrzny powinien być dostępny dla każdego serwera wirtualizacji oraz dla każdego klienta łączącego się z systemem.
+Jest to wymagane do stwierdzenia czy użytkownik nadal jest podłączony do maszyny wirtualnej. 
+
+\subsubsection{Dostępność nadzorców}
+Nadzorcy powinni być dostępni dla aplikacji klienckich, którzy poprzez nich komunikują się z resztą systemu. 
+Administrator po pobraniu panelu administracyjnego z serwera http powinien móc wysyłać zapytania do nadzorców.
+
+\subsubsection{Dostępność serwerów wirtualizacji}
+Serwery wirtualizacji nie muszą być dostępne dla żadnego z modułów.
+
+\subsubsection{Dostępność serwera http z panelem administracyjnym}
+Serwer HTTP powinien być dostępny dla każdego z administratorów.
+
+\subsubsection{Dostępność maszyn wirtualnych}
+Maszyny wirtualne powinny być dostępne dla każdego z klientów.
+Jest to potrzebne do pracy na nich poprzez protokół RDP.
+
+\subsection{Wymagania aplikacji klienckiej}
+Dla systemu Windows aplikacja kliencka jako plik wykonywalny pobrana z \href{https://github.com/one-click-desktop/client/releases}{oficjalnych wydań} powinna uruchomić się bez żadnych wcześniejszych konfiguracji.
+Do działania skorzysta ona z klienta RDP dostarczonego przez Microsoft wraz z systemem Windows.
+
+W przypadku systemu Linux należy zainstalować klienta \href{https://www.freerdp.com/}{FreeRDP}. Pozostałe zależności są dostarczone wewnątrz pliku \texttt{.appimage}.
+
+\subsection {Wymagania aplikacji nadzorcy i serwera panelu administracyjnego}
+Do uruchomienia aplikacji nadzorcy i serwera HTTP z panelem administracyjnym potrzeba zainstalowanego \texttt{Dockera} w systemie.
+Każdy z tych dwóch modułów można zbudować do kontenera, w którym wszystkie zależności zostaną spełnione.
+
+\subsection{Wymagania serwera wirtualizacji}
+\label{system_requirements.virtsrv_rquirements}
+Serwer wirtualizacji oprócz działającej usługi \texttt{Dockera} potrzebuje dodatkowych usług.
+Do prawidłowego działania wymagana jest działająca usługa zarządcy wirtualnych maszyn \texttt{libvirt}.
+Aby prawidłowo uruchomić maszynę wirtualna potrzebna jest uruchomiona usługa zapory sieciowej oraz pakiet \texttt{dnsmasq}.
+Wymagana jest także inicjalizacja struktur usługi \texttt{vagrant} dla użytkownika uruchamiającego serwer wirtualizacji.
+Konkretnie chodzi o utworzenie folder \texttt{.vagrant.d} w folderze domowym użytkownika.
+
+Aby uruchamiane maszyny wirtualne były dostępne dla innych urządzeń potrzeba utworzyć interfejs sieciowy w trybie bridge.
+Nazwa interfejsu powinna być przekazana do pliku konfiguracyjnego serwera wirtualizacji.
+Maszyny wirtualne uzyskają wtedy dostęp do sieci w sposób jakby były fizycznymi komputerami w sieci.
+
+Czasami przy uruchomieniu maszyny wirtualnej przy użyciu \texttt{vagranta} oraz uruchomieniu wybranych kontenerów w \texttt{dockerze} komunikacja sieciowa z maszyny wirtualnej poprzez podłączony interfejs w trybie bridge może zostać ograniczona. Wtedy należy pilnować by w trakcie działanie systemu zapora sieciowa posiadała zasadę na samej górze łańcucha \texttt{FORWARD}, która będzie bezwarunkowo zezwalać trasować pakiety z urządzeń w trybie bridge. 
+
+\subsection{Automatyzacja konfiguracji}
+\label{system_requirements.ansible_conf}
+Przykładowa konfiguracja oraz narzędzia do automatycznej konfiguracji przed uruchomieniem dostępne sa w module \href{https://github.com/one-click-desktop/configuration}{\texttt{configuration}}.
+
+Składa się on ze skryptów konfiguracyjnych Ansible, nazywanych dalej playbook, oraz zmiennych opisujących konfigurowane komputery.
+
+By uruchomić skrypt dla pewnego systemu operacyjnego, który chcemy skonfigurować, musi on spełniać wymogi opisane w \href{https://docs.ansible.com/ansible/latest/plugins/connection.html#connection-plugins}{dokumentacji Ansible}.
+
+\subsubsection{Grupy i zmienne}
+Konfiguracja podzielona jest na 2 grupy: \texttt{overseer} i \texttt{virtsrv}.
+Odpowiadają one za reprezentację systemów przygotowanych odpowiednio dla nadzorców oraz serwerów wirtualizacji.
+Dodatkowo wytyczona jest sztuczna grupa \texttt{all} opisująca wszystkie konfigurowane systemy.
+
+Jedyną wspólną zmienną dla wszystkich maszyn jest nazwa użytkownika, który będzie uruchamiał i odpowiadał za zasoby systemu OneClickDesktop.
+
+Dla każdej maszyny z osobna należy dane dostępowe do komunikacji z konfigurowanym systemem. Dodatkowo należy podać hasło dla dostępu do uprawnień superużytkownika.
+
+\subsubsection{Zmienne dla serwera wirtualizacji}
+Playbook dla serwera wirtualizacji wykona wszystkie kroki opisane w \ref{system_requirements.virtsrv_rquirements}.
+Aby tego dokonać należy zdefiniować dane dla tworzonego interfejsu typu bridge.
+	
+\end{document}

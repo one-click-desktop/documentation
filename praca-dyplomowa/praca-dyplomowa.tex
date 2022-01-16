@@ -32,6 +32,10 @@
 
 \usepackage[hidelinks]{hyperref} % dla hiperlinków, m.in url , odnośników do równań, czy bibliografii --- opcja hideboxes usuwa prostokąty wokół kiperlinków
 
+\usepackage{multibib} % Wiele bibliografii dla jednego dokumentu - podział na żródła zewnętrzne i źródła wewnętrzne
+\newcites{ocd}{Zródła wewnętrzne}
+%\newcites{ext}{Zródła zewnętrzne}
+
 % ---------------- Marginesy, akapity, interlinia ------------------
 
 \usepackage[inner=20mm, outer=20mm, bindingoffset=10mm, top=25mm, bottom=25mm]{geometry}
@@ -370,12 +374,11 @@
 \chapter*{Wykaz symboli i skrótów}
 
 \begin{tabular}{cl}
-  nzw.           & nadzwyczajny      \\
+  RDP            & \href{https://docs.microsoft.com/pl-pl/windows/win32/termserv/remote-desktop-protocol?redirectedfrom=MSDN}{Remote Desktop Protocol}     \\
   *              & operator gwiazdka \\
   $\widetilde{}$ & tylda
 \end{tabular}
 \\
-Jak nie występują, usunąć.
 \thispagestyle{empty}
 
 
