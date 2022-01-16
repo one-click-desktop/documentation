@@ -42,8 +42,13 @@ Jest to potrzebne do pracy na nich poprzez protokół RDP.
 \subsection{Wymagania aplikacji klienckiej}
 Dla systemu Windows aplikacja kliencka jako plik wykonywalny pobrana z \href{https://github.com/one-click-desktop/client/releases}{oficjalnych wydań} powinna uruchomić się bez żadnych wcześniejszych konfiguracji.
 Do działania skorzysta ona z klienta RDP dostarczonego przez Microsoft wraz z systemem Windows.
+Aplikacja na pewno działa dla systemu Windows 10 i nowszych.
+Dla starszych wersji systemu Windows aplikacja może nie działać prawidłowo.
 
-W przypadku systemu Linux należy zainstalować klienta \href{https://www.freerdp.com/}{FreeRDP}. Pozostałe zależności są dostarczone wewnątrz pliku \texttt{.appimage}.
+W przypadku systemu Linux należy posiadać środowisko graficzne oraz mieć zainstalowanego klienta \href{https://www.freerdp.com/}{FreeRDP}.
+Pozostałe zależności są dostarczone wewnątrz pliku \texttt{.appimage}.
+Aplikacja na pewno działa na dystrybucji bazowanych na Debianie oraz Archu.
+Dla innych dystrybucji aplikacja może nie działać prawidłowo.
 
 \subsection {Wymagania aplikacji nadzorcy i serwera panelu administracyjnego}
 Do uruchomienia aplikacji nadzorcy i serwera HTTP z panelem administracyjnym potrzeba zainstalowanego \texttt{Dockera} w systemie.
@@ -89,5 +94,24 @@ Playbook korzysta z \href{https://networkmanager.dev/}{NetworkManagera} do zmian
 
 \subsubsection{Zmienne dla nadzorcy}
 Aby uruchomić nadzorce wystarczą wspólne wymagania dla wszystkich grup.
+
+\subsection{Wymagania szablonu maszyny wirtualnej}
+\label{system_requirements.vagrant_box}
+Maszyna wirtualna uruchamiana w ramach systemu OneClickDesktop musi być w postaci Vagrant Boxa.
+Przykładowy box został utworzony w czasie rozwoju systemu i dostępny jest w chmurze Vagrant pod nazwą \href{https://app.vagrantup.com/smogork/boxes/archlinux-rdp}{smogork/archlinux-rdp}.
+Jest to Arch Linux, który spełnia wszystkie wymagania aby zostać uruchomionym w ramach systemu.
+
+Do przygotowania szablonu proponujemy aby skorzystać właśnie z tego obrazu.
+Jeżeli jednak jest potrzeba utworzenie niestandardowego szablonu to musi on:
+\begin{itemize}
+	\item Spełniać minimalne wymagania opisane w \href{https://www.vagrantup.com/docs/boxes/base}{dokumentacji Vagranta}.
+	\item Mieć zainstalowany pewien menadżer okienek. Przykładowy szablon zawiera menadżera okienek XFCE.
+	\item Przy uruchomieniu udostępniać usługę zdalnego pulpitu RDP. Przykładowy szablon korzysta z implementacji \href{http://xrdp.org/}{xrdp}.
+	\item Każdy nowy interfejs sieciowy powinien być skonfigurowany aby uzyskać adres IP z usługi DHCP.
+	\item Przy starcie systemu urchamiać usługę qemu-guest-agent.
+\end{itemize}
+Nie ma ograniczenia na uruchamiany system operacyjny wewnątrz systemu OneClickDesktop. Jedynie taki szablon musi spełniać powyższe wymagania.
+
+Aby zbudować własny szablon należy skonsultować się z \href{https://github.com/vagrant-libvirt/vagrant-libvirt#create-box}{dokumentacją wtyczki vagrant-libvirt}.
 	
 \end{document}
