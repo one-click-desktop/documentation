@@ -1,0 +1,45 @@
+\documentclass[12pt]{article}
+
+\usepackage{polski}
+%\usepackage[utf8]{inputenc}
+%\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{footnote}
+\usepackage{hyperref}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{datetime}
+\usepackage{xparse}
+\usepackage{subfiles}
+\newdateformat{mydate}{\twodigit{\THEDAY}.\twodigit{\THEMONTH}.\THEYEAR r.}
+
+\begin{document}
+
+\begin{titlepage}
+	\begin{flushright}
+		{\mydate\today}\\
+	\end{flushright}
+	\vskip30ex
+
+	\begin{center}
+		\Large {\bf{
+				System do zdalnej pracy w środowisku graficznym wykorzystujący maszyny wirtualne QEMU z akceleracja sprzętową\\
+			}}
+		\vskip2ex
+		\bf{Dokumentacja wdrożeniowa\\}
+		\vskip2ex
+		\small { Autorzy: Krzysztof Smogór, Piotr Widomski\\  }
+		\small { Promotor: Dr inż. Marek Kozłowski\\ }
+	\end{center}
+\end{titlepage}
+
+\section{Wymagania systemu}
+\subfile{../praca-dyplomowa/sections/opis-rozw/wymagania-systemu.tex}
+
+\section{Uruchomienie systemu}
+\subfile{../praca-dyplomowa/sections/opis-rozw/uruchomienie-systemu.tex}
+
+\end{document}
