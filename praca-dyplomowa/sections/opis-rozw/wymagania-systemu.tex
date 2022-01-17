@@ -6,11 +6,11 @@
 System do poprawnej pracy wymaga konfiguracji środowiska na wielu płaszczyznach.
 	
 \subsection{Komunikacja sieciowa między modułami}
-System składa się przynajmniej z:
+System do poprawnego działania musi składać się z:
 \begin{enumerate}
 	\item Przynajmniej jednego nadzorcy.
 	\item Serwerów wirtualizacji (może być ich 0).
-	\item Maszyny wirtualne uruchamiane na serwerach wirtualizacji.
+	\item Maszyn wirtualnych uruchamnych na serwerach wirtualizacji.
 	\item Serwera HTTP udostępniającego panel administracyjny.
 	\item Brokera wiadomości do komunikacji wewnętrznej.
 	\item Brokera wiadomości do komunikacje zewnętrznej (może być tym samym brokerem co wewnętrzny).
@@ -27,7 +27,7 @@ Jest to wymagane do stwierdzenia czy użytkownik nadal jest podłączony do masz
 
 \subsubsection{Dostępność nadzorców}
 Nadzorcy powinni być dostępni dla aplikacji klienckich, którzy poprzez nich komunikują się z resztą systemu. 
-Administrator po pobraniu panelu administracyjnego z serwera http powinien móc wysyłać zapytania do nadzorców.
+Administrator po pobraniu panelu administracyjnego z serwera HTTP powinien móc wysyłać zapytania do nadzorców.
 
 \subsubsection{Dostępność serwerów wirtualizacji}
 Serwery wirtualizacji nie muszą być dostępne dla żadnego z modułów.
@@ -40,14 +40,14 @@ Maszyny wirtualne powinny być dostępne dla każdego z klientów.
 Jest to potrzebne do pracy na nich poprzez protokół RDP.
 
 \subsection{Wymagania aplikacji klienckiej}
-Dla systemu Windows aplikacja kliencka jako plik wykonywalny pobrana z \href{https://github.com/one-click-desktop/client/releases}{oficjalnych wydań} powinna uruchomić się bez żadnych wcześniejszych konfiguracji.
-Do działania skorzysta ona z klienta RDP dostarczonego przez Microsoft wraz z systemem Windows.
-Aplikacja na pewno działa dla systemu Windows 10 i nowszych.
+Dla systemu Windows aplikacja kliencka jako plik wykonywalny pobrana z \href{https://github.com/one-click-desktop/client/releases}{oficjalnych wydań} powinna uruchomić się bez żadnych wcześniejszych konfiguracji. Do uruchomienia wymagany jest jednak plik konfiguracji użytkownika dostępny w oficjalnych wydaniach.
+Do działania korzysta ona z klienta RDP dostarczonego przez firmę Microsoft wraz z systemem Windows.
+Aplikacja była testowana dla systemu Windows 10.
 Dla starszych wersji systemu Windows aplikacja może nie działać prawidłowo.
 
 W przypadku systemu Linux należy posiadać środowisko graficzne oraz mieć zainstalowanego klienta \href{https://www.freerdp.com/}{FreeRDP}.
 Pozostałe zależności są dostarczone wewnątrz pliku \texttt{.appimage}.
-Aplikacja na pewno działa na dystrybucji bazowanych na Debianie oraz Archu.
+Działanie aplikacji było testowane na dystrybucjach bazowanych na Debianie oraz ArchLinuxie.
 Dla innych dystrybucji aplikacja może nie działać prawidłowo.
 
 \subsection {Wymagania aplikacji nadzorcy i serwera panelu administracyjnego}
@@ -58,15 +58,15 @@ Każdy z tych dwóch modułów można zbudować do kontenera, w którym wszystki
 \label{system_requirements.virtsrv_rquirements}
 Serwer wirtualizacji oprócz działającej usługi \texttt{Dockera} potrzebuje dodatkowych usług.
 Do prawidłowego działania wymagana jest działająca usługa zarządcy wirtualnych maszyn \texttt{libvirt}.
-Aby prawidłowo uruchomić maszynę wirtualna potrzebna jest uruchomiona usługa zapory sieciowej oraz pakiet \texttt{dnsmasq}.
+Aby prawidłowo uruchomić maszynę wirtualną potrzebna jest uruchomiona usługa zapory sieciowej oraz pakiet \texttt{dnsmasq}.
 Wymagana jest także inicjalizacja struktur usługi \texttt{vagrant} dla użytkownika uruchamiającego serwer wirtualizacji.
-Konkretnie chodzi o utworzenie folder \texttt{.vagrant.d} w folderze domowym użytkownika.
+Chodzi konkretnie o utworzenie folderu \texttt{.vagrant.d} w katalogu domowym użytkownika.
 
 Aby uruchamiane maszyny wirtualne były dostępne dla innych urządzeń potrzeba utworzyć interfejs sieciowy w trybie bridge.
 Nazwa interfejsu powinna być przekazana do pliku konfiguracyjnego serwera wirtualizacji.
-Maszyny wirtualne uzyskają wtedy dostęp do sieci w sposób jakby były fizycznymi komputerami w sieci.
+Maszyny wirtualne uzyskają wtedy dostęp do sieci w taki sposób, jakby były fizycznymi komputerami w sieci.
 
-Czasami przy uruchomieniu maszyny wirtualnej przy użyciu \texttt{vagranta} oraz uruchomieniu wybranych kontenerów w \texttt{dockerze} komunikacja sieciowa z maszyny wirtualnej poprzez podłączony interfejs w trybie bridge może zostać ograniczona. Wtedy należy pilnować by w trakcie działanie systemu zapora sieciowa posiadała zasadę na samej górze łańcucha \texttt{FORWARD}, która będzie bezwarunkowo zezwalać trasować pakiety z urządzeń w trybie bridge. 
+W niektórych przypadkach podczas uruchomiania maszyny wirtualnej przy użyciu \texttt{vagranta} oraz uruchomiania wybranych kontenerów w \texttt{dockerze} komunikacja sieciowa z maszyną wirtualną poprzez podłączony interfejs w trybie bridge może zostać ograniczona. Należy wtedy dopilnować by w trakcie działanie systemu zapora sieciowa posiadała zasadę na samej górze łańcucha \texttt{FORWARD}, która będzie bezwarunkowo zezwalać trasować pakiety z urządzeń w trybie bridge.
 
 \subsection{Automatyzacja konfiguracji}
 \label{system_requirements.ansible_conf}
@@ -83,34 +83,33 @@ Dodatkowo wytyczona jest sztuczna grupa \texttt{all} opisująca wszystkie konfig
 
 Jedyną wspólną zmienną dla wszystkich maszyn jest nazwa użytkownika, który będzie uruchamiał i odpowiadał za zasoby systemu OneClickDesktop.
 
-Dla każdej maszyny z osobna należy dane dostępowe do komunikacji z konfigurowanym systemem. Dodatkowo należy podać hasło dla dostępu do uprawnień superużytkownika.
+Dla każdej maszyny z osobna należy zdefiniować dane dostępowe do komunikacji z konfigurowanym systemem. Dodatkowo należy podać hasło umożliwiające dostęp do uprawnień superużytkownika.
 
 \subsubsection{Zmienne dla serwera wirtualizacji}
 Playbook dla serwera wirtualizacji wykona wszystkie kroki opisane w \ref{system_requirements.virtsrv_rquirements}.
 Aby tego dokonać należy zdefiniować dane dla tworzonego interfejsu typu bridge.
-Należy zdefiniować nazwę interfejsu sieciowego, który zostanie połączony do nowo tworzonego urządzenia bridge.
-Skrypt nada mu nazwę, która także trzeba zdefiniować.
-Playbook korzysta z \href{https://networkmanager.dev/}{NetworkManagera} do zmiany konfiguracji, więc trzeba podać nazwę \textit{connection} (jednostka logiczna w NetworkManagerze) skojarzonego z początkowo wybranym interfejsem sieciowym.
+Należy zdefiniować nazwę interfejsu sieciowego, który zostanie połączony do nowo tworzonego urządzenia bridge o nazwie zdefiniowanej w pliku.
+Playbook korzysta z \href{https://networkmanager.dev/}{NetworkManagera} do zmiany konfiguracji, zatem trzeba podać nazwę \textit{connection} (jednostka logiczna w NetworkManagerze) skojarzonego z początkowo wybranym interfejsem sieciowym.
 
 \subsubsection{Zmienne dla nadzorcy}
-Aby uruchomić nadzorce wystarczą wspólne wymagania dla wszystkich grup.
+Aby uruchomić nadzorcę wystarczą wspólne wymagania dla wszystkich grup.
 
 \subsection{Wymagania szablonu maszyny wirtualnej}
 \label{system_requirements.vagrant_box}
 Maszyna wirtualna uruchamiana w ramach systemu OneClickDesktop musi być w postaci Vagrant Boxa.
 Przykładowy box został utworzony w czasie rozwoju systemu i dostępny jest w chmurze Vagrant pod nazwą \href{https://app.vagrantup.com/smogork/boxes/archlinux-rdp}{smogork/archlinux-rdp}.
-Jest to Arch Linux, który spełnia wszystkie wymagania aby zostać uruchomionym w ramach systemu.
+Box używa dystrybucji Arch Linux oraz spełnia wszystkie wymagania aby zostać uruchomionym w ramach systemu.
 
 Do przygotowania szablonu proponujemy aby skorzystać właśnie z tego obrazu.
-Jeżeli jednak jest potrzeba utworzenie niestandardowego szablonu to musi on:
+Jeżeli jednak jest potrzebne jest utworzenie niestandardowego szablonu to musi on:
 \begin{itemize}
 	\item Spełniać minimalne wymagania opisane w \href{https://www.vagrantup.com/docs/boxes/base}{dokumentacji Vagranta}.
 	\item Mieć zainstalowany pewien menadżer okienek. Przykładowy szablon zawiera menadżera okienek XFCE.
 	\item Przy uruchomieniu udostępniać usługę zdalnego pulpitu RDP. Przykładowy szablon korzysta z implementacji \href{http://xrdp.org/}{xrdp}.
-	\item Każdy nowy interfejs sieciowy powinien być skonfigurowany aby uzyskać adres IP z usługi DHCP.
-	\item Przy starcie systemu urchamiać usługę qemu-guest-agent.
+	\item Każdy nowy interfejs sieciowy powinien być tak skonfigurowany, aby uzyskać adres IP z usługi DHCP.
+	\item Przy starcie systemu urchamiać usługę \texttt{qemu-guest-agent}.
 \end{itemize}
-Nie ma ograniczenia na uruchamiany system operacyjny wewnątrz systemu OneClickDesktop. Jedynie taki szablon musi spełniać powyższe wymagania.
+Nie ma ograniczenia na system operacyjny uruchamiany wewnątrz systemu OneClickDesktop. Jedynie taki szablon musi spełniać powyższe wymagania.
 
 Aby zbudować własny szablon należy skonsultować się z \href{https://github.com/vagrant-libvirt/vagrant-libvirt#create-box}{dokumentacją wtyczki vagrant-libvirt}.
 	

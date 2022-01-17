@@ -25,14 +25,14 @@ Należy wykonać go zawsze z poziomu głównego folderu repozytorium modułu.
 Każdy kontener przy starcie wykona skrypt \texttt{assets/entry\_point.sh}.
 
 \subsubsection{Budowanie kontenera serwera wirtualizacji}
-Kontener serwera wirtualizacji wymaga specjalnie przygotowanego wcześniej kontenera zawierającego Wszystkie potrzebne zależności do uruchomienia aplikacji.
+Kontener serwera wirtualizacji wymaga specjalnie przygotowanego wcześniej kontenera zawierającego wszystkie potrzebne zależności do uruchomienia aplikacji.
 Aby go zbudować należy skorzystać z pliku \texttt{runtime\_container/Dockerfile} i oznaczyć go nazwą \texttt{one-click-desktop/virtualization-server-runtime}.
 Kontener zawierający aplikacje w czasie budowania będzie oczekiwał, ze taki obraz istnieje.
 
 Po zbudowaniu kontenera z zależnościami można przystąpić do zbudowania kontenera głównego.
 Należy do tego celu skorzystać z dostarczonego pliku \texttt{Dockerfile} w głównym folderze repozytorium.
 
-Przy uruchomieniu skryptu \texttt{build.sh} kontener jest budowane z nazwą \texttt{one-click-desktop/virtualization-server}.
+Przy uruchomieniu skryptu \texttt{build.sh} kontener jest budowany z nazwą \texttt{one-click-desktop/virtualization-server}.
 
 \subsubsection{Budowanie kontenera nadzorcy i panelu administratora}
 W przypadku tych dwóch modułów nie trzeba wykonać żądnych dodatkowych przygotowań.
@@ -46,9 +46,9 @@ Uruchamianie zbudowanych modułów poleca się tylko w przypadku rozwoju aplikac
 Przy wdrażaniu systemu najszybciej i najbezpieczniej jest skorzystać z metod opisanych w \ref{system_startup.client_obtaining} i \ref{system_startup.containers}.
 
 \subsubsection{Moduły napisane w technologii .NET}
-W przypadku budowania modułu nadzorcy i serwera wirtualizacji potrzebne sa narzędzia deweloperskie .NET 5.0.
+W przypadku budowania modułu nadzorcy i serwera wirtualizacji potrzebne są narzędzia deweloperskie .NET 5.0.
 W trakcie budowania aplikacji wszystkie użyte biblioteki zostaną pobrane przy użyciu menadżera pakietów Nuget.
-Przy uruchomieniu serwera wirtualizacji potrzebny będzie dodatkowo do wymagań zdefiniowanych w \ref{system_requirements.virtsrv_rquirements} zainstalowany vagrant wraz z wtyczka vagrant-libvirt w wersji przynajmniej 0.7.0.
+Przy uruchomieniu serwera wirtualizacji potrzebny jest, poza wymaganiami zdefiniowanymi w \ref{system_requirements.virtsrv_rquirements}, zainstalowany vagrant wraz z wtyczka vagrant-libvirt w wersji przynajmniej 0.7.0.
 
 \subsubsection{Moduły napisane w technologii Node}
 W przypadku budowania modułów aplikacji klienckiej oraz panelu administracyjnego potrzebny będzie pakiet Node.
@@ -61,7 +61,7 @@ W pliku konfiguracyjnym użytkownik musi podać:
 \begin{itemize}
 	\item Adres jednego z nadzorców(\texttt{basePath}) - adres musi być w formacie URI.
 	\item Adres zewnętrznego brokera wiadomości(\texttt{rabbitPath}) - adres musi być w formacie URI.
-	\item Czy aplikacja powinna używać danych dostępowych takich samych jak przy logowaniu do systemu(\texttt{useRdpCreadentials}) - \texttt{true} albo \texttt{false}.
+	\item Czy aplikacja powinna podczas połączenia RDP używać danych dostępowych takich samych jak przy logowaniu do systemu(\texttt{useRdpCredentials}) - \texttt{true} albo \texttt{false}.
 	\item Czy aplikacja powinna uruchamiać zintegrowanego klienta RDP(\texttt{startRdp}) - \texttt{true} albo \texttt{false}. Przydaje się to przy wykorzystaniu innego niż zalecany klient RDP. Aplikacja po uzyskaniu sesji wyświetli dane dostępowe do przypisanej maszyny wirtualnej.
 \end{itemize}
 
@@ -103,7 +103,7 @@ Pozostają jeszcze 2 ważne parametry bez sekcji zaimplementowane przez ASP.NET:
 Sekcja ta zawiera jedynie parametr \texttt{Secret}. Należy go ustawić na dowolny ciąg znaków.
 
 \subsubsection{Parametry sekcji \texttt{OneClickDesktop}}
-Sekcja zawiera parametry związane z komunikacja pomiędzy jednostkami systemu oraz kilka parametrów określających interwały czasowe zdarzeń.
+Sekcja zawiera parametry związane z komunikacją pomiędzy jednostkami systemu oraz kilka parametrów określających interwały czasowe zdarzeń.
 W dostarczonej przykładowej konfiguracji wykomentowane wartości oznaczają wartości domyślne.
 \begin{itemize}
 	\item \texttt{OverseerId} - identyfikator nadzorcy używany w komunikacji poprzez wewnętrznego brokera wiadomości. Powinna być unikatowa w skali jednej instancji systemu OneClickDesktop. Domyślnie przyjmuje wartość \texttt{overseer-test}.
@@ -111,7 +111,7 @@ W dostarczonej przykładowej konfiguracji wykomentowane wartości oznaczają war
 	\item \texttt{RabbitMQPort} - port dostępowy wewnętrznego brokera wiadomości. Domyślnie przyjmuje wartość \texttt{5672}. Bez działającego procesu brokera pod tym portem aplikacja wyłączy się z błędem zaraz po uruchomieniu.
 	\item \texttt{ModelUpdateInterval} - ilość sekund co ile nadzorca prosi serwery wirtualizacji o aktualizacje modelu. Domyślnie przyjmuje wartośc \texttt{60}. Zalecane jest aby wartość tego parametru opisywała czas od 30 do 60 sekund.																												%wtf? ą nie działa we wnętrzu {}
 	\item \texttt{DomainShutdownTimeout} - ilość minut ile musi upłynąć od oznaczenia maszyny wirtualnej stanem \texttt{Oczekiwanie na wył\k aczenie maszyny} do jej wyłączenia. Domyślnie przyjmuje wartość \texttt{15}.
-	\item \texttt{DomainShutdownCounterInterval} - ilość sekund co ile nadzorca sprawdza czy maszyna wirtualna nadal oczekuje na zamknięcie. Zaleca się aby ten czas dzielił czas z parametru \texttt{DomainShutdownTimeout} na równe części. Takich części nie powinno być mniej nić 10 ale także więcej niż 100. Każde takie sprawdzenie zużywa czas procesora.
+	\item \texttt{DomainShutdownCounterInterval} - ilość sekund co ile nadzorca sprawdza czy maszyna wirtualna nadal oczekuje na zamknięcie. Zaleca się, aby ten czas dzielił czas z parametru \texttt{DomainShutdownTimeout} na równe części. Takich części nie powinno być mniej niż 10, ale także nie więcej niż 100. Każde takie sprawdzenie zużywa czas procesora.
 \end{itemize}
 
 \subsection{Konfiguracja serwera wirtualizacji}
@@ -139,7 +139,7 @@ W głównym pliku konfiguracyjnym możemy wyróżnić 2 sekcje:
 W sekcji \texttt{OneClickDesktop} występują parametry:
 \begin{itemize}
 	\item \texttt{VirtualizationServerId} - identyfikator serwera wirtualizacji używany w komunikacji poprzez wewnętrznego brokera wiadomości. Powinna być unikatowa w skali jednej instancji systemu OneClickDesktop. Domyślnie przyjmuje wartość \texttt{virtsrv-test}.
-	\item \texttt{OversserCommunicationShutdownTimeout} - po upływie tylu sekund bez komunikacji od jakiegokolwiek nadzorcy serwer wirtualizacji uznaje, że zabrakło nadzorców w systemie. Nastąpi wtedy wyłączenie aplikacji serwera wirtualizacji. Domyslnie parametr przyjmuje wartość \texttt{120}. Zaleca się aby wartość parametru była większa niż dwukrotność parametru \texttt{ModelUpdateInterval} z konfiguracji nadzorcy opisanej w \ref{system_startup.overseer_conf}.
+	\item \texttt{OversserCommunicationShutdownTimeout} - po upływie tylu sekund bez komunikacji od jakiegokolwiek nadzorcy serwer wirtualizacji uznaje, że zabrakło nadzorców w systemie. Nastąpi wtedy wyłączenie aplikacji serwera wirtualizacji. Domyślnie parametr przyjmuje wartość \texttt{120}. Zaleca się aby wartość parametru była większa niż dwukrotność parametru \texttt{ModelUpdateInterval} z konfiguracji nadzorcy opisanej w \ref{system_startup.overseer_conf}.
 	\item \texttt{VagrantFilePath} - ścieżka do specjalnie przygotowanego pliku wsadowego dla Vagranta. Wykorzystywany jest przez system do uruchamiania i wyłączania maszyn wirtualnych. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
 	\item \texttt{PostStartupPlaybook} - skrypt wykonywany przy pomocy Ansible'a zaraz po uruchomieniu maszyny wirtualnej. Koniecznie należy przetestować czy konfiguracja wykonuje się prawidłowo. Przy każdym błędzie wykonania skryptu maszyna wirtualna zostanie usunięta. Domyślnie przyjmuje wartość \texttt{res/poststartup\_playbook.yml}.
 	\item \texttt{VagrantboxUri} - identyfikator szablonowej maszyny wirtualnej. Musi ona spełniać szereg wymogów opisanych w \ref{system_requirements.vagrant_box}. W przeciwnym wypadku system nie będzie w stanie uruchomić takiego szablonu. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
@@ -187,7 +187,7 @@ Przykładowa sekcja zasobów z jednym GPU przekazanym do systemu:
 \end{verbatim}
 
 \subsubsection{Pliki konfiguracyjne opisujące typy maszyn wirtualnych}
-W pliku opisującym typy zawarte jest ile potrzeba zasobów aby uruchomić maszynę wytworzonej z tego typu.
+W pliku opisującym typy zawarte jest ile potrzeba zasobów aby uruchomić maszynę wytworzoną z tego typu.
 
 Każdy typ ma przypisaną nazwę. Oznaczmy ją jako \texttt{\$\{template\_name\}}.
 Plik opisujący typ musi mieć nazwę \texttt{\$\{template\_name\}\_template.ini}.
