@@ -2,20 +2,21 @@
 
 \begin{document}
 \label{system_requirements}
-	
-System do poprawnej pracy wymaga konfiguracji środowiska na wielu płaszczyznach.
-	
+
+System do poprawnej pracy wymaga konfiguracji środowiska na wielu płaszczyznach. Poniższy rozdział zawiera informacje o konfiguracji systemu, wymaganej do uruchomienia każdego z modułów.
+
 \subsection{Komunikacja sieciowa między modułami}
-System do poprawnego działania musi składać się z:
+System do poprawnego działania z pełną funkcjonalnością musi składać się z:
 \begin{enumerate}
-	\item Przynajmniej jednego nadzorcy.
-	\item Serwerów wirtualizacji (może być ich 0).
-	\item Maszyn wirtualnych uruchamnych na serwerach wirtualizacji.
+	\item Przynajmniej jednego nadzorcy (*).
+	\item Serwerów wirtualizacji.
+	\item Maszyn wirtualnych uruchamianych na serwerach wirtualizacji.
 	\item Serwera HTTP udostępniającego panel administracyjny.
-	\item Brokera wiadomości do komunikacji wewnętrznej.
+	\item Brokera wiadomości do komunikacji wewnętrznej (*).
 	\item Brokera wiadomości do komunikacje zewnętrznej (może być tym samym brokerem co wewnętrzny).
 	\item Dowolnej liczby aplikacji klienckich.
 \end{enumerate}
+Elementy wymagane do poprawnego uruchomienia oznaczone zostały symbolem (*).
 
 \subsubsection{Dostępność wewnętrznego brokera}
 Broker wewnętrzny powinien być dostępny dla każdego nadzorcy oraz każdego serwera wirtualizacji.
@@ -23,14 +24,14 @@ Jest to wymagane do prawidłowej komunikacji pomiędzy nadzorcami a serwerami wi
 
 \subsubsection{Dostępność zewnętrznego brokera}
 Broker zewnętrzny powinien być dostępny dla każdego serwera wirtualizacji oraz dla każdego klienta łączącego się z systemem.
-Jest to wymagane do stwierdzenia czy użytkownik nadal jest podłączony do maszyny wirtualnej. 
+Jest to wymagane do stwierdzenia czy użytkownik nadal jest podłączony do maszyny wirtualnej.
 
 \subsubsection{Dostępność nadzorców}
-Nadzorcy powinni być dostępni dla aplikacji klienckich, którzy poprzez nich komunikują się z resztą systemu. 
-Administrator po pobraniu panelu administracyjnego z serwera HTTP powinien móc wysyłać zapytania do nadzorców.
+Nadzorcy powinni być dostępni dla aplikacji klienckich, którzy poprzez nich komunikują się z resztą systemu.
+Administrator podczas używania panelu administracyjnego z poziomu serwera HTTP powinien móc wysyłać zapytania do nadzorców.
 
 \subsubsection{Dostępność serwerów wirtualizacji}
-Serwery wirtualizacji nie muszą być dostępne dla żadnego z modułów.
+Serwery wirtualizacji nie musi być widoczny przez żaden z innych modułów.
 
 \subsubsection{Dostępność serwera http z panelem administracyjnym}
 Serwer HTTP powinien być dostępny dla każdego z administratorów.
@@ -40,29 +41,34 @@ Maszyny wirtualne powinny być dostępne dla każdego z klientów.
 Jest to potrzebne do pracy na nich poprzez protokół RDP.
 
 \subsection{Wymagania aplikacji klienckiej}
-Dla systemu Windows aplikacja kliencka jako plik wykonywalny pobrana z \href{https://github.com/one-click-desktop/client/releases}{oficjalnych wydań} powinna uruchomić się bez żadnych wcześniejszych konfiguracji. Do uruchomienia wymagany jest jednak plik konfiguracji użytkownika dostępny w oficjalnych wydaniach.
+Aplikacja kliencka wspiera system Windows 10 lub nowszy oraz GNU/Linux w dystrybucjach opartych na 64 bitowych systemach Ubuntu 18.04+ oraz Arch Linux.
+
+Dla systemu Windows aplikacja kliencka, jako plik wykonywalny pobrana z \href{https://github.com/one-click-desktop/client/releases}{oficjalnych wydań}, powinna uruchomić się bez żadnych wcześniejszych konfiguracji. Do uruchomienia wymagany jest jednak plik konfiguracji użytkownika dostępny w oficjalnych wydaniach.
 Do działania korzysta ona z klienta RDP dostarczonego przez firmę Microsoft wraz z systemem Windows.
 Aplikacja była testowana dla systemu Windows 10.
 Dla starszych wersji systemu Windows aplikacja może nie działać prawidłowo.
 
 W przypadku systemu Linux należy posiadać środowisko graficzne oraz mieć zainstalowanego klienta \href{https://www.freerdp.com/}{FreeRDP}.
 Pozostałe zależności są dostarczone wewnątrz pliku \texttt{.appimage}.
-Działanie aplikacji było testowane na dystrybucjach bazowanych na Debianie oraz ArchLinuxie.
+Działanie aplikacji było testowane na dystrybucjach opartych na Debianie oraz ArchLinuxie.
 Dla innych dystrybucji aplikacja może nie działać prawidłowo.
 
-\subsection {Wymagania aplikacji nadzorcy i serwera panelu administracyjnego}
+\subsection{Wymagania aplikacji nadzorcy i serwera panelu administracyjnego}
 Do uruchomienia aplikacji nadzorcy i serwera HTTP z panelem administracyjnym potrzeba zainstalowanego \texttt{Dockera} w systemie.
 Każdy z tych dwóch modułów można zbudować do kontenera, w którym wszystkie zależności zostaną spełnione.
 
+Do ręcznego uruchomienia aplikacji nadzorcy, bez pośrednictwa \texttt{dockera} wymagany jest \texttt{.NET 5}. W przypadku panelu administratora do kompilacji wymagany jest \texttt{NodeJS} w wersji \texttt{16.13.2}. Zbudowany panel można udostępnić za pomocą dowolnego serwera HTTP.
+
 \subsection{Wymagania serwera wirtualizacji}
 \label{system_requirements.virtsrv_rquirements}
-Serwer wirtualizacji oprócz działającej usługi \texttt{Dockera} potrzebuje dodatkowych usług.
-Do prawidłowego działania wymagana jest działająca usługa zarządcy wirtualnych maszyn \texttt{libvirt}.
+Serwer wirtualizacji, oprócz działającej usługi \texttt{Dockera}, potrzebuje dodatkowych usług.
+Do prawidłowego działania wymagana jest działająca usługa zarządcy wirtualnych maszyn \texttt{libvirt}w wersji \texttt{7.10+}. W przypadku ręcznego uruchamiania aplikacji, bez pośrednictwa \texttt{dockera} wymagany jest \texttt{vagrant} w wersji \texttt{2.2.11+} oraz \texttt{.NET 5}.
+
 Aby prawidłowo uruchomić maszynę wirtualną potrzebna jest uruchomiona usługa zapory sieciowej oraz pakiet \texttt{dnsmasq}.
-Wymagana jest także inicjalizacja struktur usługi \texttt{vagrant} dla użytkownika uruchamiającego serwer wirtualizacji.
+Wymagane jest także utworzenie struktur usługi \texttt{vagrant} dla użytkownika uruchamiającego serwer wirtualizacji.
 Chodzi konkretnie o utworzenie folderu \texttt{.vagrant.d} w katalogu domowym użytkownika.
 
-Aby uruchamiane maszyny wirtualne były dostępne dla innych urządzeń potrzeba utworzyć interfejs sieciowy w trybie bridge.
+Aby uruchamiane maszyny wirtualne były dostępne dla innych urządzeń potrzebne jest utworzenie interfejsu sieciowego w trybie bridge.
 Nazwa interfejsu powinna być przekazana do pliku konfiguracyjnego serwera wirtualizacji.
 Maszyny wirtualne uzyskają wtedy dostęp do sieci w taki sposób, jakby były fizycznymi komputerami w sieci.
 
@@ -71,7 +77,6 @@ W niektórych przypadkach podczas uruchomiania maszyny wirtualnej przy użyciu \
 \subsection{Automatyzacja konfiguracji}
 \label{system_requirements.ansible_conf}
 Przykładowa konfiguracja oraz narzędzia do automatycznej konfiguracji przed uruchomieniem dostępne sa w module \href{https://github.com/one-click-desktop/configuration}{\texttt{configuration}}.
-
 Składa się on ze skryptów konfiguracyjnych Ansible, nazywanych dalej playbook, oraz zmiennych opisujących konfigurowane komputery.
 
 By uruchomić skrypt dla pewnego systemu operacyjnego, który chcemy skonfigurować, musi on spełniać wymogi opisane w \href{https://docs.ansible.com/ansible/latest/plugins/connection.html#connection-plugins}{dokumentacji Ansible}.
@@ -97,20 +102,20 @@ Aby uruchomić nadzorcę wystarczą wspólne wymagania dla wszystkich grup.
 \subsection{Wymagania szablonu maszyny wirtualnej}
 \label{system_requirements.vagrant_box}
 Maszyna wirtualna uruchamiana w ramach systemu OneClickDesktop musi być w postaci Vagrant Boxa.
-Przykładowy box został utworzony w czasie rozwoju systemu i dostępny jest w chmurze Vagrant pod nazwą \href{https://app.vagrantup.com/smogork/boxes/archlinux-rdp}{smogork/archlinux-rdp}.
+Przykładowy box został utworzony w czasie rozwoju systemu i dostępny jest w chmurze Vagrant pod nazwą \href{https://app.vagrantup.com/smogork/boxes/archlinux-rdp}{\url{smogork/archlinux-rdp}}.
 Box używa dystrybucji Arch Linux oraz spełnia wszystkie wymagania aby zostać uruchomionym w ramach systemu.
 
 Do przygotowania szablonu proponujemy aby skorzystać właśnie z tego obrazu.
-Jeżeli jednak jest potrzebne jest utworzenie niestandardowego szablonu to musi on:
+Jeżeli jednak potrzebne jest utworzenie niestandardowego szablonu to musi on:
 \begin{itemize}
 	\item Spełniać minimalne wymagania opisane w \href{https://www.vagrantup.com/docs/boxes/base}{dokumentacji Vagranta}.
-	\item Mieć zainstalowany pewien menadżer okienek. Przykładowy szablon zawiera menadżera okienek XFCE.
-	\item Przy uruchomieniu udostępniać usługę zdalnego pulpitu RDP. Przykładowy szablon korzysta z implementacji \href{http://xrdp.org/}{xrdp}.
+	\item Mieć zainstalowany menadżer okienek. Proponowany menadżer okienek, zawarty w przykładowym szablonie, to XFCE w wersji \texttt{4.16}.
+	\item Przy uruchomieniu udostępniać usługę zdalnego pulpitu RDP. Przykładowy szablon korzysta z implementacji \href{http://xrdp.org/}{xrdp} w wersji \texttt{0.9.17-1}.
 	\item Każdy nowy interfejs sieciowy powinien być tak skonfigurowany, aby uzyskać adres IP z usługi DHCP.
-	\item Przy starcie systemu urchamiać usługę \texttt{qemu-guest-agent}.
+	\item Przy starcie systemu uruchamiać usługę \texttt{qemu-guest-agent}.
 \end{itemize}
-Nie ma ograniczenia na system operacyjny uruchamiany wewnątrz systemu OneClickDesktop. Jedynie taki szablon musi spełniać powyższe wymagania.
+Nie ma ograniczenia co do systemu operacyjnego uruchamianego wewnątrz systemu OneClickDesktop, tak długo jak jest on w stanie spełnić powyższe wymagania.
 
 Aby zbudować własny szablon należy skonsultować się z \href{https://github.com/vagrant-libvirt/vagrant-libvirt#create-box}{dokumentacją wtyczki vagrant-libvirt}.
-	
+
 \end{document}

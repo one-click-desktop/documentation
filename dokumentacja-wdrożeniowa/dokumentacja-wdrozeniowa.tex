@@ -14,6 +14,7 @@
 \usepackage{datetime}
 \usepackage{xparse}
 \usepackage{subfiles}
+\usepackage{seqsplit}
 \newdateformat{mydate}{\twodigit{\THEDAY}.\twodigit{\THEMONTH}.\THEYEAR r.}
 
 \begin{document}
@@ -35,6 +36,10 @@
 		\small { Promotor: Dr inż. Marek Kozłowski\\ }
 	\end{center}
 \end{titlepage}
+
+\tableofcontents
+
+\newpage
 
 \section{Wymagania systemu}
 \subfile{../praca-dyplomowa/sections/opis-rozw/wymagania-systemu.tex}

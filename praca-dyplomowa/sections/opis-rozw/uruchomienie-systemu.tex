@@ -11,7 +11,7 @@ Wtedy można przejść do uruchamiania systemu.
 Zalecanym sposobem pozyskania aplikacji klienckiej jest udanie się do sekcji z \href{https://github.com/one-click-desktop/client/releases}{wydaniami kodu} modułu aplikacji klienckiej oraz pobranie najnowszej wersji dla wybranego systemu operacyjnego.
 Przy pierwszym uruchomieniu trzeba pobrać archiwum plików zawierające aplikację oraz plik konfiguracyjny.
 Bez pliku konfiguracyjnego aplikacja nie uruchomi się.
-	
+
 \subsection{Zbudowanie kontenerów}
 \label{system_startup.containers}
 
@@ -26,7 +26,7 @@ Każdy kontener przy starcie wykona skrypt \texttt{assets/entry\_point.sh}.
 
 \subsubsection{Budowanie kontenera serwera wirtualizacji}
 Kontener serwera wirtualizacji wymaga specjalnie przygotowanego wcześniej kontenera zawierającego wszystkie potrzebne zależności do uruchomienia aplikacji.
-Aby go zbudować należy skorzystać z pliku \texttt{runtime\_container/Dockerfile} i oznaczyć go nazwą \texttt{one-click-desktop/virtualization-server-runtime}.
+Aby go zbudować należy skorzystać z pliku \texttt{\seqsplit{runtime\_container/Dockerfile}} i oznaczyć go nazwą \texttt{\seqsplit{click-desktop/virtualization-server-runtime}}.
 Kontener zawierający aplikacje w czasie budowania będzie oczekiwał, ze taki obraz istnieje.
 
 Po zbudowaniu kontenera z zależnościami można przystąpić do zbudowania kontenera głównego.
@@ -38,7 +38,7 @@ Przy uruchomieniu skryptu \texttt{build.sh} kontener jest budowany z nazwą \tex
 W przypadku tych dwóch modułów nie trzeba wykonać żądnych dodatkowych przygotowań.
 Wystarczy skorzystać z dostarczonego pliku \texttt{Dockerfile} w głównym folderze repozytorium.
 
-Przy uruchomieniu skryptu \texttt{build.sh} kontenery są budowane z nazwami odpowiednio \texttt{one-click-desktop/overseer} oraz \texttt{one-click-desktop/admin-panel}.
+Przy uruchomieniu skryptu \texttt{build.sh} kontenery są budowane z nazwami odpowiednio \texttt{one-click-desktop/overseer} oraz \texttt{\seqsplit{one-click-desktop/admin-panel}}.
 
 \subsection{Budowanie modułów}
 Każdy z modułów posiada dokładną instrukcję budowania w pliku \texttt{README.md}.
@@ -59,10 +59,10 @@ Są one zdefiniowane w projekcie aplikacji i zostaną pobrane automatycznie.
 Aplikacja kliencka wymaga pliku konfiguracyjnego o nazwie \texttt{config.json} w tym samym folderze co plik wykonywalny.
 W pliku konfiguracyjnym użytkownik musi podać:
 \begin{itemize}
-	\item Adres jednego z nadzorców(\texttt{basePath}) - adres musi być w formacie URI.
-	\item Adres zewnętrznego brokera wiadomości(\texttt{rabbitPath}) - adres musi być w formacie URI.
-	\item Czy aplikacja powinna podczas połączenia RDP używać danych dostępowych takich samych jak przy logowaniu do systemu(\texttt{useRdpCredentials}) - \texttt{true} albo \texttt{false}.
-	\item Czy aplikacja powinna uruchamiać zintegrowanego klienta RDP(\texttt{startRdp}) - \texttt{true} albo \texttt{false}. Przydaje się to przy wykorzystaniu innego niż zalecany klient RDP. Aplikacja po uzyskaniu sesji wyświetli dane dostępowe do przypisanej maszyny wirtualnej.
+	\item Adres jednego z nadzorców (\texttt{basePath}) - adres musi być w formacie URI.
+	\item Adres zewnętrznego brokera wiadomości (\texttt{rabbitPath}) - adres musi być w formacie URI.
+	\item Czy aplikacja powinna podczas połączenia RDP używać danych dostępowych takich samych jak przy logowaniu do systemu \\(\texttt{useRdpCredentials}) - \texttt{true} albo \texttt{false}.
+	\item Czy aplikacja powinna uruchamiać zintegrowanego klienta RDP \\(\texttt{startRdp}) - \texttt{true} albo \texttt{false}. Przydaje się to przy wykorzystaniu innego niż zalecany klient RDP. Aplikacja po uzyskaniu sesji wyświetli dane dostępowe do przypisanej maszyny wirtualnej.
 \end{itemize}
 
 \subsection{Konfiguracja panelu administracyjnego}
@@ -76,7 +76,7 @@ Nadzorca posiada wiele parametrów związanych z działaniem całego systemu.
 Kontroluje on między innymi czas oczekiwania na powrót użytkownika do porzuconej sesji.
 Wszystkie parametry należy przekazać mu poprzez plik konfiguracyjny.
 
-Nazwa pliku konfiguracyjnego musi spełniać wzorzec \texttt{appsettings.\$\{Nazwa\_srodowiska\}.ini}.
+Nazwa pliku konfiguracyjnego musi spełniać wzorzec \texttt{\seqsplit{appsettings.\$\{Nazwa\_srodowiska\}.ini}}.
 W przypadku uruchamiania aplikacji wewnątrz kontenera ustawione jest środowisko o nazwie \texttt{Production}.
 Aplikacja nadzorcy domyślnie przeszukuje folder \texttt{./config} w poszukiwaniu plików konfiguracyjnych.
 Można zmienić ścieżkę do folderu konfiguracyjnego poprzez parametr uruchomienia \texttt{-c path/to/other/config/folder/}.
@@ -87,7 +87,7 @@ W pliku konfiguracyjnym nadzorca poszukuje 2 specjalnych sekcji:
 	\item \texttt{OneClickDesktop} - przechowuje parametry związane z działaniem systemu OneClickDesktop.
 \end{itemize}
 Poza tymi sekcjami można tam umieścić dowolne sekcje, które będzie przetwarzać ASP.NET.
-Jednak warte uwagi są standardowe sekcje:
+Jednak warte uwagi są następujące sekcje:
 \begin{itemize}
 	\item \texttt{Logging} - parametry \href{https://www.nuget.org/packages/microsoft.extensions.logging}{loggera} dostarczonego przez Microsoft.
 	\item \texttt{Kestrel} - parametry serwera HTTP udostępniającego aplikację. W wypadku aplikacji nadzorcy bez ustawienia certyfikatu nie zadziała ona w trybie HTTPS.
@@ -100,7 +100,7 @@ Pozostają jeszcze 2 ważne parametry bez sekcji zaimplementowane przez ASP.NET:
 \end{itemize}
 
 \subsubsection{Parametry sekcji \texttt{JwtSettings}}
-Sekcja ta zawiera jedynie parametr \texttt{Secret}. Należy go ustawić na dowolny ciąg znaków.
+Sekcja ta zawiera jedynie parametr \texttt{Secret}. Należy go ustawić na dowolny napis.
 
 \subsubsection{Parametry sekcji \texttt{OneClickDesktop}}
 Sekcja zawiera parametry związane z komunikacją pomiędzy jednostkami systemu oraz kilka parametrów określających interwały czasowe zdarzeń.
@@ -113,6 +113,35 @@ W dostarczonej przykładowej konfiguracji wykomentowane wartości oznaczają war
 	\item \texttt{DomainShutdownTimeout} - ilość minut ile musi upłynąć od oznaczenia maszyny wirtualnej stanem \texttt{Oczekiwanie na wył\k aczenie maszyny} do jej wyłączenia. Domyślnie przyjmuje wartość \texttt{15}.
 	\item \texttt{DomainShutdownCounterInterval} - ilość sekund co ile nadzorca sprawdza czy maszyna wirtualna nadal oczekuje na zamknięcie. Zaleca się, aby ten czas dzielił czas z parametru \texttt{DomainShutdownTimeout} na równe części. Takich części nie powinno być mniej niż 10, ale także nie więcej niż 100. Każde takie sprawdzenie zużywa czas procesora.
 \end{itemize}
+
+\subsubsection{Przykładowa konfiguracja}
+
+Konfiguracja ta umożliwia użycie protokołu HTTPS dzięki przekazaniu zabezpieczonego hasłem certyfikatu oraz nasłuchiwaniu na adresie obsługującym ten protokół.
+
+\begin{verbatim}
+	AllowedHosts=*
+	urls=http://*:5000;https://*:5001
+
+	[Kestrel:Certificates:Default]
+	Password=password
+	Path=/overseer/overseer.pfx
+
+	[JwtSettings]
+	Secret=MySecretForJWTTokensPleaseChangeMe
+
+	[Logging.LogLevel]
+	Default=Information
+	Microsoft=Warning
+	Microsoft.Hosting.Lifetime=Information
+
+	[OneClickDesktop]
+	OverseerId=overseer-instance-123
+	RabbitMQHostname=1.2.3.4
+	RabbitMQPort=5678
+	ModelUpdateInterval=60
+	DomainShutdownTimeout=15
+	DomainShutdownCounterInterval=30
+\end{verbatim}
 
 \subsection{Konfiguracja serwera wirtualizacji}
 Serwer wirtualizacji posiada wiele parametrów związanych z zasobami przekazanymi do dyspozycji systemu.
@@ -127,7 +156,7 @@ Jedynym odstępstwem od reguły jest plik konfiguracyjny dla pakietu NLog.
 Musi on się znajdować w tym samym folderze co aplikacja oraz nazywać się \texttt{NLog.config}.
 
 Aplikacja serwera wirtualizacji domyślnie przeszukuje folder \texttt{./config} w poszukiwaniu plików konfiguracyjnych.
-Można zmienić ścieżkę do folderu konfiguracyjnego poprzez parametr uruchomienia \texttt{-c path/to/other/config/folder/}.
+Można zmienić ścieżkę do folderu konfiguracyjnego poprzez parametr uruchomienia \texttt{\seqsplit{-c path/to/other/config/folder/}}.
 
 \subsubsection{Główny plik konfiguracyjny}
 W głównym pliku konfiguracyjnym możemy wyróżnić 2 sekcje:
@@ -140,6 +169,7 @@ W sekcji \texttt{OneClickDesktop} występują parametry:
 \begin{itemize}
 	\item \texttt{VirtualizationServerId} - identyfikator serwera wirtualizacji używany w komunikacji poprzez wewnętrznego brokera wiadomości. Powinna być unikatowa w skali jednej instancji systemu OneClickDesktop. Domyślnie przyjmuje wartość \texttt{virtsrv-test}.
 	\item \texttt{OversserCommunicationShutdownTimeout} - po upływie tylu sekund bez komunikacji od jakiegokolwiek nadzorcy serwer wirtualizacji uznaje, że zabrakło nadzorców w systemie. Nastąpi wtedy wyłączenie aplikacji serwera wirtualizacji. Domyślnie parametr przyjmuje wartość \texttt{120}. Zaleca się aby wartość parametru była większa niż dwukrotność parametru \texttt{ModelUpdateInterval} z konfiguracji nadzorcy opisanej w \ref{system_startup.overseer_conf}.
+	      % TODO: smogork dodaj opis LibvirtUri
 	\item \texttt{VagrantFilePath} - ścieżka do specjalnie przygotowanego pliku wsadowego dla Vagranta. Wykorzystywany jest przez system do uruchamiania i wyłączania maszyn wirtualnych. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
 	\item \texttt{PostStartupPlaybook} - skrypt wykonywany przy pomocy Ansible'a zaraz po uruchomieniu maszyny wirtualnej. Koniecznie należy przetestować czy konfiguracja wykonuje się prawidłowo. Przy każdym błędzie wykonania skryptu maszyna wirtualna zostanie usunięta. Domyślnie przyjmuje wartość \texttt{res/poststartup\_playbook.yml}.
 	\item \texttt{VagrantboxUri} - identyfikator szablonowej maszyny wirtualnej. Musi ona spełniać szereg wymogów opisanych w \ref{system_requirements.vagrant_box}. W przeciwnym wypadku system nie będzie w stanie uruchomić takiego szablonu. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
@@ -171,15 +201,35 @@ W przeciwnym wypadku serwer wirtualizacji zakończy się z błędem zaraz po uru
 Każdy z tych parametrów opisuje adres pojedynczego urządzenia na magistrali PCI.
 Adres na magistrali PCI musi zostać opisany w formacie uzyskanym z polecenia \texttt{lspci} - \texttt{\{domain:4\}:\{bus:2\}:\{slot:2\}.\{function:1\}}.
 
-Przykładowa sekcja zasobów z jednym GPU przekazanym do systemu:
+Przykładowa zawartość głównego pliku konfiguracyjnego:
 \begin{verbatim}
+	[OneClickDesktop]
+	VirtualizationServerId=virtsrv-instance-123
+	OversserCommunicationShutdownTimeout=120
+	LibvirtUri=qemu:///system
+	VagrantFilePath=res/Vagrantfile
+	PostStartupPlaybook=res/poststartup_playbook.yml
+	VagrantboxUri=smogork/archlinux-rdp
+
+	BridgeInterfaceName=br0
+	BridgedNetwork=1.2.3.0/24
+
+	InternalRabbitMQHostname=1.2.3.4
+	InternalRabbitMQPort=5678
+
+	ExternalRabbitMQHostname=1.2.3.4
+	ExternalRabbitMQPort=8765
+
+	ClientHeartbeatChecksForMissing=2
+	ClientHeartbeatChecksDelay=10000
+
 	[ServerResources]
 	Cpus=6
 	Memory=4096
 	Storage=200
 	GPUsCount=1
-	MachineTypes=cpu,gpu
-	
+	MachineTypes=cpu,cpu-memory
+
 	[ServerGPU.1]
 	AddressCount=2
 	Address_1=0000:03:00.0
@@ -203,7 +253,19 @@ Zwiera ona parametry:
 	\item \texttt{Storage} - ilość przestrzeni dyskowej w GiB potrzebnej do uruchomienia maszyny tego typu. Domyślnie parametr przyjmuje wartość \texttt{20}.
 	\item \texttt{AttachGpu} - informacja czy maszyna tego typu przy uruchomieniu powinna mieć przekazaną kartę graficzną. Domyślnie parametr przyjmuje wartość \texttt{false}.
 \end{itemize}
-	
+
+Przykładowa zawartość pliku konfiguracyjnego typu maszyny:
+
+\begin{verbatim}
+	[gpu_template]
+	HumanReadableName=Efficiency machine with GPU attached
+	Cpus=1
+	Memory=2048
+	Storage=55
+
+	AttachGpu = true
+\end{verbatim}
+
 \subsection{Procedura uruchomienia}
 Prawidłowy start systemu powinien zachować następująca kolejność:
 \begin{enumerate}
@@ -224,7 +286,7 @@ Dodatkowo, jeżeli nie będzie żadnego nadzorcy nasłuchującego poprzez wewnę
 
 \subsection{Parametry uruchomienia kontenera panelu administracyjnego}
 Kontener zawierający panel administratory udostępnia aplikacje poprzez serwer HTTP nginx.
-Do komunikacji wystawia on porty 80 (HTTP) oraz 443(HTTPS).
+Do komunikacji wystawia on porty 80 (HTTP) oraz 443 (HTTPS).
 Należy przekierować je na odpowiednie porty uruchamiającego systemu.
 
 \subsubsection{Adres dostępu do nadzorców}
@@ -246,7 +308,7 @@ Do komunikacji wystawia porty 5000(HTTP) oraz 5001(HTTPS), które można zmieni�
 Należy przekierować je na odpowiednie porty uruchamiającego systemu.
 
 \subsubsection{Plik konfiguracyjny}
-Aplikacja nadzorcy poszukuje plików konfiguracyjny w lokalizacji \texttt{/overseer/config/}.
+Aplikacja nadzorcy poszukuje plików konfiguracyjny w lokalizacji \url{/overseer/config/}.
 Należy przekazać folder zawierający konfiguracje z systemu uruchamiającego(\texttt{PATH\_TO\_CONFIGS}) do wnętrza kontenera pod dokładnie tą lokalizację pod postacią woluminu.
 \begin{verbatim}
 	-v {PATH_TO_CONFIGS}:/overseer/config
