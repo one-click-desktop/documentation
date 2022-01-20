@@ -230,7 +230,7 @@ Kroki:
 	\item Sprawdź model poprzez panel administratora.
 \end{enumerate}
 
-\subsection {Odnotowanie utraty serwera wirtualizacji}
+\subsection {Serwer wirtualizacji wyłącza się przy utracie komunikacji z nadzorcami po zakończeniu sesji użytkownika}
 W trakcie działania systemu nadzorca powinien odnotować brak komunikacji z serwerami wirtualizacji poprzez wspólna kolejkę.
 W efekcie powinien wyczyścić model.
 
@@ -240,9 +240,13 @@ Kroki:
 	\item Włącz aplikację nadzorcy.
 	\item Włącz aplikację serwera wirtualizacji.
 	\item Poczekaj na prawidłowy start systemu.
-	\item Wyłącz serwer wirtualizacji.
-	\item Poczekaj na odnotowanie straty.
-	\item Sprawdź model poprzez panel administratora.
+	\item Poproś o sesję poprzez aplikację kliencką.
+	\item Podłącz się poprzez RDP do uzyskanej maszyny.
+	\item Wyłącz nadzorcę lub brokery wiadomości.
+	\item Poczekaj na wykrycie braku nadzorców (brak otrzymanych wiadomości)
+	\item Wyświetl błąd, ale kontynuuj działanie.
+	\item Poczekaj na zakończenie sesji.
+	\item Zakończ działanie.
 \end{enumerate}
 
 \section{Aktualny stan testów}
