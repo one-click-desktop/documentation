@@ -31,3 +31,6 @@
 .vscode/settings.json
 deliverable-*/sections/**/*.pdf
 praca-dyplomowa/sections/*/*.pdf
+
+#texstudio files
+*.txss2

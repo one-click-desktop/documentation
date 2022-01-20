@@ -72,7 +72,10 @@ Aby uruchamiane maszyny wirtualne były dostępne dla innych urządzeń potrzebn
 Nazwa interfejsu powinna być przekazana do pliku konfiguracyjnego serwera wirtualizacji.
 Maszyny wirtualne uzyskają wtedy dostęp do sieci w taki sposób, jakby były fizycznymi komputerami w sieci.
 
-W niektórych przypadkach podczas uruchomiania maszyny wirtualnej przy użyciu \texttt{vagranta} oraz uruchomiania wybranych kontenerów w \texttt{dockerze} komunikacja sieciowa z maszyną wirtualną poprzez podłączony interfejs w trybie bridge może zostać ograniczona. Należy wtedy dopilnować by w trakcie działanie systemu zapora sieciowa posiadała zasadę na samej górze łańcucha \texttt{FORWARD}, która będzie bezwarunkowo zezwalać trasować pakiety z urządzeń w trybie bridge.
+W niektórych przypadkach podczas uruchomiania maszyny wirtualnej przy użyciu \texttt{vagranta} oraz uruchomiania wybranych kontenerów w \texttt{dockerze} komunikacja sieciowa z maszyną wirtualną poprzez podłączony interfejs w trybie bridge może zostać ograniczona.
+Należy wtedy dopilnować by w trakcie działanie systemu zapora sieciowa posiadała zasadę na samej górze łańcucha \texttt{FORWARD}, która będzie bezwarunkowo zezwalać trasować pakiety z urządzeń w trybie bridge.
+Przy uruchomieniu serwera wrtiaulizacji w kontenerze dockerowym trzeba dopilnować aby z sieci, w której pracuje kontener, można było osiągnąć sieć konfiguracyjna Vagranta.
+W przeciwnym wypadku próba uruchomienia maszyny wirtualnej zakończy się z błędem połączenia ssh.
 
 \subsection{Automatyzacja konfiguracji}
 \label{system_requirements.ansible_conf}
