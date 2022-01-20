@@ -24,8 +24,12 @@ Głównym ułatwieniem była duża baza bibliotek zgromadzona w menadżerze paki
 Do zarządzania i monitorowania maszyn wirtualnych skorzystaliśmy z libvirta.
 W serwerze wirtualizacji wykorzystaliśmy rozszerzoną przez nas bibliotekę odwołującą się do oryginalnych bibliotek libvirta.
 Jest to technologie powszechnie znana i dobrze przez nas poznana. Był to najprostszy sposób do realizacji zarządcy maszyn wirtualnych.
-Dodatkowo współpracuje ona także z technologia Vagrant, która umożliwia proste powielanie maszyn wirtualnych z wzorca dostarczonego przez użytkownika.
+Dodatkowo współpracuje ona także z technologią Vagrant, która umożliwia proste powielanie maszyn wirtualnych z wzorca dostarczonego przez użytkownika.
 Ułatwi ona administratorom tworzenie obrazów uruchamianych systemów operacyjnych.
+
+Serwer wirtualizacji komunikuje się z Vagrantem poprzez specjalnie przygotowany plik wykonywalny z kodem w Ruby.
+Vagrant wykonywany jest jako podproces serwera wirtualizacji w postaci polecenia powłoki.
+Parametry przekazywane są poprzez zmienne środowiskowe ustawiane przez serwer wirtualizacji chwile przed uruchomieniem podprocesu.
 Do dodatkowych konfiguracji takich maszyn wirtualnych użyliśmy technologii Ansible.
 Wybraliśmy ją, ponieważ jest znacznie mniej bezawaryjna niż konfigurowanie systemu przez skrypty powłoki.
 Oprócz tego skorzystaliśmy z niej do konfiguracji komputerów przed uruchomieniem pisanego przez nas systemu.
