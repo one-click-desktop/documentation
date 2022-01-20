@@ -1,0 +1,58 @@
+\documentclass[../opis-rozwiazania.tex]{subfiles}
+
+\begin{document}
+\label{technologies}
+
+\subsection{Technologie realizacji strony klienckiej}
+%[LINK]Dodac strony do technologii
+Realizacja panelu administracyjnego oraz aplikacji klienckiej, przez które użytkownicy i administratorzy korzystają z systemu, zostały wykonane na platformie programistycznej Angular.
+Wykorzystaliśmy ją z powodu znajomości technologii, więc mogliśmy sprawnie zaimplementować aplikacje.
+W każdym przypadku skorzystaliśmy z języka TypeScript, który dobrze integruje się z Angularem dzięki pośredniej kompilacji do JavaScriptu.
+
+Aplikacja kliencka uruchamiana jest na systemie operacyjnym użytkownika poprzez technologie Electron, która umożliwia wyświetlania aplikacji Angulara w postaci okna.
+W wielkim uproszczeniu Electron korzysta z silnika Chrome'a aby uruchomić aplikację jako stronę internetową i wyświetlić ją jak inne okna w systemie.
+Ułatwiło nam to stworzenie aplikacji od razu na wiele systemów operacyjnych.
+Dodatkowym plusem korzystania z Electrona jest możliwość odwołania do silnika NodeJS, aby zwiększyć możliwości dostępu do zasobów systemu operacyjnego.
+Wykorzystaliśmy go do uruchamiania podprocesu klienta RDP żeby po uzyskaniu sesji od razu zestawić połączenie z wybrana maszyną wirtualną.
+
+\subsection{Technologie realizacji strony serwerowej}
+%[LINK] Dodac strony do technologii
+W przypadku aplikacji nadzorcy oraz serwera wirtualizacji zdecydowaliśmy się na środowisko uruchomieniowe .NET 5.0 z językiem C\#.
+Ekosystem .NET jest przez nas dobrze poznany i daje nam możliwości aby ułatwić oraz przyśpieszyć naszą pracę.
+Głównym ułatwieniem była duża baza bibliotek zgromadzona w menadżerze pakietów Nuget, do którego dodaliśmy też własne pakiety, aby wydzielić wspólną część kodu aplikacji serwerowych.
+
+Do zarządzania i monitorowania maszyn wirtualnych skorzystaliśmy z libvirta.
+W serwerze wirtualizacji wykorzystaliśmy rozszerzoną przez nas bibliotekę odwołującą się do oryginalnych bibliotek libvirta.
+Jest to technologie powszechnie znana i dobrze przez nas poznana. Był to najprostszy sposób do realizacji zarządcy maszyn wirtualnych.
+Dodatkowo współpracuje ona także z technologią Vagrant, która umożliwia proste powielanie maszyn wirtualnych z wzorca dostarczonego przez użytkownika.
+Ułatwi ona administratorom tworzenie obrazów uruchamianych systemów operacyjnych.
+
+Serwer wirtualizacji komunikuje się z Vagrantem poprzez specjalnie przygotowany plik wykonywalny z kodem w Ruby.
+Vagrant wykonywany jest jako podproces serwera wirtualizacji w postaci polecenia powłoki.
+Parametry przekazywane są poprzez zmienne środowiskowe ustawiane przez serwer wirtualizacji chwile przed uruchomieniem podprocesu.
+Do dodatkowych konfiguracji takich maszyn wirtualnych użyliśmy technologii Ansible.
+Wybraliśmy ją, ponieważ jest znacznie mniej bezawaryjna niż konfigurowanie systemu przez skrypty powłoki.
+Oprócz tego skorzystaliśmy z niej do konfiguracji komputerów przed uruchomieniem pisanego przez nas systemu.
+
+\subsection{Technologie testowania}
+%[LINK] Dodac strony do technologii
+Do testów jednostkowych aplikacji od strony klienckiej skorzystaliśmy z platformy Jest.
+Ułatwia ona pisanie testów przy niepełnym obrazie systemu. W przypadku rozbudowanej komunikacji naszego systemu było to bardzo przydatne.
+W przypadku aplikacji serwerowych skorzystaliśmy z platformy NUnit.
+Znaliśmy ją z wcześniejszych projektów, więc mogliśmy od razu przystąpić do pracy.
+Do testów komunikacji poprzez brokera wiadomości oraz integracji z libvirtem także skorzystaliśmy z NUnita.
+
+Do testów integracyjnych aplikacji Angularowych korzystaliśmy z platformy Cypress.
+Zdecydowaliśmy się na nią, ponieważ wprowadzała nowa funkcje zrzutu zmiennych przy błędnym teście.
+Wcześniej znane nam rozwiązania nie posiadały takich funkcji, przez co bardzo trudno było szukać problemów w testach.
+Dodatkowe testy API wystawianego przez aplikacje nadzorcę wykonaliśmy Postmanem.
+
+\subsection{Utrzymanie kodu}
+%[LINK] Dodac strony do technologii
+Do sprawnego zarządzania projektem wykorzystaliśmy strukturę wielu repozytoriów dostępnych na stronie github.
+Wspólne części kodu wydzielaliśmy w postaci pakietów NPM oraz Nuget.
+Aby zautomatyzować proces publikacji pakietów skorzystaliśmy z e środowiska ciągłej integracji Github Actions.
+Umożliwiło to praktycznie bezproblemowa realizację komunikacji pomiędzy nadzorcą a aplikacją kliencką i panelem administratora.
+Tworzyliśmy automatycznie generowane pakiety z częściową implementacja obiektów transportowych oraz struktury zapytań.
+
+\end{document}
