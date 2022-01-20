@@ -28,14 +28,26 @@ Połączenia oznaczone liczbami rzymskimi oznaczają kolejki komunikacji za poś
     \item Zwiększenie liczby nadzorców - zwiększenie liczby obsługiwanych klientów jednocześnie oraz niezawodności systemu.
 \end{enumerate}
 
+\subsection{Model systemu}
+
+W celu zarządzania systemem, każdy z nadzorców musi posiadać dokładną wiedzę o jego aktualnym stanie. Informacje te przechowuje w strukturze nazywanej dalej modelem systemu. Ważnym jest, że klasy modelu nie wykonują żadnych akcji poza modyfikacją przechowywanych danych. Wszelkie metody służą jedynie do zmiany stanu przechowywanego modelu w celu dopasowania go do rzeczywistego stanu, na podstawie otrzymanych danych. Przyczyną takiego stanu, jest pierwsze z założeń komunikacji opisane w \ref{communication:broker}. Sprawia ono, że zmiana modelu musi być następstwem pewnej akcji wykonanej przez serwer wirtualizacji.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{../diagrams/class_diagrams/system_model_v2.png}
+    \caption{Schemat klas modelu systemu}
+\end{figure}
+
+Główną klasą modelu jest \texttt{SystemModel} zawierający informacje o aktualnie działających serwerach wirtualizacji oraz aktywnych sesjach. Klasa \texttt{VirtualizationServer} modeluje pojedynczy serwer wirtualizacji, jego zasoby, maszyny wirtualne oraz obsługiwane sesje. Przechowuje ona również informacje wymagane do komunikacji z daną instancją serwera.
+
+Klasa \texttt{Resources} oraz jej pochodne opisują zasoby systemowe i są używane do przedstawienia zarówno zasobów maszyny jak i całego serwera wirtualizacji. Jej klasa pochodna \texttt{\seqsplit{TemplateResources}} służy do przechowywania informacji o zasobach potrzebnych do utworzenia maszyny danego typu.
+
 \subsection{Nadzorca}
 \label{modules:overseer}
 
 Aplikacja mająca za zadanie obsługiwać komunikację z aplikacjami klienckimi oraz wysyłać polecenia do serwerów wirtualizacji. Udostępnia \hyperref[communication:api]{REST API} służące do komunikacji z aplikacjami klienckimi. Do komunikacji z serwerami wirtualizacji wykorzystuje \hyperref[modules:broker]{kolejki}.
 
 Nadzorca przechowuje wewnętrznie model systemu zawierający informację o działających serwerach wirtualizacji i stanie ich maszyn. Na podstawie tego modelu moduł stwierdza, do której maszyny przypisać nowo utworzoną sesję. Wewnętrzne procesy skupione są wokół zmian modelu. Jeżeli proces wysłał do serwera wirtualizacji prośbę o zmianę stanu, to dalsze procesowanie odbywa się, gdy stan modelu został zaktualizowany, i na podstawie jego stanu podejmowane są decyzje.
-
-% ? może dać tutaj schemat modelu? albo wcześniej?
 
 Dzięki zastosowaniu \hyperref[modules:broker]{kolejek} oraz \hyperref[communication:broker]{zasad komunikacji} w systemie może istnieć więcej niż jeden nadzorca. Instancje nadzorców działają niezależnie od siebie i przechowują identyczny model systemu. Dzięki temu uzyskujemy retencję i możemy zmniejszyć obciążenie poszczególnych nadzorców.
 
