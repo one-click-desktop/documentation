@@ -56,7 +56,7 @@ Proces opisuje przyjęcie nowego serwera wirtualizacji do systemu.
 
 Serwer wirtualizacji bez działającego nadzorcy nie jest w stanie obsługiwać użytkowników.
 Oznacza to, że jeśli przy starcie nie wykryje brokera wiadomości
-lub nadzorcy po drugiej stronie kolejek\footnote{\href{https://www.rabbitmq.com/confirms.html}{Mechanizm potwierdzenia wykonania zadania}} to się wyłączy.
+lub nadzorcy po drugiej stronie kolejek\parencite{rabbit-ack} to się wyłączy.
 Jeżeli jednak komunikacja z nadzorcą jest możliwa, to serwer podłączy się do \hyperref[modules:broker:queue-virtsrv]{wspólnych kolejek}
 oraz przekaże informacje nadzorcom o \hyperref[modules:broker:queue-exclusive]{kolejce bezpośredniej}.
 Gdy komunikacja będzie ustanowiona bezwarunkowo wyśle stan swojego modelu do nadzorców.

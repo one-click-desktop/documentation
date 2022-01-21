@@ -8,7 +8,7 @@ Wtedy można przejść do uruchamiania systemu.
 
 \subsection{Pozyskanie aplikacji klienckiej}
 \label{system_startup.client_obtaining}
-Zalecanym sposobem pozyskania aplikacji klienckiej jest udanie się do sekcji z \href{https://github.com/one-click-desktop/client/releases}{wydaniami kodu} modułu aplikacji klienckiej oraz pobranie najnowszej wersji dla wybranego systemu operacyjnego.
+Zalecanym sposobem pozyskania aplikacji klienckiej jest udanie się do sekcji z oficjalnymi wydaniami\parencite{ocd-client-releases} modułu aplikacji klienckiej oraz pobranie najnowszej wersji dla wybranego systemu operacyjnego.
 Przy pierwszym uruchomieniu trzeba pobrać archiwum plików zawierające aplikację oraz plik konfiguracyjny.
 Bez pliku konfiguracyjnego aplikacja nie uruchomi się.
 
@@ -89,7 +89,7 @@ W pliku konfiguracyjnym nadzorca poszukuje 2 specjalnych sekcji:
 Poza tymi sekcjami można tam umieścić dowolne sekcje, które będzie przetwarzać ASP.NET.
 Jednak warte uwagi są następujące sekcje:
 \begin{itemize}
-	\item \texttt{Logging} - parametry \href{https://www.nuget.org/packages/microsoft.extensions.logging}{loggera} dostarczonego przez Microsoft.
+	\item \texttt{Logging} - parametry loggera dostarczonego przez Microsoft(\url{https://www.nuget.org/packages/microsoft.extensions.logging}).
 	\item \texttt{Kestrel} - parametry serwera HTTP udostępniającego aplikację. W wypadku aplikacji nadzorcy bez ustawienia certyfikatu nie zadziała ona w trybie HTTPS.
 \end{itemize}
 \noindent
@@ -366,7 +366,7 @@ Nie można zapomnieć o wyjątku konfiguracji NLoga, którą trzeba przekazać d
 
 \subsection{Przykład minimalnego systemu}
 Uruchamiając kontenery z modułami należy podać odpowiednie parametry aby aplikacje wewnątrz pracowały prawidłowo.
-Przykładowy minimalny system wraz z parametrami można zobaczyć w module \href{https://github.com/one-click-desktop/demonstration}{\texttt{demonstration}}.
+Przykładowy minimalny system wraz z parametrami można zobaczyć w module \texttt{demonstration}\parencite{ocd-demo}.
 Znajduje się tam system składający się z jednego brokera wiadomości (zewnętrzna i wewnętrzna komunikacja w jednym), panelu administracyjnego, jednego nadzorcy i jednego serwera wirtualizacji.
 Można znaleźć tam przykłady zarówno konfiguracji modułów jak i parametrów startowych dla kontenerów.
 
