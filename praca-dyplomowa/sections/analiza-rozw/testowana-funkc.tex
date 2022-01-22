@@ -2,8 +2,8 @@
 
 \begin{document}
 
-Gotowy system poddany został testom akceptacyjnym mającym za zadanie sprawdzić, czy działa on poprawnie, oraz czy spełnienia wymagania przedstawione w rozdziale \ref{requirements:functional} oraz \ref{requirements:nonfunctional}.
-W opisie testów, jako standardowe uruchomienie systemu rozumiemy procedurę opisaną w sekcji \ref{system_startup.procedure}.
+Gotowy system poddany został testom akceptacyjnym mającym za zadanie sprawdzić poprawne działanie oraz spełnienie wymagań przedstawionych w rozdziałach \ref{requirements:functional} oraz \ref{requirements:nonfunctional}.
+W opisie testów jako standardowe uruchomienie systemu rozumiemy procedurę opisaną w sekcji \ref{system_startup.procedure}.
 
 Wykonane zostały następujące scenariusze akceptacyjne:
 
@@ -17,14 +17,14 @@ Kroki:
 \end{enumerate}
 
 \subsection{Utrata komunikacji z nadzorcą}
-Po poprawnym starcie systemu z pojedynczym nadzorcą oraz serwerem wirtualizacji, serwer powinien wyłączyć się po wyłączeniu się ostatniego (jedynego) nadzorcy.
+Po poprawnym starcie systemu z pojedynczym nadzorcą oraz serwerem wirtualizacji, serwer powinien zakończyć pracę po wyłączeniu się ostatniego (jedynego) nadzorcy.
 
 Kroki:
 \begin{enumerate}
   \item Uruchom system standardową procedurą.
   \item Poczekaj na prawidłowy start systemu.
   \item Wyłącz nadzorcę lub brokery wiadomości.
-  \item Poczekaj na wykrycie braku nadzorców (brak otrzymanych wiadomości)
+  \item Poczekaj na wykrycie braku nadzorców (brak otrzymanych wiadomości).
   \item Wyświetl błąd i zakończ działanie.
 \end{enumerate}
 
