@@ -76,8 +76,8 @@ Wydajnościowo minimalnie musi być w stanie uruchomić wirtualne maszyny z usł
 Jednak zalecamy aby system był wyposażony przynajmniej w dwurdzeniowy procesor, 4GB pamięci operacyjnej oraz przynajmniej 100GB przestrzeni dyskowej.
 Jeżeli system spełni takie wymagania powinien być w stanie uruchomić maszynę wirtualną pod kontrola systemu bez przekazanego urządzenia PCI.
 
-Przy chęci wykorzystania funkcjonalności PCI Passthrough aby przekazać urządzenia do maszyny wirtualnej komputer musi spełniać dodatkowe wymagania.
-Przy aktywowaniu modułu IOMMU wszystkie urządzenia podłączone do systemu muszą znajdować się w innej grupie IOMMU.
+Przy chęci wykorzystania funkcjonalności PCI Passthrough\parencite{pci-passthrough} aby przekazać urządzenia do maszyny wirtualnej komputer musi spełniać dodatkowe wymagania.
+Po aktywowaniu modułu IOMMU(I/O Memory Management Unit)\parencite{amd-iommu} wszystkie urządzenia podłączone do systemu muszą znajdować się w innej grupie IOMMU.
 Prawidłowa izolacja urządzeń od pozostałych urządzeń uruchamianych na serwerze wirtualizacji jest kluczowa z punktu bezpieczeństwa.
 
 Fakt możliwości prawidłowej izolacji urządzeń od siebie wynika z decyzji projektantów używanej w konstrukcji płyty głównej.
@@ -86,7 +86,7 @@ Oznacza to częste korzystanie z tych samych linii komunikacyjnych do wspólnych
 Należy więc skorzystać z płyt przeznaczonych do procesorów dla entuzjastów(np. linia AMD Threadripper z chipsetami z linii X) albo profesjonalnych (np. linia AMD Epyc).
 Mają one wiele linii PCI, więc producenci nie muszą oszczędzać połączeń.
 
-Alternatywnym wyborem jest modyfikacja kernela systemu i dodanie ACS Override patch.
+Alternatywnym wyborem jest modyfikacja kernela systemu i dodanie ACS Override patch\parencite{acs-override}.
 Spowoduje to rozdzielenie wspólnych grup IOMMU na oddzielne wirtualne grupy.
 Jednakże istnieje niebezpieczeństwo wykonania wyłomu poza wirtualna maszynę z tak skonfigurowanym systemem oraz zdestabilizowanie pracy systemu.
 Odradzamy wykorzystywania takiego rozwiązania w przypadku publicznego dostępu do systemu.
