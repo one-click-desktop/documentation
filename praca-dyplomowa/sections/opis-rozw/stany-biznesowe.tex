@@ -17,7 +17,7 @@ Maszyna, aby być całkowicie uruchomiona, musi zostać zaopatrzona we wszystkie
 Stan "Wolna" oznacza możliwość przypisania sesji do tej maszyny.
 Po przypisaniu maszyny do sesji przechodzi ona w stan oczekiwania na użytkownika. Czas oczekiwania jest konfigurowalny, a po jego upłynięciu maszyna przechodzi w stan oczekiwania na wyłączenie.
 W tym stanie oczekuje ona na ponowne połączenie, pozwalając użytkownikowi na bezproblemowy powrót do sesji w przypadku nieoczekiwanego utracenia połączenia. Jeżeli użytkownik nie powróci do sesji, system wyłącza maszynę.
-Maszyna jest w stanie "Zajęta", gdy aktualnie pracuje na niej użytkownik. Monitorowanie zajętości realizowane jest przy użyciu odpowiedniej kolejki wiadomości (\ref{modules:broker:queue-users}).
+Maszyna jest w stanie "Zajęta", gdy aktualnie pracuje na niej użytkownik. Monitorowanie zajętości realizowane jest przy użyciu odpowiedniej kolejki wiadomości (rozdział \ref{modules:broker:queue-users}).
 
 \subsection{Serwer wirtualizacji}
 

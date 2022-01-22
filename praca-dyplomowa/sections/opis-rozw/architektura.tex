@@ -22,7 +22,7 @@ Schematyczny obraz systemu przedstawia poniższy rysunek.
     \caption{Schematyczna architektura systemu}
 \end{figure}
 
-Połączenia oznaczone liczbami rzymskimi oznaczają kolejki komunikacji za pośrednictwem brokera wiadomości, które opisane zostały w \ref{modules:broker}. Z założenia system powinien móc skalować się w dwóch wymiarach, to znaczy:
+Połączenia oznaczone liczbami rzymskimi oznaczają kolejki komunikacji za pośrednictwem brokera wiadomości, które opisane zostały w rozdziale \ref{modules:broker}. Z założenia system powinien móc skalować się w dwóch wymiarach, to znaczy:
 \begin{enumerate}
     \item Zwiększanie liczby serwerów wirtualnych - zwiększenie liczby istniejących jednocześnie sesji.
     \item Zwiększenie liczby nadzorców - zwiększenie liczby obsługiwanych klientów jednocześnie oraz niezawodności systemu.
@@ -30,7 +30,7 @@ Połączenia oznaczone liczbami rzymskimi oznaczają kolejki komunikacji za poś
 
 \subsection{Model systemu}
 
-W celu zarządzania systemem, każdy z nadzorców musi posiadać dokładną wiedzę o jego aktualnym stanie. Informacje te przechowuje w strukturze nazywanej dalej modelem systemu. Ważnym jest, że klasy modelu nie wykonują żadnych akcji poza modyfikacją przechowywanych danych. Wszelkie metody służą jedynie do zmiany stanu przechowywanego modelu w celu dopasowania go do rzeczywistego stanu, na podstawie otrzymanych danych. Przyczyną takiego stanu, jest pierwsze z założeń komunikacji opisane w \ref{communication:broker}. Sprawia ono, że zmiana modelu musi być następstwem pewnej akcji wykonanej przez serwer wirtualizacji.
+W celu zarządzania systemem, każdy z nadzorców musi posiadać dokładną wiedzę o jego aktualnym stanie. Informacje te przechowuje w strukturze nazywanej dalej modelem systemu. Ważnym jest, że klasy modelu nie wykonują żadnych akcji poza modyfikacją przechowywanych danych. Wszelkie metody służą jedynie do zmiany stanu przechowywanego modelu w celu dopasowania go do rzeczywistego stanu, na podstawie otrzymanych danych. Przyczyną takiego stanu, jest pierwsze z założeń komunikacji opisane w rozdziale \ref{communication:broker}. Sprawia ono, że zmiana modelu musi być następstwem pewnej akcji wykonanej przez serwer wirtualizacji.
 
 \begin{figure}[H]
     \centering
@@ -45,11 +45,11 @@ Klasa \texttt{Resources} oraz jej pochodne opisują zasoby systemowe i są używ
 \subsection{Nadzorca}
 \label{modules:overseer}
 
-Aplikacja mająca za zadanie obsługiwać komunikację z aplikacjami klienckimi oraz wysyłać polecenia do serwerów wirtualizacji. Udostępnia REST API (\ref{communication:api}), służące do komunikacji z aplikacjami klienckimi. Do komunikacji z serwerami wirtualizacji wykorzystuje kolejki wiadomości (\ref{modules:broker}).
+Aplikacja mająca za zadanie obsługiwać komunikację z aplikacjami klienckimi oraz wysyłać polecenia do serwerów wirtualizacji. Udostępnia REST API (rozdział \ref{communication:api}), służące do komunikacji z aplikacjami klienckimi. Do komunikacji z serwerami wirtualizacji wykorzystuje kolejki wiadomości (\ref{modules:broker}).
 
 Nadzorca przechowuje wewnętrznie model systemu zawierający informację o działających serwerach wirtualizacji i stanie ich maszyn. Na podstawie tego modelu moduł stwierdza, do której maszyny przypisać nowo utworzoną sesję. Wewnętrzne procesy skupione są wokół zmian modelu. Jeżeli proces wysłał do serwera wirtualizacji prośbę o zmianę stanu, to dalsze procesowanie odbywa się, gdy stan modelu został zaktualizowany, i na podstawie jego stanu podejmowane są decyzje.
 
-Dzięki zastosowaniu kolejek wiadomości (\ref{modules:broker}) oraz zasad komunikacji (\ref{communication:broker}) w systemie może istnieć więcej niż jeden nadzorca. Instancje nadzorców działają niezależnie od siebie i przechowują identyczny model systemu. Dzięki temu uzyskujemy retencję i możemy zmniejszyć obciążenie poszczególnych nadzorców.
+Dzięki zastosowaniu kolejek wiadomości (rozdział \ref{modules:broker}) oraz zasad komunikacji (\ref{communication:broker}) w systemie może istnieć więcej niż jeden nadzorca. Instancje nadzorców działają niezależnie od siebie i przechowują identyczny model systemu. Dzięki temu uzyskujemy retencję i możemy zmniejszyć obciążenie poszczególnych nadzorców.
 
 \subsection{Serwer wirtualizacji}
 \label{modules:virtsrv}
@@ -64,7 +64,7 @@ System zaprojektowany jest w taki sposób aby teoretycznie nie było ograniczeni
 \subsection{Aplikacja kliencka}
 \label{modules:client}
 
-Aplikacja okienkowa umożliwiająca użytkownikowi autoryzację, uzyskanie sesji oraz automatyczne rozpoczęcie połączenia. Komunikuje się z nadzorcą za pomocą REST API (\ref{communication:api}).
+Aplikacja okienkowa umożliwiająca użytkownikowi autoryzację, uzyskanie sesji oraz automatyczne rozpoczęcie połączenia. Komunikuje się z nadzorcą za pomocą REST API (rozdział \ref{communication:api}).
 
 Proces uzyskania sesji z perspektywy aplikacji klienckiej zawiera:
 \begin{enumerate}
@@ -93,7 +93,7 @@ Zdefiniowane zostały następujące kolejki wiadomości:
     \item \label{modules:broker:queue-exclusive} Kolejka kończąca się wyłącznie na pojedynczym serwerze wirtualizacji.
           Liczba kolejek zgadza się z liczbą serwerów wirtualizacji aktywnych w systemie.
           Służą one do przesyłania spersonalizowanych wiadomości oraz sprawdzania, czy serwer wirtualizacji nadal pracuje po drugiej stronie.
-          Skorzystamy z funkcjonalności kolejek na wyłączność(Exclusive Queue\parencite{xrdp-clients}).
+          Skorzystamy z funkcjonalności kolejek na wyłączność(Exclusive Queue \parencite{xrdp-clients}).
     \item \label{modules:broker:queue-users} Kolejka kończąca się na aktualnie podłączonym do maszyny wirtualnej kliencie.
           Podobnie jak powyżej kolejek istnieje tyle ile aktywnych użytkowników.
           Celem kolejki jest sprawdzenie, czy aplikacja kliencka nadal jest podłączona do wirtualnej maszyny (mechanizm Exclusive Queue).

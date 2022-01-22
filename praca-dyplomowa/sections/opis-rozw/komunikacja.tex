@@ -7,7 +7,7 @@
 \subsection{Komunikacja wewnętrzna}
 \label{communication:broker}
 
-Komunikacja wewnątrz systemu opiera się na kolejkach opisanych w opisie modułów (\ref{modules:broker}). W celu uniknięcia wyścigów i utrzymania spójności modelu systemu pomiędzy nadzorcami ustalone są następujące zasady:
+Komunikacja wewnątrz systemu opiera się na kolejkach opisanych w opisie modułów (rozdział \ref{modules:broker}). W celu uniknięcia wyścigów i utrzymania spójności modelu systemu pomiędzy nadzorcami ustalone są następujące zasady:
 \begin{itemize}
     \item Nadzorca może zmienić stan systemu jedynie w reakcji na odpowiedź serwera wirtualizacji. Odpowiedzi te wysyłane są do wszystkich nadzorców, dzięki czemu każdy nadzorca ma taki sam model systemu.
     \item Wiadomości przetwarzane są przez serwer wirtualizacji w sposób atomowy. Pojedyncza wiadomość musi zostać w pełni obsłużona zanim program przejdzie do obsługi kolejnej.

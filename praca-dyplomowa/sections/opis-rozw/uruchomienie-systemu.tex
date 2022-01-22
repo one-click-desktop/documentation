@@ -3,12 +3,12 @@
 \begin{document}
 \label{system_startup}
 
-W tym podrozdziale zakładamy, że każdy system operacyjny został skonfigurowany poprawnie zgodnie z opisem w \ref{system_requirements}.
+W tym podrozdziale zakładamy, że każdy system operacyjny został skonfigurowany poprawnie zgodnie z opisem w rozdziale \ref{system_requirements}.
 Wtedy można przejść do uruchamiania systemu.
 
 \subsection{Pozyskanie aplikacji klienckiej}
 \label{system_startup.client_obtaining}
-Zalecanym sposobem pozyskania aplikacji klienckiej jest udanie się do sekcji z oficjalnymi wydaniami\parencite{ocd-client-releases} modułu aplikacji klienckiej oraz pobranie najnowszej wersji dla wybranego systemu operacyjnego.
+Zalecanym sposobem pozyskania aplikacji klienckiej jest udanie się do sekcji z oficjalnymi wydaniami \parencite{ocd-client-releases} modułu aplikacji klienckiej oraz pobranie najnowszej wersji dla wybranego systemu operacyjnego.
 Przy pierwszym uruchomieniu trzeba pobrać archiwum plików zawierające aplikację oraz plik konfiguracyjny.
 Bez pliku konfiguracyjnego aplikacja nie uruchomi się.
 
@@ -43,12 +43,12 @@ Przy uruchomieniu skryptu \texttt{build.sh} kontenery są budowane z nazwami odp
 \subsection{Budowanie modułów}
 Każdy z modułów posiada dokładną instrukcję budowania w pliku \texttt{README.md}.
 Uruchamianie zbudowanych modułów poleca się tylko w przypadku rozwoju aplikacji.
-Przy wdrażaniu systemu najszybciej i najbezpieczniej jest skorzystać z metod opisanych w \ref{system_startup.client_obtaining} i \ref{system_startup.containers}.
+Przy wdrażaniu systemu najszybciej i najbezpieczniej jest skorzystać z metod opisanych w rozdziale \ref{system_startup.client_obtaining} i \ref{system_startup.containers}.
 
 \subsubsection{Moduły napisane w technologii .NET}
 W przypadku budowania modułu nadzorcy i serwera wirtualizacji potrzebne są narzędzia deweloperskie .NET 5.0.
 W trakcie budowania aplikacji wszystkie użyte biblioteki zostaną pobrane przy użyciu menadżera pakietów Nuget.
-Przy uruchomieniu serwera wirtualizacji potrzebny jest, poza wymaganiami zdefiniowanymi w \ref{system_requirements.virtsrv_rquirements}, zainstalowany vagrant wraz z wtyczka vagrant-libvirt w wersji przynajmniej 0.7.0.
+Przy uruchomieniu serwera wirtualizacji potrzebny jest, poza wymaganiami zdefiniowanymi w rozdziale \ref{system_requirements.virtsrv_rquirements}, zainstalowany vagrant wraz z wtyczka vagrant-libvirt w wersji przynajmniej 0.7.0.
 
 \subsubsection{Moduły napisane w technologii Node}
 W przypadku budowania modułów aplikacji klienckiej oraz panelu administracyjnego potrzebny będzie pakiet Node.
@@ -169,11 +169,11 @@ W głównym pliku konfiguracyjnym możemy wyróżnić 2 sekcje:
 W sekcji \texttt{OneClickDesktop} występują parametry:
 \begin{itemize}
 	\item \texttt{VirtualizationServerId} - identyfikator serwera wirtualizacji używany w komunikacji poprzez wewnętrznego brokera wiadomości. Powinna być unikatowa w skali jednej instancji systemu OneClickDesktop. Domyślnie przyjmuje wartość \texttt{virtsrv-test}.
-	\item \texttt{OversserCommunicationShutdownTimeout} - po upływie tylu sekund bez komunikacji od jakiegokolwiek nadzorcy serwer wirtualizacji uznaje, że zabrakło nadzorców w systemie. Nastąpi wtedy wyłączenie aplikacji serwera wirtualizacji. Domyślnie parametr przyjmuje wartość \texttt{120}. Zaleca się aby wartość parametru była większa niż dwukrotność parametru \texttt{ModelUpdateInterval} z konfiguracji nadzorcy opisanej w \ref{system_startup.overseer_conf}.
-	\item \texttt{LibvirtUri} - adres do połaczenia z usługa libvirta. Vagrant jak i biblioteka libvirta skorzysta z tego adresu do połaczenia. Specyfikacja libvirta dokładnie opisuje format tego adresu\parencite{libvirt-uri}.
+	\item \texttt{OversserCommunicationShutdownTimeout} - po upływie tylu sekund bez komunikacji od jakiegokolwiek nadzorcy serwer wirtualizacji uznaje, że zabrakło nadzorców w systemie. Nastąpi wtedy wyłączenie aplikacji serwera wirtualizacji. Domyślnie parametr przyjmuje wartość \texttt{120}. Zaleca się aby wartość parametru była większa niż dwukrotność parametru \texttt{ModelUpdateInterval} z konfiguracji nadzorcy opisanej w rozdziale \ref{system_startup.overseer_conf}.
+	\item \texttt{LibvirtUri} - adres do połaczenia z usługa libvirta. Vagrant jak i biblioteka libvirta skorzysta z tego adresu do połaczenia. Specyfikacja libvirta dokładnie opisuje format tego adresu \parencite{libvirt-uri}.
 	\item \texttt{VagrantFilePath} - ścieżka do specjalnie przygotowanego pliku wsadowego dla Vagranta. Wykorzystywany jest przez system do uruchamiania i wyłączania maszyn wirtualnych. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
 	\item \texttt{PostStartupPlaybook} - skrypt wykonywany przy pomocy Ansible'a zaraz po uruchomieniu maszyny wirtualnej. Koniecznie należy przetestować czy konfiguracja wykonuje się prawidłowo. Przy każdym błędzie wykonania skryptu maszyna wirtualna zostanie usunięta. Domyślnie przyjmuje wartość \texttt{res/poststartup\_playbook.yml}.
-	\item \texttt{VagrantboxUri} - identyfikator szablonowej maszyny wirtualnej. Musi ona spełniać szereg wymogów opisanych w \ref{system_requirements.vagrant_box}. W przeciwnym wypadku system nie będzie w stanie uruchomić takiego szablonu. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
+	\item \texttt{VagrantboxUri} - identyfikator szablonowej maszyny wirtualnej. Musi ona spełniać szereg wymogów opisanych w rozdziale \ref{system_requirements.vagrant_box}. W przeciwnym wypadku system nie będzie w stanie uruchomić takiego szablonu. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
 	\item \texttt{BridgeInterfaceName} - nazwa interfejsu sieciowego w skonfigurowanego w trybie bridge, do którego zostanie podłączona każda uruchomiona maszyna wirtualna. Domyślnie przyjmuje wartość \texttt{br0}.
 	\item \texttt{BridgedNetwork} - adres sieci, do której podłączona zostanie maszyna wirtualna poprzez \texttt{BridgeInterfaceName}, podany w formacie CIDR. Jeżeli maszyna nie będzie posiadać adresu z podanej sieci po uruchomieniu to zostanie wyłączona. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
 	\item \texttt{InternalRabbitMQHostname} - adres dostępowy wewnętrznego brokera wiadomości. Domyślnie przyjmuje wartość \texttt{localhost}. Bez działającego procesu brokera pod tym adresem aplikacja wyłączy się z błędem zaraz po uruchomieniu.
@@ -296,7 +296,7 @@ Należy przekierować je na odpowiednie porty uruchamiającego systemu.
 
 \subsubsection{Adres dostępu do nadzorców}
 Aplikacja panelu administracyjnego oczekuje ustalonego adresu dostępu do jakiegokolwiek nadzorcy.
-Przy uruchomieniu kontenera należy ustawić zmienną środowiskową \texttt{API\_URL} zgodnie z opisem w \ref{system_startup.admin_panel_conf}.
+Przy uruchomieniu kontenera należy ustawić zmienną środowiskową \texttt{API\_URL} zgodnie z opisem w rozdziale \ref{system_startup.admin_panel_conf}.
 
 \subsubsection{Certyfikat SSL}
 W celu uruchomienia panelu w trybie HTTPS należy przekazać zmienioną konfigurację serwera nginx oraz parę klucza z certyfikatem pod postacią woluminu.
@@ -320,7 +320,7 @@ Należy przekazać folder zawierający konfiguracje z systemu uruchamiającego(\
 \end{verbatim}
 
 \subsubsection{Certyfikat SSL}
-W celu uruchomienia nadzorcy w trybie HTTPS należy przekazać certyfikat SSL w formacie \texttt{.pfx} przy pomocy woluminów oraz odpowiednio przygotowany plik konfiguracyjny tak jak opisano w \ref{system_startup.overseer_conf}.
+W celu uruchomienia nadzorcy w trybie HTTPS należy przekazać certyfikat SSL w formacie \texttt{.pfx} przy pomocy woluminów oraz odpowiednio przygotowany plik konfiguracyjny tak jak opisano w rozdziale \ref{system_startup.overseer_conf}.
 Gdy zabraknie certyfikatów a konfiguracja pokazuje, że ma się rozpocząć nasłuchiwanie w trybie HTTPS, nadzorca zakończy się z błędem zaraz po uruchomieniu.
 
 \begin{verbatim}
@@ -369,7 +369,7 @@ Nie można zapomnieć o wyjątku konfiguracji NLoga, którą trzeba przekazać d
 
 \subsection{Przykład minimalnego systemu}
 Uruchamiając kontenery z modułami należy podać odpowiednie parametry aby aplikacje wewnątrz pracowały prawidłowo.
-Przykładowy minimalny system wraz z parametrami można zobaczyć w module \texttt{demonstration}\parencite{ocd-demo}.
+Przykładowy minimalny system wraz z parametrami można zobaczyć w module \texttt{demonstration} \parencite{ocd-demo}.
 Znajduje się tam system składający się z jednego brokera wiadomości (zewnętrzna i wewnętrzna komunikacja w jednym), panelu administracyjnego, jednego nadzorcy i jednego serwera wirtualizacji.
 Można znaleźć tam przykłady zarówno konfiguracji modułów jak i parametrów startowych dla kontenerów.
 
