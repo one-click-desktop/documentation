@@ -3,12 +3,11 @@
 \begin{document}
 \label{system_startup}
 
-W tym podrozdziale zakładamy, że każdy system operacyjny został skonfigurowany poprawnie zgodnie z opisem w \ref{system_requirements}.
-Wtedy można przejść do uruchamiania systemu.
+W tym podrozdziale zakładamy, że każdy system operacyjny został skonfigurowany poprawnie zgodnie z opisem w rozdziale \ref{system_requirements}.
 
 \subsection{Pozyskanie aplikacji klienckiej}
 \label{system_startup.client_obtaining}
-Zalecanym sposobem pozyskania aplikacji klienckiej jest udanie się do sekcji z oficjalnymi wydaniami\parencite{ocd-client-releases} modułu aplikacji klienckiej oraz pobranie najnowszej wersji dla wybranego systemu operacyjnego.
+Zalecanym sposobem pozyskania aplikacji klienckiej jest udanie się do sekcji z oficjalnymi wydaniami \parencite{ocd-client-releases} modułu aplikacji klienckiej oraz pobranie najnowszej wersji dla wybranego systemu operacyjnego.
 Przy pierwszym uruchomieniu trzeba pobrać archiwum plików zawierające aplikację oraz plik konfiguracyjny.
 Bez pliku konfiguracyjnego aplikacja nie uruchomi się.
 
@@ -43,7 +42,7 @@ Przy uruchomieniu skryptu \texttt{build.sh} kontenery są budowane z nazwami odp
 \subsection{Budowanie modułów}
 Każdy z modułów posiada dokładną instrukcję budowania w pliku \texttt{README.md}.
 Uruchamianie zbudowanych modułów poleca się tylko w przypadku rozwoju aplikacji.
-Przy wdrażaniu systemu najszybciej i najbezpieczniej jest skorzystać z metod opisanych w \ref{system_startup.client_obtaining} i \ref{system_startup.containers}.
+Przy wdrażaniu systemu najszybciej i najbezpieczniej jest skorzystać z metod opisanych w sekcjach \ref{system_startup.client_obtaining} i \ref{system_startup.containers}.
 
 \subsubsection{Moduły napisane w technologii .NET}
 W przypadku budowania modułu nadzorcy i serwera wirtualizacji potrzebne są narzędzia deweloperskie .NET 5.0.
@@ -59,16 +58,16 @@ Są one zdefiniowane w projekcie aplikacji i zostaną pobrane automatycznie.
 Aplikacja kliencka wymaga pliku konfiguracyjnego o nazwie \texttt{config.json} w tym samym folderze co plik wykonywalny.
 W pliku konfiguracyjnym użytkownik musi podać:
 \begin{itemize}
-	\item Adres jednego z nadzorców (\texttt{basePath}) - adres musi być w formacie URI.
+	\item Adres jednego z nadzorców lub serwera dostępowego (\texttt{basePath}) - adres musi być w formacie URI.
 	\item Adres zewnętrznego brokera wiadomości (\texttt{rabbitPath}) - adres musi być w formacie URI.
-	\item Czy aplikacja powinna podczas połączenia RDP używać danych dostępowych takich samych jak przy logowaniu do systemu \\(\texttt{useRdpCredentials}) - \texttt{true} albo \texttt{false}.
-	\item Czy aplikacja powinna uruchamiać zintegrowanego klienta RDP \\(\texttt{startRdp}) - \texttt{true} albo \texttt{false}. Przydaje się to przy wykorzystaniu innego niż zalecany klient RDP. Aplikacja po uzyskaniu sesji wyświetli dane dostępowe do przypisanej maszyny wirtualnej.
+	\item Czy aplikacja powinna podczas połączenia RDP używać danych dostępowych takich samych jak przy logowaniu do systemu (\texttt{useRdpCredentials}) - \texttt{true} albo \texttt{false}.
+	\item Czy aplikacja powinna uruchamiać zintegrowanego klienta RDP (\texttt{startRdp}) - \texttt{true} albo \texttt{false}. Przydaje się to przy wykorzystaniu innego niż zalecany klient RDP. Aplikacja po uzyskaniu sesji wyświetli dane dostępowe do przypisanej maszyny wirtualnej.
 \end{itemize}
 
 \subsection{Konfiguracja panelu administracyjnego}
 \label{system_startup.admin_panel_conf}
 Przy uruchomieniu panelu administracyjnego trzeba przekazać adres jednego z nadzorców.
-Aby tego dokonać należy ustawić zmienną środowiskową \texttt{API\_URL} na adres dostępowy jednego z nadzorców.
+Aby tego dokonać należy ustawić zmienną środowiskową \texttt{API\_URL} na adres dostępowy jednego z nadzorców lub serwera dostępowego.
 
 \subsection{Konfiguracja nadzorcy}
 \label{system_startup.overseer_conf}
@@ -86,7 +85,7 @@ W pliku konfiguracyjnym nadzorca poszukuje 2 specjalnych sekcji:
 	\item \texttt{JwtSettings} - przechowuje parametr wykorzystywany do generowania unikatowych tokenów autoryzacyjnych
 	\item \texttt{OneClickDesktop} - przechowuje parametry związane z działaniem systemu OneClickDesktop.
 \end{itemize}
-Poza tymi sekcjami można tam umieścić dowolne sekcje, które będzie przetwarzać ASP.NET.
+Poza tymi sekcjami można tam umieścić dowolne sekcje, które będzie przetwarzać ASP.NET. % TODO: link do dostęnych settingsów z ASP.NET
 Jednak warte uwagi są następujące sekcje:
 \begin{itemize}
 	\item \texttt{Logging} - parametry loggera dostarczonego przez Microsoft(\url{https://www.nuget.org/packages/microsoft.extensions.logging}).
@@ -110,7 +109,7 @@ W dostarczonej przykładowej konfiguracji wykomentowane wartości oznaczają war
 	\item \texttt{RabbitMQHostname} - adres dostępowy wewnętrznego brokera wiadomości. Domyślnie przyjmuje wartość \texttt{localhost}. Bez działającego procesu brokera pod tym adresem aplikacja wyłączy się z błędem zaraz po uruchomieniu.
 	\item \texttt{RabbitMQPort} - port dostępowy wewnętrznego brokera wiadomości. Domyślnie przyjmuje wartość \texttt{5672}. Bez działającego procesu brokera pod tym portem aplikacja wyłączy się z błędem zaraz po uruchomieniu.
 	\item \texttt{ModelUpdateInterval} - ilość sekund co ile nadzorca prosi serwery wirtualizacji o aktualizacje modelu. Domyślnie przyjmuje wartośc \texttt{60}. Zalecane jest aby wartość tego parametru opisywała czas od 30 do 60 sekund.																												%wtf? ą nie działa we wnętrzu {}
-	\item \texttt{DomainShutdownTimeout} - ilość minut ile musi upłynąć od oznaczenia maszyny wirtualnej stanem \texttt{Oczekiwanie na wył\k aczenie maszyny} do jej wyłączenia. Domyślnie przyjmuje wartość \texttt{15}.
+	\item \texttt{DomainShutdownTimeout} - ilość minut ile musi upłynąć od oznaczenia maszyny wirtualnej stanem \textit{Oczekiwanie na wyłączenie maszyny} do jej wyłączenia. Domyślnie przyjmuje wartość \texttt{15}.
 	\item \texttt{DomainShutdownCounterInterval} - ilość sekund co ile nadzorca sprawdza czy maszyna wirtualna nadal oczekuje na zamknięcie. Zaleca się, aby ten czas dzielił czas z parametru \texttt{DomainShutdownTimeout} na równe części. Takich części nie powinno być mniej niż 10, ale także nie więcej niż 100. Każde takie sprawdzenie zużywa czas procesora.
 \end{itemize}
 
@@ -157,7 +156,7 @@ Jedynym odstępstwem od reguły jest plik konfiguracyjny dla pakietu NLog.
 Musi on się znajdować w tym samym folderze co aplikacja oraz nazywać się \texttt{NLog.config}.
 
 Aplikacja serwera wirtualizacji domyślnie przeszukuje folder \texttt{./config} w poszukiwaniu plików konfiguracyjnych.
-Można zmienić ścieżkę do folderu konfiguracyjnego poprzez parametr uruchomienia \texttt{\seqsplit{-c path/to/other/config/folder/}}.
+Można zmienić ścieżkę do folderu konfiguracyjnego poprzez parametr uruchomienia \texttt{-c\ path/to/other/config/folder/}.
 
 \subsubsection{Główny plik konfiguracyjny}
 W głównym pliku konfiguracyjnym możemy wyróżnić 2 sekcje:
@@ -169,11 +168,11 @@ W głównym pliku konfiguracyjnym możemy wyróżnić 2 sekcje:
 W sekcji \texttt{OneClickDesktop} występują parametry:
 \begin{itemize}
 	\item \texttt{VirtualizationServerId} - identyfikator serwera wirtualizacji używany w komunikacji poprzez wewnętrznego brokera wiadomości. Powinna być unikatowa w skali jednej instancji systemu OneClickDesktop. Domyślnie przyjmuje wartość \texttt{virtsrv-test}.
-	\item \texttt{OversserCommunicationShutdownTimeout} - po upływie tylu sekund bez komunikacji od jakiegokolwiek nadzorcy serwer wirtualizacji uznaje, że zabrakło nadzorców w systemie. Nastąpi wtedy wyłączenie aplikacji serwera wirtualizacji. Domyślnie parametr przyjmuje wartość \texttt{120}. Zaleca się aby wartość parametru była większa niż dwukrotność parametru \texttt{ModelUpdateInterval} z konfiguracji nadzorcy opisanej w \ref{system_startup.overseer_conf}.
-	\item \texttt{LibvirtUri} - adres do połaczenia z usługa libvirta. Vagrant jak i biblioteka libvirta skorzysta z tego adresu do połaczenia. Specyfikacja libvirta dokładnie opisuje format tego adresu\parencite{libvirt-uri}.
+	\item \texttt{OversserCommunicationShutdownTimeout} - po upływie tylu sekund bez komunikacji od jakiegokolwiek nadzorcy serwer wirtualizacji uznaje, że zabrakło nadzorców w systemie. Nastąpi wtedy wyłączenie aplikacji serwera wirtualizacji. Domyślnie parametr przyjmuje wartość \texttt{120}. Zaleca się aby wartość parametru była większa niż dwukrotność parametru \texttt{ModelUpdateInterval} z konfiguracji nadzorcy opisanej w sekcji \ref{system_startup.overseer_conf}.
+	\item \texttt{LibvirtUri} - adres do połaczenia z usługa libvirta. Vagrant jak i biblioteka libvirta skorzysta z tego adresu do połaczenia. Specyfikacja libvirta dokładnie opisuje format tego adresu \parencite{libvirt-uri}.
 	\item \texttt{VagrantFilePath} - ścieżka do specjalnie przygotowanego pliku wsadowego dla Vagranta. Wykorzystywany jest przez system do uruchamiania i wyłączania maszyn wirtualnych. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
 	\item \texttt{PostStartupPlaybook} - skrypt wykonywany przy pomocy Ansible'a zaraz po uruchomieniu maszyny wirtualnej. Koniecznie należy przetestować czy konfiguracja wykonuje się prawidłowo. Przy każdym błędzie wykonania skryptu maszyna wirtualna zostanie usunięta. Domyślnie przyjmuje wartość \texttt{res/poststartup\_playbook.yml}.
-	\item \texttt{VagrantboxUri} - identyfikator szablonowej maszyny wirtualnej. Musi ona spełniać szereg wymogów opisanych w \ref{system_requirements.vagrant_box}. W przeciwnym wypadku system nie będzie w stanie uruchomić takiego szablonu. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
+	\item \texttt{VagrantboxUri} - identyfikator szablonowej maszyny wirtualnej. Musi ona spełniać szereg wymogów opisanych w sekcji \ref{system_requirements.vagrant_box}. W przeciwnym wypadku system nie będzie w stanie uruchomić takiego szablonu. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
 	\item \texttt{BridgeInterfaceName} - nazwa interfejsu sieciowego w skonfigurowanego w trybie bridge, do którego zostanie podłączona każda uruchomiona maszyna wirtualna. Domyślnie przyjmuje wartość \texttt{br0}.
 	\item \texttt{BridgedNetwork} - adres sieci, do której podłączona zostanie maszyna wirtualna poprzez \texttt{BridgeInterfaceName}, podany w formacie CIDR. Jeżeli maszyna nie będzie posiadać adresu z podanej sieci po uruchomieniu to zostanie wyłączona. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
 	\item \texttt{InternalRabbitMQHostname} - adres dostępowy wewnętrznego brokera wiadomości. Domyślnie przyjmuje wartość \texttt{localhost}. Bez działającego procesu brokera pod tym adresem aplikacja wyłączy się z błędem zaraz po uruchomieniu.
@@ -197,7 +196,7 @@ Gdy $n = \texttt{GPUsCount}$ jest większy od 0, wtedy w pliku muszą znaleźć 
 W przeciwnym wypadku serwer wirtualizacji zakończy się z błędem zaraz po uruchomieniu.
 
 Każda z tych sekcji zawiera parametr \texttt{AddressCount}, który określa jak duża jest grupa IOMMU w której znajduje się przekazywane urządzenie PCI.
-W zależności $m = \texttt{AddressCount}$ w tej sekcji muszą znaleźć się parametry od \texttt{Address\_1} do \texttt{Address\_$m$} włącznie.
+W przypadku $m = \texttt{AddressCount}$ w tej sekcji muszą znaleźć się parametry od \texttt{Address\_1} do \texttt{Address\_$m$} włącznie.
 W przeciwnym wypadku serwer wirtualizacji zakończy się z błędem zaraz po uruchomieniu.
 Każdy z tych parametrów opisuje adres pojedynczego urządzenia na magistrali PCI.
 Adres na magistrali PCI musi zostać opisany w formacie uzyskanym z polecenia \texttt{lspci} - \texttt{\{domain:4\}:\{bus:2\}:\{slot:2\}.\{function:1\}}.
@@ -242,7 +241,7 @@ W pliku opisującym typy zawarte jest ile potrzeba zasobów aby uruchomić maszy
 
 Każdy typ ma przypisaną nazwę. Oznaczmy ją jako \texttt{\$\{template\_name\}}.
 Nazwa typu powinna być unikatowa na skale systemu.
-Jeżeli chcemy udostępnić ten sam typ na wielu serwerach wirtualizacja należy nadać mu takie same zasoby.
+Jeżeli chcemy udostępnić ten sam typ na wielu serwerach wirtualizacja, należy nadać mu takie same zasoby.
 System może nieprawidłowo zarządzać zasobami, gdy uzyska 2 wzorce zasobów tego samego typu maszyny.
 Plik opisujący typ musi mieć nazwę \texttt{\$\{template\_name\}\_template.ini}.
 Plik konfiguracyjny dla wybranego typu musi znajdować się w folderze z pozostałymi plikami konfiguracyjnymi.
@@ -284,7 +283,7 @@ Prawidłowy start systemu powinien zachować następująca kolejność:
 \end{enumerate}
 
 Po opisanych krokach system jest gotowy do podłączenia się przez użytkowników.
-Ważne jest aby przed uruchomieniem jakiegokolwiek nadzorcy brokery wiadomości były już prawidłowo zainicjalizowane.
+Ważne jest aby przed uruchomieniem jakiegokolwiek nadzorcy brokerzy wiadomości byli już prawidłowo zainicjalizowani i gotowi na przyjęcie komunikacji.
 W przeciwnym wypadku aplikacja nadzorcy zakończy się z błędem.
 Serwer wirtualizacji także zakończy się z błędem, jeżeli zabraknie brokerów wiadomości.
 Dodatkowo, jeżeli nie będzie żadnego nadzorcy nasłuchującego poprzez wewnętrznego brokera wiadomości, serwer wirtualizacji zgłosi błąd i zakończy pracę.
@@ -296,7 +295,7 @@ Należy przekierować je na odpowiednie porty uruchamiającego systemu.
 
 \subsubsection{Adres dostępu do nadzorców}
 Aplikacja panelu administracyjnego oczekuje ustalonego adresu dostępu do jakiegokolwiek nadzorcy.
-Przy uruchomieniu kontenera należy ustawić zmienną środowiskową \texttt{API\_URL} zgodnie z opisem w \ref{system_startup.admin_panel_conf}.
+Przy uruchomieniu kontenera należy ustawić zmienną środowiskową \texttt{API\_URL} zgodnie z opisem w sekcji \ref{system_startup.admin_panel_conf}.
 
 \subsubsection{Certyfikat SSL}
 W celu uruchomienia panelu w trybie HTTPS należy przekazać zmienioną konfigurację serwera nginx oraz parę klucza z certyfikatem pod postacią woluminu.
@@ -314,14 +313,14 @@ Należy przekierować je na odpowiednie porty uruchamiającego systemu.
 
 \subsubsection{Plik konfiguracyjny}
 Aplikacja nadzorcy poszukuje plików konfiguracyjny w lokalizacji \url{/overseer/config/}.
-Należy przekazać folder zawierający konfiguracje z systemu uruchamiającego(\texttt{PATH\_TO\_CONFIGS}) do wnętrza kontenera pod dokładnie tą lokalizację pod postacią woluminu.
+Należy przekazać folder zawierający konfiguracje z systemu uruchamiającego (\texttt{PATH\_TO\_CONFIGS}) do wnętrza kontenera pod dokładnie tą lokalizację pod postacią woluminu.
 \begin{verbatim}
 	-v {PATH_TO_CONFIGS}:/overseer/config
 \end{verbatim}
 
 \subsubsection{Certyfikat SSL}
 W celu uruchomienia nadzorcy w trybie HTTPS należy przekazać certyfikat SSL w formacie \texttt{.pfx} przy pomocy woluminów oraz odpowiednio przygotowany plik konfiguracyjny tak jak opisano w \ref{system_startup.overseer_conf}.
-Gdy zabraknie certyfikatów a konfiguracja pokazuje, że ma się rozpocząć nasłuchiwanie w trybie HTTPS, nadzorca zakończy się z błędem zaraz po uruchomieniu.
+Gdy zabraknie certyfikatów, a konfiguracja pokazuje, że ma się rozpocząć nasłuchiwanie w trybie HTTPS, nadzorca zakończy się z błędem zaraz po uruchomieniu.
 
 \begin{verbatim}
 	-v {PATH_TO_CERT}:{PATH_TO_CERT_IN_CONTAINER}
@@ -334,10 +333,10 @@ Wymaga dość nietypowo podłączonych woluminów aby prawidłowo funkcjonować.
 
 \subsubsection{Zasoby libvirta}
 Aby komunikować się z usługa libvirta uruchomioną na systemie uruchamiającym potrzebujemy gniazda sieciowego przekazanego do wnętrza kontenera.
-Musi ono udawać, że jest uruchomiona usługa libvirta we wnętrzu kontenera.
+Musi ono udawać, że jest uruchomioną usługą libvirta we wnętrzu kontenera.
 Dodatkowo nowo tworzone maszyny powinny zapisywać się pomiędzy uruchomieniami kontenera.
 W tym celu trzeba przekazać także cały folder z danymi libvirta.
-Tai efekt można uzyskać przy pomocy woluminów przekazując
+Taki efekt można uzyskać przy pomocy woluminów przekazując
 \begin{verbatim}
 	-v /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock
 	-v /var/lib/libvirt/:/var/lib/libvirt/
@@ -346,7 +345,7 @@ Tai efekt można uzyskać przy pomocy woluminów przekazując
 \subsubsection{Zasoby vagranta}
 Przy starcie kontenera zasoby vagranta są puste.
 Oznacza to, że przy każdym pierwszym uruchomieniu maszyny wirtualnej będzie ona musiała być pobrana i rozpakowana do zasobów libvirta.
-Zabiera to czas i przestrzec dyskową.
+Zabiera to czas i przestrzeń dyskową.
 Aby zapewnić trwałość Vagrant Boxów pomiędzy uruchomieniami oraz zarządzanie nimi z poziomu systemu uruchamiającego należy przekazać do kontenera główny folder vagranta.
 Folder domowy użytkownika wykonawczego powinien być wykorzystany do tego celu.
 
@@ -357,19 +356,19 @@ gdzie \texttt{HOME} to ścieżka do folderu domowego użytkownika wykonawczego.
 
 \subsubsection{Plik konfiguracyjny}
 Aplikacja serwera wirtualizacji poszukuje plików konfiguracyjny w lokalizacji \texttt{/app/config/docker-test/}.
-Należy przekazać folder zawierający konfiguracje z systemu uruchamiającego(\texttt{PATH\_TO\_CONFIGS}) do wnętrza kontenera pod dokładnie tą lokalizację pod postacią woluminu.
+Należy przekazać folder zawierający konfiguracje z systemu uruchamiającego (\texttt{PATH\_TO\_CONFIGS}) do wnętrza kontenera pod dokładnie tą lokalizację pod postacią woluminu.
 \begin{verbatim}
 	-v {PATH_TO_CONFIGS_DIR}:/app/config/
 \end{verbatim}
 
-Można także zmienić lokalizacje folderu z konfiguracja ustawiając zmienna środowiskową \texttt{CONFIG}.
+Można także zmienić lokalizacje folderu z konfiguracja ustawiając zmienną środowiskową \texttt{CONFIG}.
 Może być ona względna do ścieżki \texttt{/app}.
 
 Nie można zapomnieć o wyjątku konfiguracji NLoga, którą trzeba przekazać do folderu \texttt{/app}.
 
 \subsection{Przykład minimalnego systemu}
-Uruchamiając kontenery z modułami należy podać odpowiednie parametry aby aplikacje wewnątrz pracowały prawidłowo.
-Przykładowy minimalny system wraz z parametrami można zobaczyć w module \texttt{demonstration}\parencite{ocd-demo}.
+Uruchamiając kontenery z modułami należy podać odpowiednie parametry, aby aplikacje wewnątrz pracowały prawidłowo.
+Przykładowy minimalny system wraz z parametrami można zobaczyć w module \texttt{demonstration} \parencite{ocd-demo}.
 Znajduje się tam system składający się z jednego brokera wiadomości (zewnętrzna i wewnętrzna komunikacja w jednym), panelu administracyjnego, jednego nadzorcy i jednego serwera wirtualizacji.
 Można znaleźć tam przykłady zarówno konfiguracji modułów jak i parametrów startowych dla kontenerów.
 

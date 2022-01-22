@@ -7,15 +7,15 @@ System do poprawnej pracy wymaga konfiguracji środowiska na wielu płaszczyznac
 
 \subsection{Komunikacja sieciowa między modułami}
 System do poprawnego działania z pełną funkcjonalnością musi składać się z:
-\begin{enumerate}
-	\item Przynajmniej jednego nadzorcy (*).
-	\item Serwerów wirtualizacji.
-	\item Maszyn wirtualnych uruchamianych na serwerach wirtualizacji.
-	\item Serwera HTTP udostępniającego panel administracyjny.
-	\item Brokera wiadomości do komunikacji wewnętrznej (*).
-	\item Brokera wiadomości do komunikacje zewnętrznej (może być tym samym brokerem co wewnętrzny).
-	\item Dowolnej liczby aplikacji klienckich.
-\end{enumerate}
+\begin{itemize}
+  \item Przynajmniej jednego nadzorcy (*).
+  \item Serwerów wirtualizacji.
+  \item Maszyn wirtualnych uruchamianych na serwerach wirtualizacji.
+  \item Serwera HTTP udostępniającego panel administracyjny.
+  \item Brokera wiadomości do komunikacji wewnętrznej (*).
+  \item Brokera wiadomości do komunikacje zewnętrznej (może być tym samym brokerem co wewnętrzny).
+  \item Dowolnej liczby aplikacji klienckich.
+\end{itemize}
 Elementy wymagane do poprawnego uruchomienia oznaczone zostały symbolem (*).
 
 \subsubsection{Dostępność wewnętrznego brokera}
@@ -43,7 +43,7 @@ Jest to potrzebne do pracy na nich poprzez protokół RDP.
 \subsection{Wymagania aplikacji klienckiej}
 Aplikacja kliencka wspiera system Windows 10 lub nowszy oraz GNU/Linux w dystrybucjach opartych na 64 bitowych systemach Ubuntu 18.04+ oraz Arch Linux.
 
-Dla systemu Windows aplikacja kliencka, jako plik wykonywalny pobrana ze strony z oficjalnymi wydaniami\parencite{ocd-client-releases}, powinna uruchomić się bez żadnych wcześniejszych konfiguracji. Do uruchomienia wymagany jest jednak plik konfiguracji użytkownika dostępny w oficjalnych wydaniach.
+Dla systemu Windows aplikacja kliencka, jako plik wykonywalny pobrana ze strony z oficjalnymi wydaniami \parencite{ocd-client-releases}, powinna uruchomić się bez żadnych wcześniejszych konfiguracji. Do uruchomienia wymagany jest jednak plik konfiguracji użytkownika dostępny w oficjalnych wydaniach.
 Do działania korzysta ona z klienta RDP dostarczonego przez firmę Microsoft wraz z systemem Windows.
 Aplikacja była testowana dla systemu Windows 10.
 Dla starszych wersji systemu Windows aplikacja może nie działać prawidłowo.
@@ -76,7 +76,7 @@ Wydajnościowo minimalnie musi być w stanie uruchomić wirtualne maszyny z usł
 Jednak zalecamy aby system był wyposażony przynajmniej w dwurdzeniowy procesor, 4GB pamięci operacyjnej oraz przynajmniej 100GB przestrzeni dyskowej.
 Jeżeli system spełni takie wymagania powinien być w stanie uruchomić maszynę wirtualną pod kontrola systemu bez przekazanego urządzenia PCI.
 
-Przy chęci wykorzystania funkcjonalności PCI Passthrough aby przekazać urządzenia do maszyny wirtualnej komputer musi spełniać dodatkowe wymagania.
+Przy chęci wykorzystania funkcjonalności PCI Passthrough, aby przekazać urządzenia do maszyny wirtualnej, komputer musi spełniać dodatkowe wymagania.
 Przy aktywowaniu modułu IOMMU wszystkie urządzenia podłączone do systemu muszą znajdować się w innej grupie IOMMU.
 Prawidłowa izolacja urządzeń od pozostałych urządzeń uruchamianych na serwerze wirtualizacji jest kluczowa z punktu bezpieczeństwa.
 
@@ -88,7 +88,7 @@ Mają one wiele linii PCI, więc producenci nie muszą oszczędzać połączeń.
 
 Alternatywnym wyborem jest modyfikacja kernela systemu i dodanie ACS Override patch.
 Spowoduje to rozdzielenie wspólnych grup IOMMU na oddzielne wirtualne grupy.
-Jednakże istnieje niebezpieczeństwo wykonania wyłomu poza wirtualna maszynę z tak skonfigurowanym systemem oraz zdestabilizowanie pracy systemu.
+Jednakże istnieje niebezpieczeństwo wykonania wyłomu poza wirtualną maszynę z tak skonfigurowanym systemem oraz zdestabilizowanie pracy systemu.
 Odradzamy wykorzystywania takiego rozwiązania w przypadku publicznego dostępu do systemu.
 W przypadku braku odpowiedniego sprzętu oraz ograniczenia dostępu do systemu można spróbować zastosować to rozwiązanie.
 
@@ -104,17 +104,17 @@ Aby uruchamiane maszyny wirtualne były dostępne dla innych urządzeń potrzebn
 Nazwa interfejsu powinna być przekazana do pliku konfiguracyjnego serwera wirtualizacji.
 Maszyny wirtualne uzyskają wtedy dostęp do sieci w taki sposób, jakby były fizycznymi komputerami w sieci.
 
-W niektórych przypadkach podczas uruchomiania maszyny wirtualnej przy użyciu \texttt{vagranta} oraz uruchomiania wybranych kontenerów w \texttt{dockerze} komunikacja sieciowa z maszyną wirtualną poprzez podłączony interfejs w trybie bridge może zostać ograniczona.
-Należy wtedy dopilnować by w trakcie działanie systemu zapora sieciowa posiadała zasadę na samej górze łańcucha \texttt{FORWARD}, która będzie bezwarunkowo zezwalać trasować pakiety z urządzeń w trybie bridge.
-Przy uruchomieniu serwera wrtiaulizacji w kontenerze dockerowym trzeba dopilnować aby z sieci, w której pracuje kontener, można było osiągnąć sieć konfiguracyjna Vagranta.
-W przeciwnym wypadku próba uruchomienia maszyny wirtualnej zakończy się z błędem połączenia ssh.
+W niektórych przypadkach, podczas uruchomiania maszyny wirtualnej przy użyciu \texttt{vagranta} oraz uruchomiania wybranych kontenerów w \texttt{dockerze}, komunikacja sieciowa z maszyną wirtualną poprzez podłączony interfejs w trybie bridge może zostać ograniczona.
+Należy wtedy dopilnować, by w trakcie działanie systemu zapora sieciowa posiadała zasadę na samej górze łańcucha \texttt{FORWARD}, która będzie bezwarunkowo zezwalać trasować pakiety z urządzeń w trybie bridge.
+Przy uruchomieniu serwera wirtualizacji w kontenerze dockerowym trzeba dopilnować aby z sieci, w której pracuje kontener, można było osiągnąć sieć konfiguracyjna Vagranta.
+W przeciwnym wypadku próba uruchomienia maszyny wirtualnej zakończy się z błędem połączenia SSH.
 
 \subsection{Automatyzacja konfiguracji}
 \label{system_requirements.ansible_conf}
-Przykładowa konfiguracja oraz narzędzia do automatycznej konfiguracji przed uruchomieniem dostępne sa w module \texttt{configuration}\parencite{ocd-configuration}.
+Przykładowa konfiguracja oraz narzędzia do automatycznej konfiguracji przed uruchomieniem dostępne są w module \texttt{configuration} \parencite{ocd-configuration}.
 Składa się on ze skryptów konfiguracyjnych Ansible, nazywanych dalej playbook, oraz zmiennych opisujących konfigurowane komputery.
 
-By uruchomić skrypt dla pewnego systemu operacyjnego, który chcemy skonfigurować, musi on spełniać wymogi opisane w dokumentacji Ansible\parencite{ansible-connection}.
+By uruchomić skrypt dla pewnego systemu operacyjnego, który chcemy skonfigurować, musi on spełniać wymogi opisane w dokumentacji Ansible \parencite{ansible-connection}.
 
 \subsubsection{Grupy i zmienne}
 Konfiguracja podzielona jest na 2 grupy: \texttt{overseer} i \texttt{virtsrv}.
@@ -129,7 +129,7 @@ Dla każdej maszyny z osobna należy zdefiniować dane dostępowe do komunikacji
 Playbook dla serwera wirtualizacji wykona wszystkie kroki opisane w \ref{system_requirements.virtsrv_rquirements}.
 Aby tego dokonać należy zdefiniować dane dla tworzonego interfejsu typu bridge.
 Należy zdefiniować nazwę interfejsu sieciowego, który zostanie połączony do nowo tworzonego urządzenia bridge o nazwie zdefiniowanej w pliku.
-Playbook korzysta z NetworkManagera(\url{https://networkmanager.dev/}) do zmiany konfiguracji, zatem trzeba podać nazwę \textit{connection} (jednostka logiczna w NetworkManagerze) skojarzonego z początkowo wybranym interfejsem sieciowym.
+Playbook korzysta z NetworkManagera (\url{https://networkmanager.dev/}) do zmiany konfiguracji, zatem trzeba podać nazwę \textit{connection} (jednostka logiczna w NetworkManagerze) skojarzonego z początkowo wybranym interfejsem sieciowym.
 
 \subsubsection{Zmienne dla nadzorcy}
 Aby uruchomić nadzorcę wystarczą wspólne wymagania dla wszystkich grup.
@@ -137,20 +137,20 @@ Aby uruchomić nadzorcę wystarczą wspólne wymagania dla wszystkich grup.
 \subsection{Wymagania szablonu maszyny wirtualnej}
 \label{system_requirements.vagrant_box}
 Maszyna wirtualna uruchamiana w ramach systemu OneClickDesktop musi być w postaci Vagrant Boxa.
-Przykładowy box został utworzony w czasie rozwoju systemu i dostępny jest w chmurze Vagrant pod nazwą \texttt{smogork/archlinux-rdp}\parencite{ocd-vbox}.
+Przykładowy box został utworzony w czasie rozwoju systemu i dostępny jest w chmurze Vagrant pod nazwą \texttt{smogork/archlinux-rdp} \parencite{ocd-vbox}.
 Box używa dystrybucji Arch Linux oraz spełnia wszystkie wymagania aby zostać uruchomionym w ramach systemu.
 
 Do przygotowania szablonu proponujemy aby skorzystać właśnie z tego obrazu.
 Jeżeli jednak potrzebne jest utworzenie niestandardowego szablonu to musi on:
 \begin{itemize}
-	\item Spełniać minimalne wymagania opisane w dokumentacji Vagranta\parencite{vagrant-basebox}.
-	\item Mieć zainstalowany menadżer okienek. Proponowany menadżer okienek, zawarty w przykładowym szablonie, to XFCE w wersji \texttt{4.16}.
-	\item Przy uruchomieniu udostępniać usługę zdalnego pulpitu RDP. Przykładowy szablon korzysta z implementacji xRDP w wersji \texttt{0.9.17-1}.
-	\item Każdy nowy interfejs sieciowy powinien być tak skonfigurowany, aby uzyskać adres IP z usługi DHCP.
-	\item Przy starcie systemu uruchamiać usługę \texttt{qemu-guest-agent}.
+  \item Spełniać minimalne wymagania opisane w dokumentacji Vagranta \parencite{vagrant-basebox}.
+  \item Mieć zainstalowany menadżer okienek. Proponowany menadżer okienek, zawarty w przykładowym szablonie, to XFCE w wersji \texttt{4.16}.
+  \item Przy uruchomieniu udostępniać usługę zdalnego pulpitu RDP. Przykładowy szablon korzysta z implementacji xRDP w wersji \texttt{0.9.17-1}. % TODO: tu jakieś refy?
+  \item Każdy nowy interfejs sieciowy powinien być tak skonfigurowany, aby uzyskać adres IP z usługi DHCP.
+  \item Przy starcie systemu uruchamiać usługę \texttt{qemu-guest-agent}.
 \end{itemize}
 Nie ma ograniczenia co do systemu operacyjnego uruchamianego wewnątrz systemu OneClickDesktop, tak długo jak jest on w stanie spełnić powyższe wymagania.
 
-Aby zbudować własny szablon należy skonsultować się z dokumentacją wtyczki vagrant-libvirt\parencite{vlibvirt-box}.
+Aby zbudować własny szablon należy skonsultować się z dokumentacją wtyczki vagrant-libvirt \parencite{vlibvirt-box}.
 
 \end{document}
