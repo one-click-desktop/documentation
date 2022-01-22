@@ -68,7 +68,6 @@ Do ręcznego uruchomienia aplikacji nadzorcy, bez pośrednictwa \texttt{dockera}
 \subsection{Wymagania serwera wirtualizacji}
 \label{system_requirements.virtsrv_rquirements}
 
-%TODO: dodac odnosniki do wszystkich dziwnych nazw tutaj
 \subsubsection{Wymagania sprzętowe}
 Serwer wirtualizacji zadziała prawidłowo na komputerze działającym pod kontrola systemu operacyjnego z grupy GNU/Linux.
 Obowiązkowo musi on być podłączony do sieci poprzez przewodowy interfejs sieciowy (wymaga tego utworzenie interfejsu typu bridge).
@@ -76,8 +75,8 @@ Wydajnościowo minimalnie musi być w stanie uruchomić wirtualne maszyny z usł
 Jednak zalecamy aby system był wyposażony przynajmniej w dwurdzeniowy procesor, 4GB pamięci operacyjnej oraz przynajmniej 100GB przestrzeni dyskowej.
 Jeżeli system spełni takie wymagania powinien być w stanie uruchomić maszynę wirtualną pod kontrola systemu bez przekazanego urządzenia PCI.
 
-Przy chęci wykorzystania funkcjonalności PCI Passthrough, aby przekazać urządzenia do maszyny wirtualnej, komputer musi spełniać dodatkowe wymagania.
-Przy aktywowaniu modułu IOMMU wszystkie urządzenia podłączone do systemu muszą znajdować się w innej grupie IOMMU.
+Przy chęci wykorzystania funkcjonalności PCI Passthrough \parencite{pci-passthrough}, aby przekazać urządzenia do maszyny wirtualnej komputer musi spełniać dodatkowe wymagania.
+Po aktywowaniu modułu IOMMU(I/O Memory Management Unit) \parencite{amd-iommu} wszystkie urządzenia podłączone do systemu muszą znajdować się w innej grupie IOMMU.
 Prawidłowa izolacja urządzeń od pozostałych urządzeń uruchamianych na serwerze wirtualizacji jest kluczowa z punktu bezpieczeństwa.
 
 Fakt możliwości prawidłowej izolacji urządzeń od siebie wynika z decyzji projektantów używanej w konstrukcji płyty głównej.
@@ -86,7 +85,7 @@ Oznacza to częste korzystanie z tych samych linii komunikacyjnych do wspólnych
 Należy więc skorzystać z płyt przeznaczonych do procesorów dla entuzjastów(np. linia AMD Threadripper z chipsetami z linii X) albo profesjonalnych (np. linia AMD Epyc).
 Mają one wiele linii PCI, więc producenci nie muszą oszczędzać połączeń.
 
-Alternatywnym wyborem jest modyfikacja kernela systemu i dodanie ACS Override patch.
+Alternatywnym wyborem jest modyfikacja kernela systemu i dodanie ACS Override patch \parencite{acs-override}.
 Spowoduje to rozdzielenie wspólnych grup IOMMU na oddzielne wirtualne grupy.
 Jednakże istnieje niebezpieczeństwo wykonania wyłomu poza wirtualną maszynę z tak skonfigurowanym systemem oraz zdestabilizowanie pracy systemu.
 Odradzamy wykorzystywania takiego rozwiązania w przypadku publicznego dostępu do systemu.
@@ -111,7 +110,11 @@ W przeciwnym wypadku próba uruchomienia maszyny wirtualnej zakończy się z bł
 
 \subsection{Automatyzacja konfiguracji}
 \label{system_requirements.ansible_conf}
+<<<<<<< HEAD
 Przykładowa konfiguracja oraz narzędzia do automatycznej konfiguracji przed uruchomieniem dostępne są w module \texttt{configuration} \parencite{ocd-configuration}.
+=======
+Przykładowa konfiguracja oraz narzędzia do automatycznej konfiguracji przed uruchomieniem dostępne sa w module \texttt{configuration} \parencite{ocd-configuration}.
+>>>>>>> 554d4552047db287d5237a7a7d365f93cb8575a6
 Składa się on ze skryptów konfiguracyjnych Ansible, nazywanych dalej playbook, oraz zmiennych opisujących konfigurowane komputery.
 
 By uruchomić skrypt dla pewnego systemu operacyjnego, który chcemy skonfigurować, musi on spełniać wymogi opisane w dokumentacji Ansible \parencite{ansible-connection}.
@@ -126,7 +129,7 @@ Jedyną wspólną zmienną dla wszystkich maszyn jest nazwa użytkownika, który
 Dla każdej maszyny z osobna należy zdefiniować dane dostępowe do komunikacji z konfigurowanym systemem. Dodatkowo należy podać hasło umożliwiające dostęp do uprawnień superużytkownika.
 
 \subsubsection{Zmienne dla serwera wirtualizacji}
-Playbook dla serwera wirtualizacji wykona wszystkie kroki opisane w \ref{system_requirements.virtsrv_rquirements}.
+Playbook dla serwera wirtualizacji wykona wszystkie kroki opisane w rozdziale \ref{system_requirements.virtsrv_rquirements}.
 Aby tego dokonać należy zdefiniować dane dla tworzonego interfejsu typu bridge.
 Należy zdefiniować nazwę interfejsu sieciowego, który zostanie połączony do nowo tworzonego urządzenia bridge o nazwie zdefiniowanej w pliku.
 Playbook korzysta z NetworkManagera (\url{https://networkmanager.dev/}) do zmiany konfiguracji, zatem trzeba podać nazwę \textit{connection} (jednostka logiczna w NetworkManagerze) skojarzonego z początkowo wybranym interfejsem sieciowym.
@@ -143,11 +146,19 @@ Box używa dystrybucji Arch Linux oraz spełnia wszystkie wymagania aby zostać 
 Do przygotowania szablonu proponujemy aby skorzystać właśnie z tego obrazu.
 Jeżeli jednak potrzebne jest utworzenie niestandardowego szablonu to musi on:
 \begin{itemize}
+  <<<<<<< HEAD
   \item Spełniać minimalne wymagania opisane w dokumentacji Vagranta \parencite{vagrant-basebox}.
   \item Mieć zainstalowany menadżer okienek. Proponowany menadżer okienek, zawarty w przykładowym szablonie, to XFCE w wersji \texttt{4.16}.
   \item Przy uruchomieniu udostępniać usługę zdalnego pulpitu RDP. Przykładowy szablon korzysta z implementacji xRDP w wersji \texttt{0.9.17-1}. % TODO: tu jakieś refy?
   \item Każdy nowy interfejs sieciowy powinien być tak skonfigurowany, aby uzyskać adres IP z usługi DHCP.
   \item Przy starcie systemu uruchamiać usługę \texttt{qemu-guest-agent}.
+        =======
+  \item Spełniać minimalne wymagania opisane w dokumentacji Vagranta \parencite{vagrant-basebox}.
+  \item Mieć zainstalowany menadżer okienek. Proponowany menadżer okienek, zawarty w przykładowym szablonie, to XFCE w wersji \texttt{4.16}.
+  \item Przy uruchomieniu udostępniać usługę zdalnego pulpitu RDP. Przykładowy szablon korzysta z implementacji xRDP w wersji \texttt{0.9.17-1}.
+  \item Każdy nowy interfejs sieciowy powinien być tak skonfigurowany, aby uzyskać adres IP z usługi DHCP.
+  \item Przy starcie systemu uruchamiać usługę \texttt{qemu-guest-agent}.
+        >>>>>>> 554d4552047db287d5237a7a7d365f93cb8575a6
 \end{itemize}
 Nie ma ograniczenia co do systemu operacyjnego uruchamianego wewnątrz systemu OneClickDesktop, tak długo jak jest on w stanie spełnić powyższe wymagania.
 

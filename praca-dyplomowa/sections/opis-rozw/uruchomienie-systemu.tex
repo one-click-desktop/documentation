@@ -47,7 +47,7 @@ Przy wdrażaniu systemu najszybciej i najbezpieczniej jest skorzystać z metod o
 \subsubsection{Moduły napisane w technologii .NET}
 W przypadku budowania modułu nadzorcy i serwera wirtualizacji potrzebne są narzędzia deweloperskie .NET 5.0.
 W trakcie budowania aplikacji wszystkie użyte biblioteki zostaną pobrane przy użyciu menadżera pakietów Nuget.
-Przy uruchomieniu serwera wirtualizacji potrzebny jest, poza wymaganiami zdefiniowanymi w \ref{system_requirements.virtsrv_rquirements}, zainstalowany vagrant wraz z wtyczka vagrant-libvirt w wersji przynajmniej 0.7.0.
+Przy uruchomieniu serwera wirtualizacji potrzebny jest, poza wymaganiami zdefiniowanymi w rozdziale \ref{system_requirements.virtsrv_rquirements}, zainstalowany vagrant wraz z wtyczka vagrant-libvirt w wersji przynajmniej 0.7.0.
 
 \subsubsection{Moduły napisane w technologii Node}
 W przypadku budowania modułów aplikacji klienckiej oraz panelu administracyjnego potrzebny będzie pakiet Node.
@@ -319,7 +319,7 @@ Należy przekazać folder zawierający konfiguracje z systemu uruchamiającego (
 \end{verbatim}
 
 \subsubsection{Certyfikat SSL}
-W celu uruchomienia nadzorcy w trybie HTTPS należy przekazać certyfikat SSL w formacie \texttt{.pfx} przy pomocy woluminów oraz odpowiednio przygotowany plik konfiguracyjny tak jak opisano w \ref{system_startup.overseer_conf}.
+W celu uruchomienia nadzorcy w trybie HTTPS należy przekazać certyfikat SSL w formacie \texttt{.pfx} przy pomocy woluminów oraz odpowiednio przygotowany plik konfiguracyjny tak jak opisano w rozdziale \ref{system_startup.overseer_conf}.
 Gdy zabraknie certyfikatów, a konfiguracja pokazuje, że ma się rozpocząć nasłuchiwanie w trybie HTTPS, nadzorca zakończy się z błędem zaraz po uruchomieniu.
 
 \begin{verbatim}

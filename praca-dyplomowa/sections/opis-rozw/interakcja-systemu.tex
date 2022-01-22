@@ -4,7 +4,7 @@
 \label{system_interaction}
 
 \subsection{Typowe działanie systemu}
-Po uruchomieniu opisanym w \ref{system_startup.procedure} system powinien być w pełni używalny.
+Po uruchomieniu opisanym w rozdziale \ref{system_startup.procedure} system powinien być w pełni używalny.
 Typowym zachowaniem systemu będzie cykliczne wysyłanie próśb przez nadzorców do serwerów wirtualizacji.
 W logach serwerów wirtualizacji jak i nadzorców powinny cyklicznie pojawiać się informacje o prośbie lub odpowiedzi na zapytanie o model.
 
@@ -105,7 +105,7 @@ W przeciwnym wypadku zostanie zgłoszony błąd i prośba o sesję zostanie umor
 Po prawidłowym utworzeniu sesji aplikacja rozpocznie zgłaszanie do zewnętrznego brokera wiadomości, że użytkownik pracuje na maszynie wirtualnej.
 Ten stan reprezentuje ekran pokazany na rysunku \ref{figure:system_interaction.client.session}.
 Zamknięcie klienta RDP albo naciśniecie przycisku \textit{End session} spowoduje oznaczenie sesji jako \textit{do usunięcia}.
-Od tego momentu użytkownik ma \texttt{DomainShutdownTimeout} minut na powrót do swojej sesji (szczegóły w sekcji \ref{system_startup.overseer_conf}).
+Od tego momentu użytkownik ma \texttt{DomainShutdownTimeout} minut na powrót do swojej sesji (szczegóły w rozdziale \ref{system_startup.overseer_conf}).
 Po upływie tego czasu sesja zostaje zamknięta oraz maszyna z nią skojarzona wyłączona.
 
 \begin{figure}[h!]
