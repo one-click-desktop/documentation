@@ -242,6 +242,9 @@ Przykładowa zawartość głównego pliku konfiguracyjnego:
 W pliku opisującym typy zawarte jest ile potrzeba zasobów aby uruchomić maszynę wytworzoną z tego typu.
 
 Każdy typ ma przypisaną nazwę. Oznaczmy ją jako \texttt{\$\{template\_name\}}.
+Nazwa typu powinna być unikatowa na skale systemu.
+Jeżeli chcemy udostępnić ten sam typ na wielu serwerach wirtualizacja należy nadać mu takie same zasoby.
+System może nieprawidłowo zarządzać zasobami, gdy uzyska 2 wzorce zasobów tego samego typu maszyny.
 Plik opisujący typ musi mieć nazwę \texttt{\$\{template\_name\}\_template.ini}.
 Plik konfiguracyjny dla wybranego typu musi znajdować się w folderze z pozostałymi plikami konfiguracyjnymi.
 Jeżeli dla jakiejkolwiek nazwy typu aplikacja nie znajdzie pliku konfiguracyjnego to zakończy się z błędem zaraz po uruchomieniu.
