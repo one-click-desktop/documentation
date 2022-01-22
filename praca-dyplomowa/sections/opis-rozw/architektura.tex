@@ -42,7 +42,7 @@ W celu zarządzania systemem, każdy z nadzorców musi posiadać dokładną wied
 
 Główną klasą modelu jest \texttt{SystemModel} zawierający informacje o aktualnie działających serwerach wirtualizacji oraz aktywnych sesjach. Klasa \texttt{VirtualizationServer} modeluje pojedynczy serwer wirtualizacji, jego zasoby, maszyny wirtualne oraz obsługiwane sesje. Przechowuje ona również informacje wymagane do komunikacji z daną instancją serwera.
 
-Klasa \texttt{Resources} oraz jej pochodne opisują zasoby systemowe i są używane do przedstawienia zarówno zasobów maszyny jak i całego serwera wirtualizacji. Jej klasa pochodna \texttt{\seqsplit{TemplateResources}} służy do przechowywania informacji o zasobach potrzebnych do utworzenia maszyny danego typu.
+Klasa \texttt{Resources}, oraz jej pochodne, opisują zasoby systemowe i są używane do przedstawienia zarówno zasobów maszyny, jak i całego serwera wirtualizacji. Jej klasa pochodna \texttt{\seqsplit{TemplateResources}} służy do przechowywania informacji o zasobach potrzebnych do utworzenia maszyny danego typu.
 
 \subsection{Nadzorca}
 \label{modules:overseer}
