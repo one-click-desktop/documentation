@@ -4,14 +4,14 @@
 \label{system_interaction}
 
 \subsection{Typowe działanie systemu}
-Po uruchomieniu opisanym w rozdziale \ref{system_startup.procedure} system powinien być w pełni używalny.
+Po uruchomieniu opisanym w rozdziale \ref{system_startup.procedure} system powinien być w pełni funkcjonalny.
 Typowym zachowaniem systemu będzie cykliczne wysyłanie próśb przez nadzorców do serwerów wirtualizacji.
-W logach serwerów wirtualizacji jak i nadzorców powinny cyklicznie pojawiać się informacje o prośbie lub odpowiedzi na zapytanie o model.
+W logach serwerów wirtualizacji, jak i nadzorców, powinny cyklicznie pojawiać się informacje o prośbie lub odpowiedzi na zapytanie o model.
 
 Zaraz po starcie systemu powinny pojawić się prośby o włączenie maszyn wirtualnych na odpowiednich serwerach wirtualizacji.
 Przy patrzeniu na standardowe wyjście aplikacji powinny być widoczne informacje od uruchamiającego się Vagranta.
-Przy każdej nowej utworzonej sesji powinny wybudzać się następne maszyny wirtualne.
-Często problemy z uruchomieniem maszyn wirtualnych będą oznaczać nieskończone próby uruchamiania maszyn wirtualnych, które zawsze będą kończyć się niepowodzeniem.
+Przy każdej nowo utworzonej sesji powinny wybudzać się następne maszyny wirtualne.
+Często problemy z uruchomieniem maszyn wirtualnych będą oznaczać nieskończone próby ich uruchomienia, które zawsze będą kończyć się niepowodzeniem.
 Serwer wirtualizacji powinien wszystkie informacje o błędach zapisywać do pliku z logami we wnętrzu kontenera w folderze roboczym aplikacji \texttt{/app}.
 
 Przy wyłączaniu serwera wirtualizacji mogą pozostać nadal działające maszyny wirtualne wytworzone przez niego.
@@ -20,7 +20,7 @@ Nazwy maszyn można wyczytać z logów pracy serwera wirtualizacji.
 
 \subsection{Funkcje panelu administracyjnego}
 
-Po wejściu na stronę panelu administracyjnego administrator musi podać nazwę użytkownika i hasło (rysunek \ref{figure:system_interaction.admin.login})..
+Po wejściu na stronę panelu administracyjnego, administrator musi podać nazwę użytkownika i hasło (rysunek \ref{figure:system_interaction.admin.login}).
 Jeżeli rzeczywiście podane konto jest kontem administratora przejdzie dalej do panelu.
 W przeciwnym wypadku zostanie zwrócony błąd dostępu.
 
@@ -32,7 +32,7 @@ W przeciwnym wypadku zostanie zwrócony błąd dostępu.
 \end{figure}
 
 Po zalogowaniu administrator ma dostęp do głównego panelu z podsumowaniem wszystkich dostępnych zasobów.
-Po lewej stronie ma on dostępna listę wszystkich aktywnych serwerów wirtualizacji w systemie (rysunek \ref{figure:system_interaction.admin.panel}).
+Po lewej stronie ma on dostępną listę wszystkich aktywnych serwerów wirtualizacji w systemie (rysunek \ref{figure:system_interaction.admin.panel}).
 
 \begin{figure}[h!]
   \centering
@@ -41,8 +41,8 @@ Po lewej stronie ma on dostępna listę wszystkich aktywnych serwerów wirtualiz
   \label{figure:system_interaction.admin.panel}
 \end{figure}
 
-Po naciśnięciu na wybrany serwer wirtualizacji na środku pojawiają się szczegóły zasobów konkretnego serwera (rysunek \ref{figure:system_interaction.admin.details}).
-Administrator Oprócz zasobów może sprawdzić ile aktualnie jest uruchomionych maszyn (sekcja Running) oraz ile maszyn można jeszcze uruchomić (sekcja Free).
+Po naciśnięciu na wybrany serwer wirtualizacji na środku pojawiają się szczegółowy opis zasobów konkretnego serwera (rysunek \ref{figure:system_interaction.admin.details}).
+Administrator, oprócz zasobów, może sprawdzić ile aktualnie jest uruchomionych maszyn (sekcja \textit{Running}) oraz ile jeszcze można uruchomić (sekcja \textit{Free}).
 
 \begin{figure}[h!]
   \centering
@@ -68,7 +68,7 @@ W przeciwnym wypadku zostanie zwrócony błąd dostępu.
 \end{figure}
 
 Po zalogowaniu użytkownik trafia do ekranu głównego (rysunek \ref{figure:system_interaction.client.home}).
-Może tutaj zobaczyć, ile jest dostępnych maszyn w systemie, poprosić o sesję oraz zmienić ustawienia aplikacji.
+Może tutaj zobaczyć ile jest dostępnych maszyn w systemie, poprosić o sesję oraz zmienić ustawienia aplikacji.
 
 \begin{figure}[h!]
   \centering
@@ -78,7 +78,7 @@ Może tutaj zobaczyć, ile jest dostępnych maszyn w systemie, poprosić o sesj�
 \end{figure}
 
 Przechodząc do ustawień (rysunek \ref{figure:system_interaction.client.settings}) użytkownik może edytować plik konfiguracyjny z poziomu aplikacji albo wrócić do ekranu głównego.
-Zmiana adresu do nadzorcy będzie wymagać ponownego uruchomienia.
+Zmiana adresu nadzorcy będzie wymagać ponownego uruchomienia.
 Inne ustawienia zostaną zastosowane od razu po zmianie.
 
 \begin{figure}[h!]
@@ -88,7 +88,7 @@ Inne ustawienia zostaną zastosowane od razu po zmianie.
   \label{figure:system_interaction.client.settings}
 \end{figure}
 
-Gdy użytkownik z ekranu głównego naciśnie przycisk \textit{Connect} zostanie zapytany o typ sesji, jaki system am mu przypisać (rysunek \ref{figure:system_interaction.client.select}).
+Gdy użytkownik z ekranu głównego naciśnie przycisk \textit{Connect} zostanie zapytany o typ sesji, jaki system ma mu przypisać (rysunek \ref{figure:system_interaction.client.select}).
 
 \begin{figure}[h!]
   \centering
@@ -100,13 +100,13 @@ Gdy użytkownik z ekranu głównego naciśnie przycisk \textit{Connect} zostanie
 Po wybraniu jednego z typów sesji i naciśnięciu przycisku \textit{Connect} aplikacja kliencka wyśle prośbę o znalezienie maszyny danego typu i utworzenie sesji dla pytającego użytkownika.
 Do czasu utworzenia sesji aplikacja będzie oczekiwać na dane do połączenia.
 W przypadku poprawnego utworzenia sesji uruchomi się klient RDP i będzie można rozpocząć pracę.
-W przeciwnym wypadku zostanie zgłoszony błąd i prośba o sesję zostanie umorzona.
+W przeciwnym wypadku zostanie zgłoszony błąd, a prośba o sesję zostanie umorzona.
 
 Po prawidłowym utworzeniu sesji aplikacja rozpocznie zgłaszanie do zewnętrznego brokera wiadomości, że użytkownik pracuje na maszynie wirtualnej.
 Ten stan reprezentuje ekran pokazany na rysunku \ref{figure:system_interaction.client.session}.
-Zamknięcie klienta RDP albo naciśniecie przycisku \textit{End session} spowoduje oznaczenie sesji jako \textit{do usunięcia}.
+Zamknięcie klienta RDP lub naciśniecie przycisku \textit{End session} spowoduje oznaczenie sesji jako \textit{do usunięcia}.
 Od tego momentu użytkownik ma \texttt{DomainShutdownTimeout} minut na powrót do swojej sesji (szczegóły w rozdziale \ref{system_startup.overseer_conf}).
-Po upływie tego czasu sesja zostaje zamknięta oraz maszyna z nią skojarzona wyłączona.
+Po upływie tego czasu sesja zostaje zamknięta, a maszyna z nią skojarzona wyłączona.
 
 \begin{figure}[h!]
   \centering
@@ -115,8 +115,8 @@ Po upływie tego czasu sesja zostaje zamknięta oraz maszyna z nią skojarzona w
   \label{figure:system_interaction.client.session}
 \end{figure}
 
-W przypadku, gdy użytkownik poprosi aby nie uruchamiać dołączonego klienta RDP albo uruchomieni klienta RDP zakończy się błędem zostaną mu przekazane dane dostępowe do przypisanej maszyny wirtualnej (rysunek \ref{figure:system_interaction.client.session_nordp}).
-Wtedy jedynym sposobem na zaznaczenie, że skończyło się prace na maszynie, jest naciśniecie przycisku \textit{End session}.
+W przypadku gdy użytkownik poprosi aby nie uruchamiać dołączonego klienta RDP, albo uruchomienie klienta RDP zakończy się błędem, zostaną mu przekazane dane dostępowe do przypisanej maszyny wirtualnej (rysunek \ref{figure:system_interaction.client.session_nordp}).
+Wtedy jedynym sposobem na zaznaczenie, że skończyło się pracę na maszynie, jest naciśnięcie przycisku \textit{End session}.
 
 \begin{figure}[h!]
   \centering
