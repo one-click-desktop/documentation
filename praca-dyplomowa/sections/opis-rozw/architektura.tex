@@ -93,7 +93,7 @@ Zdefiniowane zostały następujące kolejki wiadomości:
     \item \label{modules:broker:queue-exclusive} Kolejka kończąca się wyłącznie na pojedynczym serwerze wirtualizacji.
           Liczba kolejek zgadza się z liczbą serwerów wirtualizacji aktywnych w systemie.
           Służą one do przesyłania spersonalizowanych wiadomości oraz sprawdzania, czy serwer wirtualizacji nadal pracuje po drugiej stronie.
-          Skorzystamy z funkcjonalności kolejek na wyłączność(Exclusive Queue\footnote{\href{https://www.rabbitmq.com/queues.html\#exclusive-queues}{Opis zachowania kolejek na wyłączność}}).
+          Skorzystamy z funkcjonalności kolejek na wyłączność(Exclusive Queue\parencite{xrdp-clients}).
     \item \label{modules:broker:queue-users} Kolejka kończąca się na aktualnie podłączonym do maszyny wirtualnej kliencie.
           Podobnie jak powyżej kolejek istnieje tyle ile aktywnych użytkowników.
           Celem kolejki jest sprawdzenie, czy aplikacja kliencka nadal jest podłączona do wirtualnej maszyny (mechanizm Exclusive Queue).
