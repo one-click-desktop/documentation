@@ -243,11 +243,15 @@
   \begin{center}
     \tytul
   \end{center}
-  Streszczam.
 
-  Lorem ipsum dolor sit amet, consetetur sadipscing elit, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.\\
+  Celem pracy jest stworzenie systemu do zdalnej pracy, za pomocą zdalnego pulpitu, wykorzystującego maszyny wirtualne. Jedną z głównych wyróżników projektu jest możliwość użycia maszyn z akceleracją sprzętową oraz integracja z zewnętrznym systemem katalogowym.
 
-  \noindent \textbf{Słowa kluczowe:} slowo1, slowo2, ...
+  Na wstępie pracy przedstawiony został problem wynikający ze zdalnej pracy, oraz wizja systemu, który ma go niwelować. Opisane zostały również wymagania, które musi spełniać powstały system.
+  W następnym rozdziale zawarty został dokładny opis systemu, z wyróżnieniem poszczególnym modułów oraz procesów. Wymienione zostały również wykorzystane technologie, instrukcja uruchomienia systemu oraz interakcji z nim.
+  Kolejny rozdział przedstawia analizę rozwiązania, skupiającą się na sposobie testowania poprawności działania systemu oraz jego wynikach.
+  Rozdział końcowy opisuje ostateczny stan systemu z wyróżnieniem elementów, które naszym zdaniem wyróżniają się gorszą jakością. Wymienione zostały aspekty, o widocznych możliwościach rozwoju oraz znane problemy systemu.
+
+  \noindent \textbf{Słowa kluczowe:} maszyny wirtualne, zdalny pulpit, libvirt, chmura
 \end{abstract}
 }
 
@@ -259,9 +263,14 @@
     \begin{center}
       \title
     \end{center}
-    Konieczne jest załączenie wypełnionego oświadczenia o autorstwie pracy. By tego dokonać, skan (w formacie PDF) należy umieścić w folderze \emph{scans} i nazwać go, np.  oswiadczenie\_o\_autorstwie\_pracy.pdf (w przypadku innej nazwy lub umieszczenia w innym folderze, konieczne jest adekwatne zmodyfikowanie ścieżki w komendzie je załączającej --- patrz fragment kodu OŚWIADCZENIA.\\
+    Goal of thesis is to create environment for remote work, using remote desktop, based on virtual machines. One of main traits is ability to use machines with hardware acceleration and integration with external directory system.
 
-    \noindent \textbf{Keywords:} keyword1, keyword2, ...
+    Introduction describes problem addressed by thesis and proposed environment, aiming to ease it. Chapter also contains requirements, which the project must fulfil.
+    Next chapter describes in detail the designed environment, including created modules and business processes, used technologies and deployment and use instruction.
+    Following chapter analyses the created solution focusing on testing operations and fulfillment of requirements.
+    Final chapter describes final state of solution with emphasis on components that stand apart in quality. Possible development paths and open problems were presented.
+
+    \noindent \textbf{Keywords:} virtual machines, remote desktop, libvirt, cloud
   \end{abstract}
 }
 
@@ -373,15 +382,15 @@
 
 
 % --- 7. Wykaz symboli i skrótów - jeśli nie ma, zakomentować
-\chapter*{Wykaz symboli i skrótów}
+% \chapter*{Wykaz symboli i skrótów}
 
-\begin{tabular}{cl}
-  RDP            & \href{https://docs.microsoft.com/pl-pl/windows/win32/termserv/remote-desktop-protocol?redirectedfrom=MSDN}{Remote Desktop Protocol} \\
-  *              & operator gwiazdka                                                                                                                   \\
-  $\widetilde{}$ & tylda
-\end{tabular}
-\\
-\thispagestyle{empty}
+% \begin{tabular}{cl}
+%   RDP            & \href{https://docs.microsoft.com/pl-pl/windows/win32/termserv/remote-desktop-protocol?redirectedfrom=MSDN}{Remote Desktop Protocol} \\
+%   *              & operator gwiazdka                                                                                                                   \\
+%   $\widetilde{}$ & tylda
+% \end{tabular}
+% \\
+% \thispagestyle{empty}
 
 
 % ----- 8. Spis rysunków - jeśli nie ma, zakomentować --------
@@ -397,13 +406,13 @@
 
 % 10. Spis załączników - jak nie ma załączników, to zakomentować lub usunąć
 
-\chapter*{Spis załączników}
-\begin{enumerate}
-  \item Załącznik 1
-  \item Załącznik 2
-  \item Jak nie występują, usunąć rozdział.
-\end{enumerate}
-\thispagestyle{empty}
+% \chapter*{Spis załączników}
+% \begin{enumerate}
+%   \item Załącznik 1
+%   \item Załącznik 2
+%   \item Jak nie występują, usunąć rozdział.
+% \end{enumerate}
+% \thispagestyle{empty}
 
 
 \end{document}
