@@ -47,10 +47,10 @@ Przy wdrażaniu systemu najszybciej i najbezpieczniej jest skorzystać z metod o
 \subsubsection{Moduły napisane w technologii .NET}
 W przypadku budowania modułu nadzorcy i serwera wirtualizacji potrzebne są narzędzia deweloperskie .NET 5.0.
 W trakcie budowania aplikacji wszystkie użyte biblioteki zostaną pobrane przy użyciu menadżera pakietów Nuget.
-Przy uruchomieniu serwera wirtualizacji potrzebny jest, poza wymaganiami zdefiniowanymi w rozdziale \ref{system_requirements.virtsrv_rquirements}, zainstalowany \texttt{Vagrant} wraz z wtyczka \texttt{vagrant-libvirt} w wersji przynajmniej 0.7.0.
+Przy uruchomieniu serwera wirtualizacji potrzebny jest, poza wymaganiami zdefiniowanymi w rozdziale \ref{system_requirements.virtsrv_rquirements}, zainstalowany Vagrant wraz z wtyczka vagrant-libvirt w wersji przynajmniej 0.7.0.
 
 \subsubsection{Moduły napisane w technologii Node}
-W przypadku budowania modułów aplikacji klienckiej oraz panelu administracyjnego potrzebny będzie pakiet \texttt{Node}. Przed zbudowaniem aplikacji należy pobrać wszystkie użyte biblioteki przy użyciu menadżera pakietów \texttt{npm}.
+W przypadku budowania modułów aplikacji klienckiej oraz panelu administracyjnego potrzebny będzie pakiet Node. Przed zbudowaniem aplikacji należy pobrać wszystkie użyte biblioteki przy użyciu menadżera pakietów npm.
 Są one zdefiniowane w projekcie aplikacji i zostaną pobrane automatycznie.
 
 \subsection{Konfiguracja aplikacji klienckiej}
@@ -288,7 +288,7 @@ Serwer wirtualizacji także zakończy się z błędem, jeżeli zabraknie broker�
 Dodatkowo, jeżeli nie będzie żadnego nadzorcy nasłuchującego poprzez wewnętrznego brokera wiadomości, serwer wirtualizacji zgłosi błąd i zakończy pracę.
 
 \subsection{Parametry uruchomienia kontenera panelu administracyjnego}
-Kontener zawierający panel administratory udostępnia aplikacje poprzez serwer HTTP \texttt{nginx}.
+Kontener zawierający panel administratory udostępnia aplikacje poprzez serwer HTTP nginx.
 Do komunikacji wystawia on porty 80 (HTTP) oraz 443 (HTTPS).
 Należy przekierować je na odpowiednie porty uruchamiającego systemu.
 
