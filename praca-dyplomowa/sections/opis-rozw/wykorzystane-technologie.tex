@@ -4,54 +4,57 @@
 \label{technologies}
 
 \subsection{Technologie realizacji strony klienckiej}
-%[LINK]Dodac strony do technologii
-Realizacja panelu administracyjnego oraz aplikacji klienckiej, przez które użytkownicy i administratorzy korzystają z systemu, zostały wykonane przy użyciu platformy programistycznej Angular.
+Realizacja panelu administracyjnego oraz aplikacji klienckiej, przez które użytkownicy i administratorzy korzystają z systemu, zostały wykonane przy użyciu platformy programistycznej Angular (\url{https://angular.io/}).
 Wykorzystaliśmy ją z powodu znajomości technologii, co umożliwiło sprawną implementację aplikacji.
-W każdym przypadku skorzystaliśmy z języka TypeScript, który jest wykorzystywany przez Angulara oraz kompiluje się do JavaScriptu.
+W każdym przypadku skorzystaliśmy z języka TypeScript (\url{https://www.typescriptlang.org/}), który jest wykorzystywany przez Angulara oraz kompiluje się do JavaScriptu(\url{https://www.ecma-international.org/publications-and-standards/standards/ecma-262/}).
 
-Aplikacja kliencka uruchamiana jest na systemie operacyjnym użytkownika poprzez technologie Electron, która umożliwia wyświetlanie aplikacji internetowej w postaci okna.
+Aplikacja kliencka uruchamiana jest na systemie operacyjnym użytkownika poprzez technologie Electron (\url{https://www.electronjs.org/}), która umożliwia wyświetlanie aplikacji internetowej w postaci okna.
 W wielkim uproszczeniu Electron korzysta z silnika Chrome'a aby uruchomić aplikację jako stronę internetową i wyświetlić ją jak inne okna w systemie.
 Ułatwiło nam to stworzenie aplikacji od razu na wiele systemów operacyjnych.
-Dodatkowym plusem korzystania z Electrona jest możliwość odwołania do silnika NodeJS, aby zwiększyć możliwości dostępu do zasobów systemu operacyjnego.
+Dodatkowym plusem korzystania z Electrona jest możliwość odwołania do silnika NodeJS (\url{https://nodejs.org/en/}), aby zwiększyć możliwości dostępu do zasobów systemu operacyjnego.
 Wykorzystaliśmy go do uruchamiania podprocesu klienta RDP, aby po uzyskaniu sesji od razu zestawić połączenie z wybraną maszyną wirtualną.
 
-\subsection{Technologie realizacji strony serwerowej}
-%[LINK] Dodac strony do technologii
-W przypadku aplikacji nadzorcy oraz serwera wirtualizacji zdecydowaliśmy się na środowisko uruchomieniowe .NET 5.0 z językiem C\#.
-Ekosystem .NET jest przez nas dobrze poznany i daje nam możliwości aby ułatwić oraz przyśpieszyć naszą pracę.
-Głównym ułatwieniem była duża baza bibliotek zgromadzona w menadżerze pakietów Nuget, do którego dodaliśmy też własne pakiety, aby wydzielić wspólną część kodu aplikacji serwerowych.
+Aby ułatwic implementacje zaprojektowanego API (rozdział \ref{communication:api})) do komuniakcji pomiędzy aplikacjami od strony klienta do nadzorcy skorzystaliśmy z generatora kodu OpenAPI Generator (\url{https://openapi-generator.tech/}).
+Dzięki niemu generowaliśmy gotowe szablony klas do komunikacji ze strony klienta oraz nadzorcy.
+Zmniejszyło to do minimum błędy związane z błędna implementacją opisanego API.
 
-Do zarządzania i monitorowania maszyn wirtualnych skorzystaliśmy z libvirta.
+\subsection{Technologie realizacji strony serwerowej}
+W przypadku aplikacji nadzorcy oraz serwera wirtualizacji zdecydowaliśmy się na środowisko uruchomieniowe .NET 5.0 (\url{https://dotnet.microsoft.com/en-us/}) z językiem \texttt{C\#} (\url{https://docs.microsoft.com/en-us/dotnet/csharp/})).
+Ekosystem .NET jest przez nas dobrze poznany i daje nam możliwości aby ułatwić oraz przyśpieszyć naszą pracę.
+Głównym ułatwieniem była duża baza bibliotek zgromadzona w menadżerze pakietów Nuget (\url{https://www.nuget.org/}), do którego dodaliśmy też własne pakiety, aby wydzielić wspólną część kodu aplikacji serwerowych.
+
+Do zarządzania i monitorowania maszyn wirtualnych skorzystaliśmy z libvirta (\url{https://libvirt.org/}).
 W serwerze wirtualizacji wykorzystaliśmy rozszerzoną przez nas bibliotekę odwołującą się do oryginalnych bibliotek libvirta.
 Jest to technologie powszechnie znana i dobrze przez nas poznana. Był to najprostszy sposób do realizacji zarządcy maszyn wirtualnych.
-Dodatkowo współpracuje ona także z technologią Vagrant, która umożliwia proste powielanie maszyn wirtualnych z wzorca dostarczonego przez użytkownika.
+Dodatkowo współpracuje ona także z technologią Vagrant (\url{https://www.vagrantup.com/}), która umożliwia proste powielanie maszyn wirtualnych z wzorca dostarczonego przez użytkownika.
 Ułatwi ona administratorom tworzenie obrazów uruchamianych systemów operacyjnych.
 
-Serwer wirtualizacji komunikuje się z Vagrantem poprzez specjalnie przygotowany plik wykonywalny z kodem w Ruby.
+Serwer wirtualizacji komunikuje się z Vagrantem poprzez specjalnie przygotowany plik wykonywalny z kodem w Ruby (\url{https://www.ruby-lang.org/en/}).
 Vagrant wykonywany jest jako podproces serwera wirtualizacji w postaci polecenia powłoki.
 Parametry przekazywane są poprzez zmienne środowiskowe ustawiane przez serwer wirtualizacji chwile przed uruchomieniem podprocesu.
-Do dodatkowych konfiguracji maszyn wirtualnych użyliśmy technologii Ansible.
+Do dodatkowych konfiguracji maszyn wirtualnych użyliśmy technologii Ansible (\url{https://www.ansible.com/}).
 Wybraliśmy ją, ponieważ jest znacznie mniej bezawaryjna niż konfigurowanie systemu przez skrypty powłoki.
 Oprócz tego skorzystaliśmy z niej do konfiguracji komputerów przed uruchomieniem pisanego przez nas systemu.
 
+Do komunikacji pomiędzy modułami po stronie serwerowej skorzystaliśmy z asynchronicznego brokera wiadomości RabbitMQ (\url{https://www.rabbitmq.com/}).
+Umożliwił nam on bezproblemową implementacje komunikacji pomiędzy modułami nadzorcy i serwera wirtualizacji.
+
 \subsection{Technologie testowania}
-%[LINK] Dodac strony do technologii
-Do testów jednostkowych aplikacji od strony klienckiej skorzystaliśmy z platformy Jest.
+Do testów jednostkowych aplikacji od strony klienckiej skorzystaliśmy z platformy Jest (\url{https://jestjs.io/}).
 Ułatwia ona pisanie testów przy niepełnym obrazie systemu. W przypadku rozbudowanej komunikacji naszego systemu było to bardzo przydatne.
-W przypadku aplikacji serwerowych skorzystaliśmy z platformy NUnit.
+W przypadku aplikacji serwerowych skorzystaliśmy z platformy NUnit (\url{https://nunit.org/}).
 Znaliśmy ją z wcześniejszych projektów, więc mogliśmy od razu przystąpić do pracy.
 Do testów komunikacji poprzez brokera wiadomości oraz integracji z libvirtem także skorzystaliśmy z NUnita.
 
-Do testów integracyjnych aplikacji Angularowych korzystaliśmy z platformy Cypress.
+Do testów integracyjnych aplikacji Angularowych korzystaliśmy z platformy Cypress (\url{https://www.cypress.io/}).
 Zdecydowaliśmy się na nią, ponieważ wykonuje ona zrzut widoku podczas każdego kroku testów.
 Wcześniej znane nam rozwiązania nie posiadały takich funkcji, przez co bardzo trudno było szukać problemów w testach.
-Dodatkowe testy API wystawianego przez aplikacje nadzorcy wykonaliśmy Postmanem.
+Dodatkowe testy API wystawianego przez aplikacje nadzorcy wykonaliśmy Postmanem (\url{https://www.postman.com/}).
 
 \subsection{Utrzymanie kodu}
-%[LINK] Dodac strony do technologii
 Do sprawnego zarządzania projektem wykorzystaliśmy strukturę wielu repozytoriów dostępnych na stronie github.
-Wspólne części kodu wydzielaliśmy w postaci pakietów NPM oraz Nuget.
-Aby zautomatyzować proces publikacji pakietów skorzystaliśmy ze środowiska ciągłej integracji Github Actions.
+Wspólne części kodu wydzielaliśmy w postaci pakietów NPM (\url{https://www.npmjs.com/}) oraz Nuget.
+Aby zautomatyzować proces publikacji pakietów skorzystaliśmy ze środowiska ciągłej integracji Github Actions (\url{https://github.com/features/actions}).
 Umożliwiło to praktycznie bezproblemowa realizację komunikacji pomiędzy nadzorcą a aplikacją kliencką i panelem administratora.
 Tworzyliśmy automatycznie generowane pakiety z częściową implementacja obiektów transportowych oraz struktury zapytań.
 
