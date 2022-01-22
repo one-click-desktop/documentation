@@ -1,11 +1,11 @@
 \documentclass[../wstep.tex]{subfiles}
 
 \begin{document}
-% TODO: dopisać brokera wiadomości
 \begin{itemize}
   \item \textbf{Aplikacja kliencka} - aplikacja okienkowa uruchamiana na komputerze użytkownika, która umożliwia komunikację z systemem oraz uruchomienie zewnętrznego programu implementującego protokół RDP.
   \item \textbf{Aplikacja nadzorcza (Nadzorca)} - aplikacja, która przetwarza zapytania od aplikacji klienckiej oraz komunikuje się ze wszystkimi serwerami wirtualizacji. Na podstawie tych informacji buduje model zajętości każdego z serwerów wirtualizacji oraz decyduje kiedy, i na którym, serwerze trzeba uruchomić nowe maszyny wirtualne. Decyduje również, do której wirtualnej maszyny ma podłączyć się użytkownik proszący o utworzenie sesji.
   \item \textbf{Serwer wirtualizacji} - komputer, który udostępnia swoje zasoby (rdzenie procesora, karty graficzne, pamięć RAM oraz przestrzeń dyskową) w postaci uruchamianych na nim maszyn wirtualnych. Komputer ten uruchamia aplikację, która odpowiada na zapytania aplikacji nadzorczej oraz wykonuje operacje na maszynach wirtualnych (uruchamianie i wyłączanie). Komputer może uruchamiać co najwyżej jedną aplikację, dlatego zarówno komputer, jak i aplikację, nazywamy serwerem wirtualizacji.
+  \item \textbf{Broker wiadomości} - aplikacja przekazująca wiadomości pomiędzy połączonymi z nią innymi aplikacjami.
   \item \textbf{Maszyna wirtualna CPU} - maszyna systemowa emulująca, lub para-emulująca, sprzęt i służąca do uruchamiania systemu operacyjnego. Udostępnia użytkownikowi podstawowe zasoby (procesor, pamięć RAM i przestrzeń dyskowa). Uruchamiana jest na serwerze wirtualizacji z liczbą zasobów określoną w konfiguracji. Maszyna wirtualna uruchamia system operacyjny GNU/Linux (ArchLinux - \url{https://archlinux.org/}).
   \item \textbf{Maszyna wirtualna GPU} - maszyna analogiczna do maszyny wirtualnej CPU. Wyróżnia się przekazaną na wyłączność, za pośrednictwem mechanizmu PCI Passthrough, kartą graficzną podłączona do serwera wirtualizacji.
   \item \textbf{RDP} - protokół zdalnego dostępu do pulpitu od firmy Microsoft \parencite{rdp}. Maszyny wirtualne uruchamiają serwer RDP (xrdp - \url{http://xrdp.org/}), który umożliwia zdalną pracę za pośrednictwem protokołu RDP.
@@ -16,7 +16,7 @@
   \item \textbf{Konto użytkownika} - profil użytkownika w systemie, do którego ma dostęp na każdej maszynie wirtualnej. Za pomocą przygotowanych wcześniej danych logowania może uzyskać dostęp do maszyn wirtualnych. Przechowywane są w zewnętrznym (poza opisanym systemem) systemie katalogowym.
   \item \textbf{Katalog użytkownika} - prywatny folder dostępny dla użytkownika na każdej maszynie wirtualnej. Przechowywany na zewnętrznym (poza opisanym systemem) dysku sieciowym.
   \item \textbf{Konfiguracja stała} - konfiguracja maszyny wirtualnej, która nie zmienia się w zależności od miejsca uruchomienia. Docelowo ta konfiguracja ma być zapisana w Vagrant Boxie. W razie potrzeby można ja także zdefiniować w odpowiednim Ansible playbooku.
-  \item \textbf{Konfiguracja zmienna} - konfiguracja maszyny wirtualnej, która zmienia się w zależności od miejsca uruchomienia. Jest definiowana w odpowiednim Ansible playbooku uruchamianym przy każdym włączeniu maszyny. % TODO: do zweryfikowania
+  \item \textbf{Konfiguracja zmienna} - konfiguracja maszyny wirtualnej, która zmienia się w zależności od miejsca uruchomienia. Jest definiowana w odpowiednim Ansible playbooku uruchamianym przy każdym włączeniu maszyny.
 \end{itemize}
 
 \end{document}
