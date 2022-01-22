@@ -170,7 +170,7 @@ W sekcji \texttt{OneClickDesktop} występują parametry:
 \begin{itemize}
 	\item \texttt{VirtualizationServerId} - identyfikator serwera wirtualizacji używany w komunikacji poprzez wewnętrznego brokera wiadomości. Powinna być unikatowa w skali jednej instancji systemu OneClickDesktop. Domyślnie przyjmuje wartość \texttt{virtsrv-test}.
 	\item \texttt{OversserCommunicationShutdownTimeout} - po upływie tylu sekund bez komunikacji od jakiegokolwiek nadzorcy serwer wirtualizacji uznaje, że zabrakło nadzorców w systemie. Nastąpi wtedy wyłączenie aplikacji serwera wirtualizacji. Domyślnie parametr przyjmuje wartość \texttt{120}. Zaleca się aby wartość parametru była większa niż dwukrotność parametru \texttt{ModelUpdateInterval} z konfiguracji nadzorcy opisanej w \ref{system_startup.overseer_conf}.
-	      % TODO: smogork dodaj opis LibvirtUri
+	\item \texttt{LibvirtUri} - adres do połaczenia z usługa libvirta. Vagrant jak i biblioteka libvirta skorzysta z tego adresu do połaczenia. Specyfikacja libvirta dokładnie opisuje format tego adresu\parencite{libvirt-uri}.
 	\item \texttt{VagrantFilePath} - ścieżka do specjalnie przygotowanego pliku wsadowego dla Vagranta. Wykorzystywany jest przez system do uruchamiania i wyłączania maszyn wirtualnych. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
 	\item \texttt{PostStartupPlaybook} - skrypt wykonywany przy pomocy Ansible'a zaraz po uruchomieniu maszyny wirtualnej. Koniecznie należy przetestować czy konfiguracja wykonuje się prawidłowo. Przy każdym błędzie wykonania skryptu maszyna wirtualna zostanie usunięta. Domyślnie przyjmuje wartość \texttt{res/poststartup\_playbook.yml}.
 	\item \texttt{VagrantboxUri} - identyfikator szablonowej maszyny wirtualnej. Musi ona spełniać szereg wymogów opisanych w \ref{system_requirements.vagrant_box}. W przeciwnym wypadku system nie będzie w stanie uruchomić takiego szablonu. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
@@ -241,6 +241,9 @@ Przykładowa zawartość głównego pliku konfiguracyjnego:
 W pliku opisującym typy zawarte jest ile potrzeba zasobów aby uruchomić maszynę wytworzoną z tego typu.
 
 Każdy typ ma przypisaną nazwę. Oznaczmy ją jako \texttt{\$\{template\_name\}}.
+Nazwa typu powinna być unikatowa na skale systemu.
+Jeżeli chcemy udostępnić ten sam typ na wielu serwerach wirtualizacja należy nadać mu takie same zasoby.
+System może nieprawidłowo zarządzać zasobami, gdy uzyska 2 wzorce zasobów tego samego typu maszyny.
 Plik opisujący typ musi mieć nazwę \texttt{\$\{template\_name\}\_template.ini}.
 Plik konfiguracyjny dla wybranego typu musi znajdować się w folderze z pozostałymi plikami konfiguracyjnymi.
 Jeżeli dla jakiejkolwiek nazwy typu aplikacja nie znajdzie pliku konfiguracyjnego to zakończy się z błędem zaraz po uruchomieniu.

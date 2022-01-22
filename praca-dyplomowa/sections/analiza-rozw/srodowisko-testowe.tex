@@ -2,6 +2,18 @@
 
 \begin{document}
 
-% TODO: smogork opisz swoj system
+Testy przeprowadzaliśmy na dwóch komputerach podłączonych do wspólnej sieci lokalnej.
+Usługa OpenLDAP była uruchomiona na innym komputerze oraz udostępniała testową bazę użytkowników.
+Każdy z nich pracował pod kontrolą systemu operacyjnego Arch Linux w wersji ze stycznia 2022 roku.
+Obydwa pracowały z 8 GB pamięci operacyjnej oraz 4 rdzeniowym procesorem o 8 wątkach (Intel i7-2600K oraz i7-4790).
+Do testów skonfigurowaliśmy serwery wirtualizacji, aby miały do dyspozycji 6 wątków oraz 4096 MB pamięci operacyjnej.
 
+Niestety taka platforma uniemożliwiła przetestowanie funkcjonalności PCI Passthrough (patrz wymagania sprzętowe serwera wirtualizacji \ref{system_requirements.virtsrv_rquirements}).
+Budowa ich płyt głównych nie pozwalała na całkowita izolację urządzeń podłączonych do złączy PCI Express.
+Skorzystaliśmy z innego komputera, który posiadał inna konstrukcję płyty głównej i każde z urządzeń zostało prawidłowo odizolowane dzięki przydzieleniu innych adresów pamięci.
+Pracował on pod kontrola systemu operacyjnego Arch Linux ze stycznia 2022 roku.
+Posiadał on 48GB pamięci operacyjnej oraz 12 rdzeniowy procesor o 24 wątkach (AMD Threadripper 1920X).
+Uruchamiany na nim serwer wirtualizacji miał do dyspozycji 20 wątków oraz 43008 MB pamięci operacyjnej.
+
+Na każdym z tych komputerów można było uruchomić aplikację serwera wirtualizacji, panelu administracyjnego oraz nadzorcy.
 \end{document}
