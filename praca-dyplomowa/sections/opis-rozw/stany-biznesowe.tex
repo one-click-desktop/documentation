@@ -30,11 +30,11 @@ Serwer wirtualizacji monitoruje zasoby zużywane przez uruchamiane na nim maszyn
   \label{state_virtsrv}
 \end{figure}
 
-Przy starcie serwer wirtualizacji oczekuje na działającego nadzorcy w sieci.
+Przy starcie serwer wirtualizacji oczekuje na działającego w sieci nadzorcę.
 W przypadku jego braku serwer kończy działanie zwracając błąd.
-Pod względem zasobów, może on mieć wolne zasoby aby utworzyć nowe maszyny, lub też nie.
+Serwer może mieć wolne zasoby na uruchomienie maszyny lub ich brak.
 Jednak ważniejszym stanem z perspektywy działania serwera są podłączeni do niego użytkownicy.
-W przypadku gdy podłączony jest do niego przynajmniej jeden użytkownik, serwer nie może się poprawnie zakończyć pracy aż użytkownik nie skończy używać maszyny.
+W przypadku gdy podłączony jest do niego przynajmniej jeden użytkownik, serwer nie może poprawnie zakończyć pracy aż użytkownik nie skończy używać maszyny.
 
 \subsection{Użytkownik}
 
