@@ -22,7 +22,7 @@ Schematyczny obraz systemu przedstawia poniższy rysunek.
     \caption{Schematyczna architektura systemu}
 \end{figure}
 
-Połączenia oznaczone liczbami rzymskimi oznaczają kolejki komunikacji za pośrednictwem brokera wiadomości, które opisane zostały w \hyperref[modules:broker]{punkcie jemu poświęconym.} Z założenia system powinien móc skalować się w dwóch wymiarach, to znaczy:
+Połączenia oznaczone liczbami rzymskimi oznaczają kolejki komunikacji za pośrednictwem brokera wiadomości, które opisane zostały w \ref{modules:broker}. Z założenia system powinien móc skalować się w dwóch wymiarach, to znaczy:
 \begin{enumerate}
     \item Zwiększanie liczby serwerów wirtualnych - zwiększenie liczby istniejących jednocześnie sesji.
     \item Zwiększenie liczby nadzorców - zwiększenie liczby obsługiwanych klientów jednocześnie oraz niezawodności systemu.
@@ -45,11 +45,11 @@ Klasa \texttt{Resources} oraz jej pochodne opisują zasoby systemowe i są używ
 \subsection{Nadzorca}
 \label{modules:overseer}
 
-Aplikacja mająca za zadanie obsługiwać komunikację z aplikacjami klienckimi oraz wysyłać polecenia do serwerów wirtualizacji. Udostępnia \hyperref[communication:api]{REST API} służące do komunikacji z aplikacjami klienckimi. Do komunikacji z serwerami wirtualizacji wykorzystuje \hyperref[modules:broker]{kolejki}.
+Aplikacja mająca za zadanie obsługiwać komunikację z aplikacjami klienckimi oraz wysyłać polecenia do serwerów wirtualizacji. Udostępnia REST API (\ref{communication:api}), służące do komunikacji z aplikacjami klienckimi. Do komunikacji z serwerami wirtualizacji wykorzystuje kolejki wiadomości (\ref{modules:broker}).
 
 Nadzorca przechowuje wewnętrznie model systemu zawierający informację o działających serwerach wirtualizacji i stanie ich maszyn. Na podstawie tego modelu moduł stwierdza, do której maszyny przypisać nowo utworzoną sesję. Wewnętrzne procesy skupione są wokół zmian modelu. Jeżeli proces wysłał do serwera wirtualizacji prośbę o zmianę stanu, to dalsze procesowanie odbywa się, gdy stan modelu został zaktualizowany, i na podstawie jego stanu podejmowane są decyzje.
 
-Dzięki zastosowaniu \hyperref[modules:broker]{kolejek} oraz \hyperref[communication:broker]{zasad komunikacji} w systemie może istnieć więcej niż jeden nadzorca. Instancje nadzorców działają niezależnie od siebie i przechowują identyczny model systemu. Dzięki temu uzyskujemy retencję i możemy zmniejszyć obciążenie poszczególnych nadzorców.
+Dzięki zastosowaniu kolejek wiadomości (\ref{modules:broker}) oraz zasad komunikacji (\ref{communication:broker}) w systemie może istnieć więcej niż jeden nadzorca. Instancje nadzorców działają niezależnie od siebie i przechowują identyczny model systemu. Dzięki temu uzyskujemy retencję i możemy zmniejszyć obciążenie poszczególnych nadzorców.
 
 \subsection{Serwer wirtualizacji}
 \label{modules:virtsrv}
@@ -64,7 +64,7 @@ System zaprojektowany jest w taki sposób aby teoretycznie nie było ograniczeni
 \subsection{Aplikacja kliencka}
 \label{modules:client}
 
-Aplikacja okienkowa umożliwiająca użytkownikowi autoryzację, uzyskanie sesji oraz automatyczne rozpoczęcie połączenia. Komunikuje się z nadzorcą za pomocą \hyperref[communication:api]{REST API}.
+Aplikacja okienkowa umożliwiająca użytkownikowi autoryzację, uzyskanie sesji oraz automatyczne rozpoczęcie połączenia. Komunikuje się z nadzorcą za pomocą REST API (\ref{communication:api}).
 
 Proces uzyskania sesji z perspektywy aplikacji klienckiej zawiera:
 \begin{enumerate}

@@ -40,8 +40,8 @@ Serwer powiadamia o tym fakcie nadzorców, po czym oczekuje na polecenie wyłąc
 \subsection{Aktualizacja stanu}
 
 Nadzorca może w każdej chwili poprosić wszystkie serwery wirtualizacji
-o przesłanie ich aktualnego stanu poprzez wspólna kolejkę \hyperref[modules:broker:queue-virtsrv]{do serwerów wirtualizacji}.
-Serwery muszą bezwarunkowo odpowiedzieć aktualnym stanem do wspólnej \hyperref[modules:broker:queue-overseers]{kolejki zwrotnej}.
+o przesłanie ich aktualnego stanu poprzez wspólna kolejkę do serwerów wirtualizacji (\ref{modules:broker:queue-virtsrv}).
+Serwery muszą bezwarunkowo odpowiedzieć aktualnym stanem do wspólnej kolejki zwrotnej (\ref{modules:broker:queue-overseers}).
 
 \begin{figure}[H]
     \centering
@@ -53,7 +53,7 @@ Serwery muszą bezwarunkowo odpowiedzieć aktualnym stanem do wspólnej \hyperre
 \subsection{Włączenie maszyny}
 
 Nadzorca może poprosić konkretny serwer wirtualizacji aby utworzył maszynę o konkretnej nazwie.
-Jeżeli maszynie nie istnieje, to zostanie uruchomiona oraz serwer odeśle powiadomienie \hyperref[modules:broker:queue-overseers]{zbiorcza kolejką} o zmianie modelu.
+Jeżeli maszynie nie istnieje, to zostanie uruchomiona oraz serwer odeśle powiadomienie zbiorcza kolejką(\ref{modules:broker:queue-overseers}) o zmianie modelu.
 W przeciwnym wypadku nie zrobi nic.
 
 \begin{figure}[H]
@@ -67,7 +67,7 @@ W przeciwnym wypadku nie zrobi nic.
 
 Nadzorca może poprosić konkretny serwer wirtualizacji aby wyłączył konkretną maszynę wirtualną.
 Jeżeli maszynę można wyłączyć to zostanie on wyłączona.
-Następnie serwer wirtualizacji odeśle powiadomienie \hyperref[modules:broker:queue-overseers]{zbiorcza kolejką} o zmianie modelu.
+Następnie serwer wirtualizacji odeśle powiadomienie zbiorczą kolejką (\ref{modules:broker:queue-overseers}) o zmianie modelu.
 W przeciwnym wypadku nie zrobi nic.
 
 \begin{figure}[H]
