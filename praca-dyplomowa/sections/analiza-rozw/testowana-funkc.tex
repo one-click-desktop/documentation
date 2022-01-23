@@ -29,7 +29,7 @@ Kroki:
 \end{enumerate}
 
 \subsection{Standardowe użycie systemu przez użytkownika}
-Użytkownik podłącza się do systemu składającego się z pojedynczego nadzorcy oraz serwera wirtualizacji, gdzie działa przynajmniej jedna wolna maszyna.
+Użytkownik podłącza się do systemu złożonego z pojedynczego nadzorcy oraz serwera wirtualizacji, gdzie działa przynajmniej jedna wolna maszyna.
 Użytkownik powinien prawidłowo otrzymać sesję, a po odłączeniu się od maszyny, powinna ona zostać wyłączona po 15 minutach (czas konfigurowalny).
 
 Kroki:
@@ -43,7 +43,7 @@ Kroki:
 \end{enumerate}
 
 \subsection{Standardowe użycie systemu przez użytkownika przy awarii nadzorcy}
-Użytkownik podłącza się do systemu składającego się z dwóch nadzorców oraz jednego serwera wirtualizacji, gdzie działa przynajmniej jedna wolna maszyna.
+Użytkownik podłącza się do systemu złożonego z dwóch nadzorców oraz jednego serwera wirtualizacji, gdzie działa przynajmniej jedna wolna maszyna.
 Użytkownik uzyskuje sesję, a w trakcie jej użytkowania następuje awaria nadzorcy.
 Po odłączeniu się od sesji i ponownej prośbie o sesję, w czasie krótszym niż czas wyłączenia maszyny, użytkownik powinien otrzymać ponownie tą samą maszynę.
 
@@ -55,7 +55,7 @@ Kroki:
   \item Podłącz się poprzez RDP do uzyskanej maszyny.
   \item Wyłącz tego nadzorcę, z którym klient się komunikował.
   \item Zakończ sesję z poziomu aplikacji.
-  \item Poproś ponownie o sesję poprzez aplikację kliencką (powinien uzyskać tą sama maszynę)
+  \item Poproś ponownie o sesję poprzez aplikację kliencką (powinien uzyskać tą sama maszynę).
   \item Podłącz się poprzez RDP do uzyskanej maszyny.
 \end{enumerate}
 
@@ -97,7 +97,7 @@ Kroki:
 \end{enumerate}
 
 \subsection{Utrata komunikacji przy działającej sesji}
-W trakcie działania systemu, przy utracie ostatniego nadzorcy, serwer wirtualizacji powinien zakończyć działanie. Jeżeli serwer posiada działające sesje, przed zakończeniem pracy musi poczekać na ich zakończenie.
+W trakcie działania systemu, przy utracie ostatniego nadzorcy, serwer wirtualizacji powinien zakończyć działanie. Jeżeli serwer posiada działające sesje, przed zakończeniem pracy, musi poczekać na ich zakończenie.
 
 Kroki:
 \begin{enumerate}
@@ -106,14 +106,14 @@ Kroki:
   \item Poproś o sesję poprzez aplikację kliencką.
   \item Podłącz się poprzez RDP do uzyskanej maszyny.
   \item Wyłącz nadzorcę lub brokery wiadomości.
-  \item Poczekaj na wykrycie braku nadzorców (brak otrzymanych wiadomości)
+  \item Poczekaj na wykrycie braku nadzorców (brak otrzymanych wiadomości).
   \item Wyświetl błąd, ale kontynuuj działanie.
   \item Poczekaj na zakończenie sesji.
   \item Zakończ działanie.
 \end{enumerate}
 
 \subsection{Odzyskanie komunikacji przy działającej sesji}
-W trakcie działania systemu, przy utracie ostatniego nadzorcy, serwer wirtualizacji powinien zakończyć działanie. Jeżeli serwer posiada działające sesje, przed zakończeniem pracy musi poczekać na ich zakończenie. Jeżeli przed zakończeniem ostatniej sesji nastąpi przywrócenie komunikacji, serwer powinien kontynuować działanie po zakończeniu sesji.
+W trakcie działania systemu, przy utracie ostatniego nadzorcy, serwer wirtualizacji powinien zakończyć działanie. Jeżeli serwer posiada działające sesje, przed zakończeniem pracy, musi poczekać na ich zakończenie. Jeżeli przed zakończeniem ostatniej sesji nastąpi przywrócenie komunikacji, serwer powinien kontynuować działanie po zakończeniu sesji.
 
 Kroki:
 \begin{enumerate}
@@ -122,7 +122,7 @@ Kroki:
   \item Poproś o sesję poprzez aplikację kliencką.
   \item Podłącz się poprzez RDP do uzyskanej maszyny.
   \item Wyłącz nadzorcę lub brokery wiadomości.
-  \item Poczekaj na wykrycie braku nadzorców (brak otrzymanych wiadomości)
+  \item Poczekaj na wykrycie braku nadzorców (brak otrzymanych wiadomości).
   \item Wyświetl błąd, ale kontynuuj działanie.
   \item Włącz wyłączony wcześniej moduł.
   \item Poczekaj na zakończenie sesji.
