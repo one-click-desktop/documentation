@@ -60,10 +60,10 @@ Aplikacja nadzorcy i serwer panelu administracyjnego może być uruchomiony na d
 System operacyjny, pod którym pracuje komputer, nie ma znaczenia.
 
 \subsubsection{Wymagania systemowe}
-Do uruchomienia aplikacji nadzorcy i serwera HTTP z panelem administracyjnym potrzeba zainstalowanego \texttt{Dockera} w systemie.
+Do uruchomienia aplikacji nadzorcy i serwera HTTP z panelem administracyjnym potrzeba zainstalowanego Dockera w systemie.
 Każdy z tych dwóch modułów można zbudować do kontenera, w którym wszystkie zależności zostaną spełnione.
 
-Do ręcznego uruchomienia aplikacji nadzorcy, bez pośrednictwa \texttt{Dockera}, wymagany jest \texttt{.NET 5}. W przypadku panelu administratora do kompilacji wymagany jest \texttt{NodeJS} w wersji \texttt{16.13.2}. Zbudowany panel można udostępnić za pomocą dowolnego serwera HTTP.
+Do ręcznego uruchomienia aplikacji nadzorcy, bez pośrednictwa Dockera, wymagany jest .NET 5. W przypadku panelu administratora do kompilacji wymagany jest NodeJS w wersji \texttt{16.13.2}. Zbudowany panel można udostępnić za pomocą dowolnego serwera HTTP.
 
 \subsection{Wymagania serwera wirtualizacji}
 \label{system_requirements.virtsrv_rquirements}
@@ -92,20 +92,20 @@ Odradzamy wykorzystywania takiego rozwiązania w przypadku publicznego dostępu 
 W przypadku braku odpowiedniego sprzętu oraz ograniczenia dostępu do systemu można spróbować zastosować to rozwiązanie.
 
 \subsubsection{Wymagania systemowe}
-Serwer wirtualizacji, oprócz działającej usługi \texttt{Dockera}, potrzebuje dodatkowych usług.
-Do prawidłowego działania wymagana jest działająca usługa zarządcy wirtualnych maszyn \texttt{libvirt} w wersji \texttt{7.10+}. W przypadku ręcznego uruchamiania aplikacji, bez pośrednictwa \texttt{Dockera}, wymagany jest \texttt{Vagrant} w wersji \texttt{2.2.11+} oraz \texttt{.NET 5}.
+Serwer wirtualizacji, oprócz działającej usługi Dockera, potrzebuje dodatkowych usług.
+Do prawidłowego działania wymagana jest działająca usługa zarządcy wirtualnych maszyn libvirt w wersji \texttt{7.10+}. W przypadku ręcznego uruchamiania aplikacji, bez pośrednictwa Dockera, wymagany jest Vagrant w wersji \texttt{2.2.11+} oraz .NET 5.
 
 Aby prawidłowo uruchomić maszynę wirtualną potrzebna jest uruchomiona usługa zapory sieciowej oraz pakiet \texttt{dnsmasq}.
-Wymagane jest także utworzenie struktur usługi \texttt{Vagrant} dla użytkownika uruchamiającego serwer wirtualizacji.
+Wymagane jest także utworzenie struktur usługi Vagrant dla użytkownika uruchamiającego serwer wirtualizacji.
 Chodzi konkretnie o utworzenie folderu \texttt{.vagrant.d} w katalogu domowym użytkownika.
 
 Aby uruchamiane maszyny wirtualne były dostępne dla innych urządzeń potrzebne jest utworzenie interfejsu sieciowego w trybie bridge.
 Nazwa interfejsu powinna być przekazana do pliku konfiguracyjnego serwera wirtualizacji.
 Maszyny wirtualne uzyskają wtedy dostęp do sieci w taki sposób, jakby były fizycznymi komputerami w sieci.
 
-W niektórych przypadkach, podczas uruchomiania maszyny wirtualnej przy użyciu \texttt{Vagranta} oraz uruchomiania wybranych kontenerów w \texttt{Dockerze}, komunikacja sieciowa z maszyną wirtualną poprzez podłączony interfejs w trybie bridge może zostać ograniczona.
+W niektórych przypadkach, podczas uruchomiania maszyny wirtualnej przy użyciu Vagranta oraz uruchomiania wybranych kontenerów w Dockerze, komunikacja sieciowa z maszyną wirtualną poprzez podłączony interfejs w trybie bridge może zostać ograniczona.
 Należy wtedy dopilnować, by w trakcie działanie systemu zapora sieciowa posiadała zasadę na samej górze łańcucha \texttt{FORWARD}, która będzie bezwarunkowo zezwalać trasować pakiety z urządzeń w trybie bridge.
-Przy uruchomieniu serwera wirtualizacji w kontenerze dockerowym trzeba dopilnować aby z sieci, w której pracuje kontener, można było osiągnąć sieć konfiguracyjna \texttt{Vagranta}.
+Przy uruchomieniu serwera wirtualizacji w kontenerze dockerowym trzeba dopilnować aby z sieci, w której pracuje kontener, można było osiągnąć sieć konfiguracyjna Vagranta.
 W przeciwnym wypadku próba uruchomienia maszyny wirtualnej zakończy się z błędem połączenia SSH.
 
 \subsection{Automatyzacja konfiguracji}
@@ -142,7 +142,7 @@ Box używa dystrybucji Arch Linux oraz spełnia wszystkie wymagania aby zostać 
 Do przygotowania szablonu proponujemy, aby skorzystać właśnie z tego obrazu.
 Jeżeli jednak potrzebne jest utworzenie niestandardowego szablonu to musi on:
 \begin{itemize}
-  \item Spełniać minimalne wymagania opisane w dokumentacji \texttt{Vagranta} \parencite{vagrant-basebox}.
+  \item Spełniać minimalne wymagania opisane w dokumentacji Vagranta \parencite{vagrant-basebox}.
   \item Mieć zainstalowany menadżer okienek. Proponowany menadżer okienek, zawarty w przykładowym szablonie, to XFCE w wersji \texttt{4.16}. (\url{https://xfce.org/})
   \item Przy uruchomieniu udostępniać usługę zdalnego pulpitu RDP. Przykładowy szablon korzysta z implementacji xrdp w wersji \texttt{0.9.17-1}
   \item Każdy nowy interfejs sieciowy powinien być tak skonfigurowany, aby uzyskać adres IP z usługi DHCP.
