@@ -11,7 +11,7 @@ Zalecanym sposobem pozyskania aplikacji klienckiej jest udanie się do sekcji z 
 Przy pierwszym uruchomieniu trzeba pobrać archiwum plików zawierające aplikację oraz plik konfiguracyjny.
 Bez pliku konfiguracyjnego aplikacja nie uruchomi się.
 
-\subsection{Zbudowanie kontenerów}
+\subsection{Budowanie kontenerów}
 \label{system_startup.containers}
 
 Moduły: panelu administracyjnego, nadzorcy i serwera wirtualizacji można uruchomić pod postacią kontenera dockerowego.
@@ -26,7 +26,7 @@ Każdy kontener przy starcie wykona skrypt \texttt{assets/entry\_point.sh}.
 \subsubsection{Budowanie kontenera serwera wirtualizacji}
 Kontener serwera wirtualizacji wymaga specjalnie przygotowanego wcześniej kontenera zawierającego wszystkie potrzebne zależności do uruchomienia aplikacji.
 Aby go zbudować należy skorzystać z pliku \texttt{\seqsplit{runtime\_container/Dockerfile}} i oznaczyć go nazwą \texttt{\seqsplit{click-desktop/virtualization-server-runtime}}.
-Kontener zawierający aplikację w czasie budowania będzie oczekiwał, ze taki obraz istnieje.
+Kontener zawierający aplikację w czasie budowania będzie oczekiwał, że taki obraz istnieje.
 
 Po zbudowaniu kontenera z zależnościami można przystąpić do budowania kontenera głównego.
 Należy do tego celu skorzystać z dostarczonego pliku \texttt{Dockerfile} w głównym folderze repozytorium.
@@ -41,7 +41,7 @@ Przy uruchomieniu skryptu \texttt{build.sh} kontenery są budowane z nazwami odp
 
 \subsection{Budowanie modułów}
 Każdy z modułów posiada dokładną instrukcję budowania w pliku \texttt{README.md}.
-Uruchamianie zbudowanych modułów poleca się tylko w przypadku rozwoju aplikacji.
+Uruchamianie zbudowanych modułów zaleca się tylko w przypadku rozwoju aplikacji.
 Przy wdrażaniu systemu najszybciej i najbezpieczniej jest skorzystać z metod opisanych w sekcjach \ref{system_startup.client_obtaining} i \ref{system_startup.containers}.
 
 \subsubsection{Moduły napisane w technologii .NET}
@@ -50,8 +50,7 @@ W trakcie budowania aplikacji wszystkie użyte biblioteki zostaną pobrane przy 
 Przy uruchomieniu serwera wirtualizacji potrzebny jest, poza wymaganiami zdefiniowanymi w rozdziale \ref{system_requirements.virtsrv_rquirements}, zainstalowany Vagrant wraz z wtyczka vagrant-libvirt w wersji przynajmniej 0.7.0.
 
 \subsubsection{Moduły napisane w technologii Node}
-W przypadku budowania modułów aplikacji klienckiej oraz panelu administracyjnego potrzebny będzie pakiet Node. Przed zbudowaniem aplikacji należy pobrać wszystkie użyte biblioteki przy użyciu menadżera pakietów npm.
-Są one zdefiniowane w projekcie aplikacji i zostaną pobrane automatycznie.
+W przypadku budowania modułów aplikacji klienckiej oraz panelu administracyjnego potrzebny będzie pakiet Node. Przed zbudowaniem aplikacji należy pobrać wszystkie wymagane biblioteki przy użyciu menadżera pakietów npm poleceniem \texttt{npm install}.
 
 \subsection{Konfiguracja aplikacji klienckiej}
 Aplikacja kliencka wymaga pliku konfiguracyjnego o nazwie \texttt{config.json} w tym samym folderze co plik wykonywalny.
@@ -60,26 +59,26 @@ W pliku konfiguracyjnym użytkownik musi podać:
   \item Adres jednego z nadzorców lub serwera dostępowego (\texttt{basePath}) - adres musi być w formacie URI.
   \item Adres zewnętrznego brokera wiadomości (\texttt{rabbitPath}) - adres musi być w formacie URI.
   \item Czy aplikacja powinna podczas połączenia RDP używać danych dostępowych takich samych jak przy logowaniu do systemu (\texttt{useRdpCredentials}) - \texttt{true} albo \texttt{false}.
-  \item Czy aplikacja powinna uruchamiać zintegrowanego klienta RDP (\texttt{startRdp}) - \texttt{true} albo \texttt{false}. Przydaje się to przy wykorzystaniu innego niż zalecany klient RDP. Aplikacja po uzyskaniu sesji wyświetli dane dostępowe do przypisanej maszyny wirtualnej.
+  \item Czy aplikacja powinna uruchamiać zintegrowanego klienta RDP (\texttt{startRdp}) - \texttt{true} albo \texttt{false}. Przydaje się to przy wykorzystaniu własnego klienta RDP. Aplikacja po uzyskaniu sesji wyświetli dane dostępowe do przypisanej maszyny wirtualnej.
 \end{itemize}
 
 \subsection{Konfiguracja panelu administracyjnego}
 \label{system_startup.admin_panel_conf}
-Przy uruchomieniu panelu administracyjnego trzeba przekazać adres jednego z nadzorców.
+Przy uruchomieniu panelu administracyjnego trzeba przekazać adres jednego z nadzorców lub serwera dostępowego (jeżeli taki jest używany).
 Aby tego dokonać należy ustawić zmienną środowiskową \texttt{API\_URL} na adres dostępowy jednego z nadzorców lub serwera dostępowego.
 
 \subsection{Konfiguracja nadzorcy}
 \label{system_startup.overseer_conf}
 Nadzorca posiada wiele parametrów związanych z działaniem całego systemu.
 Kontroluje on między innymi czas oczekiwania na powrót użytkownika do porzuconej sesji.
-Wszystkie parametry należy przekazać mu poprzez plik konfiguracyjny.
+Wszystkie parametry należy przekazać poprzez plik konfiguracyjny.
 
 Nazwa pliku konfiguracyjnego musi spełniać wzorzec \texttt{\seqsplit{appsettings.\$\{Nazwa\_srodowiska\}.ini}}.
 W przypadku uruchamiania aplikacji wewnątrz kontenera ustawione jest środowisko o nazwie \texttt{Production}.
 Aplikacja nadzorcy domyślnie przeszukuje folder \texttt{./config} w poszukiwaniu plików konfiguracyjnych.
-Można zmienić ścieżkę do folderu konfiguracyjnego poprzez parametr uruchomienia \texttt{-c path/to/other/config/folder/}.
+Można zmienić ścieżkę do folderu konfiguracyjnego poprzez parametr \texttt{-c path/to/other/config/folder/}.
 
-W pliku konfiguracyjnym nadzorca poszukuje 2 specjalnych sekcji:
+W pliku konfiguracyjnym nadzorca odczytuje dwie sekcji:
 \begin{itemize}
   \item \texttt{JwtSettings} - przechowuje parametr wykorzystywany do generowania unikatowych tokenów autoryzacyjnych
   \item \texttt{OneClickDesktop} - przechowuje parametry związane z działaniem systemu OneClickDesktop.
@@ -88,7 +87,7 @@ Poza tymi sekcjami można tam umieścić dowolne sekcje, które będzie przetwar
 Jednak warte uwagi są następujące sekcje:
 \begin{itemize}
   \item \texttt{Logging} - parametry loggera dostarczonego przez Microsoft (\url{https://www.nuget.org/packages/microsoft.extensions.logging}).
-  \item \texttt{Kestrel} - parametry serwera HTTP udostępniającego aplikację. W wypadku aplikacji nadzorcy bez ustawienia certyfikatu nie zadziała ona w trybie HTTPS.
+  \item \texttt{Kestrel} - parametry serwera HTTP udostępniającego aplikację. Aplikacjia nie zadziała w trybie HTTPS bez skonfigurowanego certyfikatu.
 \end{itemize}
 \noindent
 Pozostają jeszcze 2 ważne parametry bez sekcji zaimplementowane przez ASP.NET:
@@ -98,7 +97,7 @@ Pozostają jeszcze 2 ważne parametry bez sekcji zaimplementowane przez ASP.NET:
 \end{itemize}
 
 \subsubsection{Parametry sekcji \texttt{JwtSettings}}
-Sekcja ta zawiera jedynie parametr \texttt{Secret}. Należy go ustawić na dowolny napis.
+Sekcja ta zawiera jedynie parametr \texttt{Secret}. Należy go ustawić na dowolny napis. W przypadku uruchamiania więcej niż jednej instancji nadzorcy taka sama wartość parametru pozwala na zmianę nadzorcy bez konieczności ponownej autoryzacji.
 
 \subsubsection{Parametry sekcji \texttt{OneClickDesktop}}
 Sekcja zawiera parametry związane z komunikacją pomiędzy jednostkami systemu oraz kilka parametrów określających interwały czasowe zdarzeń.
@@ -144,18 +143,17 @@ Konfiguracja ta umożliwia użycie protokołu HTTPS dzięki przekazaniu zabezpie
 \subsection{Konfiguracja serwera wirtualizacji}
 \label{system_startup.virtsrv_conf}
 Serwer wirtualizacji posiada wiele parametrów związanych z zasobami przekazanymi do dyspozycji systemu.
-Wszystkie parametry należy przekazać mu poprzez pliki konfiguracyjne.
+Wszystkie parametry należy przekazać poprzez pliki konfiguracyjne znajdujące się w jednym folderze.
 
-Pliki te muszą znaleźć się w jednym folderze.
 Głównym plikiem konfiguracyjnym jest \texttt{virtsrv.ini}.
 Zawiera on parametry związane z komunikacją wewnątrz i na zewnątrz systemu.
-Dodatkowo znajdują się tam informacje o udostępnionych zasobach dla serwera wirtualizacji.
+Dodatkowo znajdują się tam informacje o zasobach udostępnionych dla serwera wirtualizacji.
 Dodatkowe pliki konfiguracyjne reprezentują typy maszyn wirtualnych uruchamianych na tym serwerze wirtualizacji.
 Jedynym odstępstwem od reguły jest plik konfiguracyjny dla pakietu NLog.
-Musi on się znajdować w tym samym folderze co aplikacja oraz nazywać się \texttt{NLog.config}.
+Musi się on znajdować w tym samym folderze co aplikacja oraz nazywać \texttt{NLog.config}.
 
 Aplikacja serwera wirtualizacji domyślnie przeszukuje folder \texttt{./config} w poszukiwaniu plików konfiguracyjnych.
-Można zmienić ścieżkę do folderu konfiguracyjnego poprzez parametr uruchomienia \texttt{-c\ path/to/other/config/folder/}.
+Można zmienić ścieżkę do folderu konfiguracyjnego poprzez parametr \texttt{-c\ path/to/other/config/folder/}.
 
 \subsubsection{Główny plik konfiguracyjny}
 W głównym pliku konfiguracyjnym możemy wyróżnić 2 sekcje:
@@ -168,7 +166,7 @@ W sekcji \texttt{OneClickDesktop} występują parametry:
 \begin{itemize}
   \item \texttt{VirtualizationServerId} - identyfikator serwera wirtualizacji używany w komunikacji poprzez wewnętrznego brokera wiadomości. Powinna być unikatowa w skali jednej instancji systemu OneClickDesktop. Domyślnie przyjmuje wartość \texttt{virtsrv-test}.
   \item \texttt{OversserCommunicationShutdownTimeout} - po upływie tylu sekund bez komunikacji od jakiegokolwiek nadzorcy serwer wirtualizacji uznaje, że zabrakło nadzorców w systemie. Nastąpi wtedy wyłączenie aplikacji serwera wirtualizacji. Domyślnie parametr przyjmuje wartość \texttt{120}. Zaleca się aby wartość parametru była większa niż dwukrotność parametru \texttt{ModelUpdateInterval} z konfiguracji nadzorcy opisanej w sekcji \ref{system_startup.overseer_conf}.
-  \item \texttt{LibvirtUri} - adres do połaczenia z usługą libvirta. Vagrant jak i biblioteka libvirta skorzysta z tego adresu do połaczenia. Specyfikacja libvirta dokładnie opisuje format tego adresu \parencite{libvirt-uri}.
+  \item \texttt{LibvirtUri} - adres do połaczenia z usługą libvirta. Vagrant jak i biblioteka libvirta skorzysta z tego adresu do połączenia. Specyfikacja libvirta dokładnie opisuje format tego adresu \parencite{libvirt-uri}.
   \item \texttt{VagrantFilePath} - ścieżka do specjalnie przygotowanego pliku wsadowego dla Vagranta. Wykorzystywany jest przez system do uruchamiania i wyłączania maszyn wirtualnych. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
   \item \texttt{PostStartupPlaybook} - skrypt wykonywany przy pomocy Ansible'a zaraz po uruchomieniu maszyny wirtualnej. Koniecznie należy przetestować czy konfiguracja wykonuje się prawidłowo. Przy każdym błędzie wykonania skryptu maszyna wirtualna zostanie usunięta. Domyślnie przyjmuje wartość \texttt{res/poststartup\_playbook.yml}.
   \item \texttt{VagrantboxUri} - identyfikator szablonowej maszyny wirtualnej. Musi ona spełniać szereg wymogów opisanych w sekcji \ref{system_requirements.vagrant_box}. W przeciwnym wypadku system nie będzie w stanie uruchomić takiego szablonu. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
@@ -236,24 +234,22 @@ Przykładowa zawartość głównego pliku konfiguracyjnego:
 \end{verbatim}
 
 \subsubsection{Pliki konfiguracyjne opisujące typy maszyn wirtualnych}
-W pliku opisującym typy zawarte jest ile potrzeba zasobów aby uruchomić maszynę tego typu.
+W pliku opisującym typy zawarte jest o zasobach wymaganych do uruchomienia maszyny danego typu.
 
 Każdy typ ma przypisaną nazwę. Oznaczmy ją jako \texttt{\$\{template\_name\}}.
-Nazwa typu powinna być unikatowa na skale systemu.
+Nazwa typu powinna być unikatowa w skali systemu.
 Jeżeli chcemy udostępnić ten sam typ na wielu serwerach wirtualizacji, należy nadać mu takie same zasoby.
-System może nieprawidłowo zarządzać zasobami, gdy uzyska 2 wzorce zasobów tego samego typu maszyny.
-Plik opisujący typ musi mieć nazwę \texttt{\$\{template\_name\}\_template.ini}.
-Plik konfiguracyjny dla wybranego typu musi znajdować się w folderze z pozostałymi plikami konfiguracyjnymi.
+System może nieprawidłowo zarządzać zasobami, gdy uzyska dwa różne wzorce zasobów dla tego samego typu maszyny.
+Plik opisujący typ musi mieć nazwę \texttt{\$\{template\_name\}\_template.ini} oraz znajdować się w folderze z pozostałymi plikami konfiguracyjnymi.
 Jeżeli dla jakiejkolwiek nazwy typu aplikacja nie znajdzie pliku konfiguracyjnego to zakończy się z błędem zaraz po uruchomieniu.
 
-W znalezionym pliku musi być sekcja o nazwie \texttt{\$\{template\_name\}\_template}.
-Zwiera ona parametry:
+W znalezionym pliku musi być sekcja o nazwie \texttt{\$\{template\_name\}\_template} z parametrami:
 \begin{itemize}
-  \item \texttt{HumanReadableName} - nazwa reprezentowana w aplikacji klienckiej dla użytkownika. Domyślnie przyjmuje wartość \texttt{\$\{template\_name\}}.
-  \item \texttt{Cpus} - liczba wątków potrzebna do uruchomienia maszyny tego typu. Domyślnie parametr przyjmuje wartość \texttt{2}.
-  \item \texttt{Memory} - ilość pamięci operacyjnej w MiB potrzebnej do uruchomienia maszyny tego typu. Domyślnie parametr przyjmuje wartość \texttt{512}.
-  \item \texttt{Storage} - ilość przestrzeni dyskowej w GiB potrzebnej do uruchomienia maszyny tego typu. Domyślnie parametr przyjmuje wartość \texttt{20}.
-  \item \texttt{AttachGpu} - informacja czy maszyna tego typu przy uruchomieniu powinna mieć przekazaną kartę graficzną. Domyślnie parametr przyjmuje wartość \texttt{false}.
+  \item \texttt{HumanReadableName} - nazwa wyświetlana w aplikacji klienckiej. Domyślnie przyjmuje wartość \texttt{\$\{template\_name\}}.
+  \item \texttt{Cpus} - liczba wątków potrzebna do uruchomienia maszyny. Domyślnie parametr przyjmuje wartość \texttt{2}.
+  \item \texttt{Memory} - ilość pamięci operacyjnej w MiB potrzebnej do uruchomienia maszyny. Domyślnie parametr przyjmuje wartość \texttt{512}.
+  \item \texttt{Storage} - ilość przestrzeni dyskowej w GiB potrzebnej do uruchomienia maszyny. Domyślnie parametr przyjmuje wartość \texttt{20}.
+  \item \texttt{AttachGpu} - informacja czy maszyna powinna mieć przekazaną kartę graficzną. Domyślnie parametr przyjmuje wartość \texttt{false}.
 \end{itemize}
 
 Przykładowa zawartość pliku konfiguracyjnego typu maszyny:
@@ -270,7 +266,7 @@ Przykładowa zawartość pliku konfiguracyjnego typu maszyny:
 
 \subsection{Procedura uruchomienia}
 \label{system_startup.procedure}
-Prawidłowy start systemu powinien zachować następująca kolejność:
+Prawidłowy start systemu powinien być wykonany w następującej kolejności:
 \begin{enumerate}
   \item Uruchomić zewnętrznego i wewnętrznego brokera wiadomości.
   \item Poczekać na prawidłowy start brokerów wiadomości.
@@ -284,26 +280,24 @@ Prawidłowy start systemu powinien zachować następująca kolejność:
 Po opisanych krokach system jest gotowy do użytkowania przez użytkowników.
 Ważne jest, aby przed uruchomieniem jakiegokolwiek nadzorcy brokerzy wiadomości byli już prawidłowo zainicjalizowani i gotowi na przyjęcie komunikacji.
 W przeciwnym wypadku aplikacja nadzorcy zakończy się z błędem.
-Serwer wirtualizacji także zakończy się z błędem, jeżeli zabraknie brokerów wiadomości.
-Dodatkowo, jeżeli nie będzie żadnego nadzorcy nasłuchującego poprzez wewnętrznego brokera wiadomości, serwer wirtualizacji zgłosi błąd i zakończy pracę.
+Serwer wirtualizacji także zakończy się z błędem, jeżeli zabraknie brokerów wiadomości lub nadzorców.
 
 \subsection{Parametry uruchomienia kontenera panelu administracyjnego}
-Kontener zawierający panel administratory udostępnia aplikacje poprzez serwer HTTP nginx.
-Do komunikacji wystawia on porty 80 (HTTP) oraz 443 (HTTPS).
-Należy przekierować je na odpowiednie porty uruchamiającego systemu.
+Kontener zawierający panel administracyjny udostępnia aplikację poprzez serwer HTTP nginx.
+Do komunikacji wystawia on porty 80 (HTTP) oraz 443 (HTTPS), które należy przekierować na odpowiednie porty uruchamiającego systemu.
 
 \subsubsection{Adres dostępu do nadzorców}
 Aplikacja panelu administracyjnego oczekuje ustalonego adresu dostępu do jakiegokolwiek nadzorcy.
 Przy uruchomieniu kontenera należy ustawić zmienną środowiskową \texttt{API\_URL} zgodnie z opisem w sekcji \ref{system_startup.admin_panel_conf}.
 
 \subsubsection{Certyfikat SSL}
-W celu uruchomienia panelu w trybie HTTPS należy przekazać zmienioną konfigurację serwera nginx oraz parę klucza z certyfikatem pod postacią woluminu.
+W celu uruchomienia panelu w trybie HTTPS należy przekazać certyfikat wraz ze zmodyfikowaną konfiguracją serwera nginx.
 \begin{verbatim}
 	-v {PATH_TO_CERT}:{PATH_TO_CERT_IN_CONTAINER}
 	-v {PATH_TO_KEY}:{PATH_TO_KEY_IN_CONTAINER}
 	-v {PATH_TO_CONF}:/etc/nginx/conf.d/default.conf
 \end{verbatim}
-gdzie \texttt{PATH\_TO\_CERT}, \texttt{PATH\_TO\_KEY} i \texttt{PATH\_TO\_CONF} są ścieżkami bezwzględnymi na systemie uruchamiającym, a \texttt{PATH\_TO\_CERT\_IN\_CONTAINER} oraz \texttt{PATH\_TO\_KEY\_IN\_CONTAINER} są ścieżkami bezwzględnymi w kontenerze podanymi w przyłączonej konfiguracji.
+gdzie \texttt{PATH\_TO\_CERT}, \texttt{PATH\_TO\_KEY} i \texttt{PATH\_TO\_CONF} są ścieżkami bezwzględnymi na systemie uruchamiającym, a \texttt{PATH\_TO\_CERT\_IN\_CONTAINER} oraz \texttt{PATH\_TO\_KEY\_IN\_CONTAINER} są ścieżkami bezwzględnymi zgodnymi ze ścieżkami zdefiniowanymi w konfiguracji.
 
 \subsection{Parametry uruchomienia kontenera nadzorcy}
 Aplikacja nadzorcy udostępnia API poprzez serwer HTTP Kestrel.
@@ -318,21 +312,21 @@ Należy przekazać folder zawierający konfiguracje z systemu uruchamiającego (
 \end{verbatim}
 
 \subsubsection{Certyfikat SSL}
-W celu uruchomienia nadzorcy w trybie HTTPS należy przekazać certyfikat SSL w formacie \texttt{.pfx} przy pomocy woluminów oraz odpowiednio przygotowany plik konfiguracyjny tak jak opisano w rozdziale \ref{system_startup.overseer_conf}.
-Gdy zabraknie certyfikatów, a konfiguracja pokazuje, że ma się rozpocząć nasłuchiwanie w trybie HTTPS, nadzorca zakończy się z błędem zaraz po uruchomieniu.
+W celu uruchomienia nadzorcy w trybie HTTPS należy przekazać certyfikat SSL w formacie \texttt{.pfx} przy pomocy woluminów oraz plik konfiguracyjny zgodny z opisem z rozdziału \ref{system_startup.overseer_conf}.
+Przy konfiguracji używającej protokołu HTTPS i braku certyfikatów aplikacja zakończy się z błędem zaraz po uruchomieniu.
 
 \begin{verbatim}
 	-v {PATH_TO_CERT}:{PATH_TO_CERT_IN_CONTAINER}
 \end{verbatim}
-gdzie \texttt{PATH\_TO\_CERT} jest ścieżką bezwzględną do certyfikatu na systemie uruchamiającym oraz \texttt{PATH\_TO\_CERT\_IN\_CONTAINER} jest ścieżką bezwzględną wewnątrz kontenera podaną w konfiguracji.
+gdzie \texttt{PATH\_TO\_CERT} jest ścieżką bezwzględną do certyfikatu na systemie uruchamiającym oraz \texttt{PATH\_TO\_CERT\_IN\_CONTAINER} jest ścieżką bezwzględną wewnątrz kontenera zgodną z konfiguracją.
 
 \subsection{Parametry uruchomienia kontenera serwera wirtualizacji}
 Serwer wirtualizacji zarządza maszynami wirtualnymi na systemie uruchamiającym.
-Wymaga dość nietypowo podłączonych woluminów aby prawidłowo funkcjonować.
+Wymaga nietypowo podłączonych woluminów aby prawidłowo funkcjonować.
 
 \subsubsection{Zasoby libvirta}
-Aby komunikować się z usługa libvirta uruchomioną na systemie uruchamiającym potrzebujemy gniazda sieciowego przekazanego do wnętrza kontenera.
-Musi ono udawać, że jest uruchomioną usługą libvirta we wnętrzu kontenera.
+W celu komunikacji z usługą libvirta działającą na systemie uruchamiającym musimy przekazać gniazdo sieciowe do wnętrza kontenera.
+Musi ono udawać, że jest usługą libvirta uruchomioną we wnętrzu kontenera.
 Dodatkowo nowo tworzone maszyny powinny zapisywać się pomiędzy uruchomieniami kontenera.
 W tym celu trzeba przekazać także cały folder z danymi libvirta.
 Taki efekt można uzyskać przy pomocy woluminów przekazując
@@ -368,7 +362,8 @@ Nie można zapomnieć o wyjątku konfiguracji NLoga, którą trzeba przekazać d
 \subsection{Przykład minimalnego systemu}
 Uruchamiając kontenery z modułami należy podać odpowiednie parametry, aby aplikacje wewnątrz pracowały prawidłowo.
 Przykładowy minimalny system wraz z parametrami można zobaczyć w module \texttt{demonstration} \parencite{ocd-demo}.
-Znajduje się tam system składający się z jednego brokera wiadomości (zewnętrzna i wewnętrzna komunikacja w jednym), panelu administracyjnego, jednego nadzorcy i jednego serwera wirtualizacji.
+Znajduje się tam system składający się z jednego brokera wiadomości (zewnętrzna i wewnętrzna komunikacja w jednym), panelu administracyjnego, jednego nadzorcy i jednego serwera wirtualizacji. Konta użytkowników zdefiniowane są w systemie katalogowym, a ich katalogi domowe udostępniane poprzez serwer NFS. W celu umożliwienia uruchomienia większej ilości nadzorców stworzony został prosty serwer dostępowy.
+System zawarty w tym repozytorium udostępnia pełną funkcjonalność.
 Można znaleźć tam przykłady zarówno konfiguracji modułów jak i parametrów startowych dla kontenerów.
 
 \end{document}

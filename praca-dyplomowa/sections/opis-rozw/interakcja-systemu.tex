@@ -9,7 +9,7 @@ Typowym zachowaniem systemu będzie cykliczne wysyłanie próśb przez nadzorcó
 W logach serwerów wirtualizacji, jak i nadzorców, powinny cyklicznie pojawiać się informacje o prośbie lub odpowiedzi na zapytanie o model.
 
 Zaraz po starcie systemu powinny pojawić się prośby o włączenie maszyn wirtualnych na odpowiednich serwerach wirtualizacji.
-Przy patrzeniu na standardowe wyjście aplikacji powinny być widoczne informacje od uruchamiającego się Vagranta.
+Na standardowym wyjściu aplikacji powinny być widoczne informacje od uruchamiającego się Vagranta.
 Przy każdej nowo utworzonej sesji powinny wybudzać się następne maszyny wirtualne.
 Często problemy z uruchomieniem maszyn wirtualnych będą oznaczać nieskończone próby ich uruchomienia, które zawsze będą kończyć się niepowodzeniem.
 Serwer wirtualizacji powinien wszystkie informacje o błędach zapisywać do pliku z logami we wnętrzu kontenera w folderze roboczym aplikacji \texttt{/app}.

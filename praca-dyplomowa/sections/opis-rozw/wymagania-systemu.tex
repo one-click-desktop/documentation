@@ -15,19 +15,23 @@ System do poprawnego działania z pełną funkcjonalnością musi składać się
   \item brokera wiadomości do komunikacji wewnętrznej (*),
   \item brokera wiadomości do komunikacje zewnętrznej (może być tym samym brokerem co wewnętrzny),
   \item dowolnej liczby aplikacji klienckich,
+  \item systemu katalogowego przechowującego użytkowników
+  \item dysku sieciowego zawierającego katalogi domowe użytkowników
 \end{itemize}
 Elementy wymagane do poprawnego uruchomienia pozostałych modułów oznaczone zostały symbolem (*).
+
+Poniżej opisane zostały wymagania osiągalności połączeń sieciowych dla poszczególnych modułów.
 
 \subsubsection{Dostępność wewnętrznego brokera}
 Broker wewnętrzny powinien być dostępny dla każdego nadzorcy oraz każdego serwera wirtualizacji.
 Jest to wymagane do prawidłowej komunikacji pomiędzy nadzorcami i serwerami wirtualizacji.
 
 \subsubsection{Dostępność zewnętrznego brokera}
-Broker zewnętrzny powinien być dostępny dla każdego serwera wirtualizacji oraz dla każdego klienta łączącego się z systemem.
+Broker zewnętrzny powinien być osiągalny przez każdy serwer wirtualizacji oraz każdego klienta łączącego się z systemem.
 Jest to wymagane do stwierdzenia czy użytkownik nadal jest podłączony do maszyny wirtualnej.
 
 \subsubsection{Dostępność nadzorców}
-Nadzorcy powinni być dostępni dla aplikacji klienckich, które poprzez nich komunikują się z resztą systemu.
+Nadzorcy powinni być widoczny przez aplikacje klienckie, które poprzez nich komunikują się z resztą systemu.
 Administrator podczas używania panelu administracyjnego z poziomu serwera HTTP powinien móc wysyłać zapytania do nadzorców.
 
 \subsubsection{Dostępność serwerów wirtualizacji}
@@ -37,13 +41,17 @@ Serwery wirtualizacji nie muszą być widoczne przez żaden z innych modułów.
 Serwer HTTP powinien być dostępny dla każdego z administratorów.
 
 \subsubsection{Dostępność maszyn wirtualnych}
-Maszyny wirtualne powinny być dostępne dla każdego z klientów.
+Maszyny wirtualne powinny być osiągalny przez każdego z klientów.
 Jest to potrzebne do pracy na nich poprzez protokół RDP.
+
+\subsubsection{Dostępność zewnętrzbnych modułów}
+System katalogowy powinien być dostępny dla każdego nadzorcy oraz maszyny wirtualnej w celu autoryzacji.
+Dysk sieciowy powinien być widoczny przez maszyny wirtualne, aby mogły używać katalogów domowych użytkowników.
 
 \subsection{Wymagania aplikacji klienckiej}
 Aplikacja kliencka wspiera system Windows 10 lub nowszy oraz GNU/Linux w dystrybucjach opartych na 64 bitowych systemach Ubuntu 18.04+ oraz Arch Linux.
 
-Dla systemu Windows aplikacja kliencka, jako plik wykonywalny pobrana ze strony z oficjalnymi wydaniami \parencite{ocd-client-releases}, powinna uruchomić się bez żadnych wcześniejszych konfiguracji. Do uruchomienia wymagany jest jednak plik konfiguracji użytkownika dostępny w oficjalnych wydaniach.
+Dla systemu Windows aplikacja kliencka, jako plik wykonywalny pobrany ze strony z oficjalnymi wydaniami \parencite{ocd-client-releases}, powinna uruchomić się bez żadnych wcześniejszych konfiguracji. Do uruchomienia wymagany jest jednak plik konfiguracji użytkownika dostępny w oficjalnych wydaniach.
 Do działania korzysta ona z klienta RDP dostarczonego przez firmę Microsoft wraz z systemem Windows.
 Aplikacja była testowana dla systemu Windows 10.
 Dla starszych wersji systemu Windows aplikacja może nie działać prawidłowo.
@@ -63,37 +71,35 @@ System operacyjny, pod którym pracuje komputer, nie ma znaczenia.
 Do uruchomienia aplikacji nadzorcy i serwera HTTP z panelem administracyjnym potrzeba zainstalowanego Dockera w systemie.
 Każdy z tych dwóch modułów można zbudować do kontenera, w którym wszystkie zależności zostaną spełnione.
 
-Do ręcznego uruchomienia aplikacji nadzorcy, bez pośrednictwa Dockera, wymagany jest .NET 5. W przypadku panelu administratora do kompilacji wymagany jest NodeJS w wersji \texttt{16.13.2}. Zbudowany panel można udostępnić za pomocą dowolnego serwera HTTP.
+Do ręcznego uruchomienia aplikacji nadzorcy, bez pośrednictwa Dockera, wymagany jest .NET 5. W przypadku panelu administratora do kompilacji wymagany jest NodeJS w wersji \texttt{16.13.2}. Zbudowany moduł można udostępnić za pomocą dowolnego serwera HTTP.
 
 \subsection{Wymagania serwera wirtualizacji}
 \label{system_requirements.virtsrv_rquirements}
 
 \subsubsection{Wymagania sprzętowe}
-Serwer wirtualizacji zadziała prawidłowo na komputerze działającym pod kontrola systemu operacyjnego z grupy GNU/Linux.
-Obowiązkowo musi on być podłączony do sieci poprzez przewodowy interfejs sieciowy (wymaga tego utworzenie interfejsu typu bridge).
+Serwer wirtualizacji zadziała prawidłowo na komputerze działającym pod kontrolą systemu operacyjnego z grupy GNU/Linux.
+Maszyna musi być podłączona do sieci poprzez przewodowy interfejs sieciowy (jest to wymagane przez interfejs typu bridge).
 Wydajnościowo system musi być w stanie uruchomić wirtualne maszyny z usługą Dockera jednocześnie.
 Jednak zalecamy aby system był wyposażony przynajmniej w dwurdzeniowy procesor, 4GB pamięci operacyjnej oraz przynajmniej 100GB przestrzeni dyskowej.
-Jeżeli system spełni takie wymagania powinien być w stanie uruchomić maszynę wirtualną pod kontrolą systemu bez przekazanego urządzenia PCI.
+Jeżeli system spełnia takie wymagania, to powinien być w stanie uruchomić maszynę wirtualną pod kontrolą systemu bez przekazanego urządzenia PCI.
 
 W razie chęci wykorzystania funkcjonalności PCI Passthrough \parencite{pci-passthrough}, aby przekazać urządzenia do maszyny wirtualnej komputer musi spełniać dodatkowe wymagania.
-Po aktywowaniu modułu IOMMU (I/O Memory Management Unit) \parencite{amd-iommu} wszystkie urządzenia podłączone do systemu muszą znajdować się w innej grupie IOMMU.
-Prawidłowa izolacja urządzeń przekazywanych do maszyny wirtualnej od pozostałych urządzeń uruchamianych na serwerze wirtualizacji jest kluczowa z punktu bezpieczeństwa.
+Po aktywowaniu modułu IOMMU (I/O Memory Management Unit) \parencite{amd-iommu} każde z urządzeń, które chcemy przekazać, musi znajdować się w innej grupie IOMMU.
+Prawidłowa izolacja urządzeń przekazywanych do maszyny wirtualnej od pozostałych urządzeń uruchamianych na serwerze jest kluczowa z punktu bezpieczeństwa.
 
-Fakt możliwości prawidłowej izolacji urządzeń od siebie wynika z decyzji projektantów używanej w komputerze płyty głównej.
-Większość chipsetów przeznaczonych do komputerów biurowych przy projektowaniu wymagało wielu kompromisów.
-Oznacza to częste korzystanie z tych samych linii komunikacyjnych do wspólnych funkcjonalności.
+To czy prawidłowa izolacja urządzeń jest możliwa zależy od używanej w komputerze płyty głównej.
+Większość chipsetów przeznaczonych do komputerów biurowych używa tych samych linii komunikacji dla wielu urządzeń.
 Należy więc skorzystać z płyt przeznaczonych do procesorów dla entuzjastów (np. linia AMD Threadripper z chipsetami z linii X) albo profesjonalnych (np. linia AMD Epyc).
-Mają one wiele linii PCI, więc producenci nie muszą oszczędzać połączeń.
+Posiadają one wiele linii PCI, które zwykle nie są współdzielone między urządzeniami.
 
 Alternatywnym wyborem jest modyfikacja jądra systemu i dodanie ACS Override patch \parencite{acs-override}.
 Spowoduje to rozdzielenie wspólnych grup IOMMU na oddzielne wirtualne grupy.
-Jednakże z tak skonfigurowanym systemem istnieje niebezpieczeństwo wykonania wyłomu poza wirtualną maszynę oraz zdestabilizowania pracy systemu.
+Jednakże z tak skonfigurowaną maszyną istnieje niebezpieczeństwo wykonania wyłomu poza wirtualną maszynę oraz zdestabilizowania pracy systemu.
 Odradzamy wykorzystywania takiego rozwiązania w przypadku publicznego dostępu do systemu.
-W przypadku braku odpowiedniego sprzętu oraz ograniczenia dostępu do systemu można spróbować zastosować to rozwiązanie.
+W przypadku braku odpowiedniego sprzętu oraz ograniczenia dostępu do systemu można spróbować z niego skorzystać.
 
 \subsubsection{Wymagania systemowe}
-Serwer wirtualizacji, oprócz działającej usługi Dockera, potrzebuje dodatkowych usług.
-Do prawidłowego działania wymagana jest działająca usługa zarządcy wirtualnych maszyn libvirt w wersji \texttt{7.10+}. W przypadku ręcznego uruchamiania aplikacji, bez pośrednictwa Dockera, wymagany jest Vagrant w wersji \texttt{2.2.11+} oraz .NET 5.
+Serwer wirtualizacji, oprócz działającej usługi Dockera, wymaga usługi zarządcy maszyn wirtualnych libvirt w wersji \texttt{7.10+}. W przypadku ręcznego uruchamiania aplikacji, bez pośrednictwa Dockera, wymagany jest Vagrant w wersji \texttt{2.2.11+} oraz .NET 5.
 
 Aby prawidłowo uruchomić maszynę wirtualną potrzebna jest uruchomiona usługa zapory sieciowej oraz pakiet \texttt{dnsmasq}.
 Wymagane jest także utworzenie struktur usługi Vagrant dla użytkownika uruchamiającego serwer wirtualizacji.
@@ -103,9 +109,9 @@ Aby uruchamiane maszyny wirtualne były dostępne dla innych urządzeń potrzebn
 Nazwa interfejsu powinna być przekazana do pliku konfiguracyjnego serwera wirtualizacji.
 Maszyny wirtualne uzyskają wtedy dostęp do sieci w taki sposób, jakby były fizycznymi komputerami w sieci.
 
-W niektórych przypadkach, podczas uruchomiania maszyny wirtualnej przy użyciu Vagranta oraz uruchomiania wybranych kontenerów w Dockerze, komunikacja sieciowa z maszyną wirtualną poprzez podłączony interfejs w trybie bridge może zostać ograniczona.
-Należy wtedy dopilnować, by w trakcie działanie systemu zapora sieciowa posiadała zasadę na samej górze łańcucha \texttt{FORWARD}, która będzie bezwarunkowo zezwalać trasować pakiety z urządzeń w trybie bridge.
-Przy uruchomieniu serwera wirtualizacji w kontenerze dockerowym trzeba dopilnować aby z sieci, w której pracuje kontener, można było osiągnąć sieć konfiguracyjna Vagranta.
+W niektórych przypadkach, podczas uruchomiania maszyny wirtualnej przy użyciu Vagranta z działającym Dockerem, komunikacja sieciowa z maszyną wirtualną poprzez podłączony interfejs w trybie bridge może zostać ograniczona.
+Należy wtedy dopilnować, by w trakcie działania systemu zapora sieciowa posiadała zasadę na samej górze łańcucha \texttt{FORWARD}, która będzie bezwarunkowo zezwalać trasować pakiety z urządzeń w trybie bridge.
+Przy uruchomieniu serwera wirtualizacji w kontenerze dockerowym trzeba dopilnować aby z sieci, w której pracuje kontener, można było osiągnąć sieć konfiguracyjną Vagranta.
 W przeciwnym wypadku próba uruchomienia maszyny wirtualnej zakończy się z błędem połączenia SSH.
 
 \subsection{Automatyzacja konfiguracji}
@@ -127,15 +133,15 @@ Dla każdej maszyny z osobna należy zdefiniować dane dostępowe do komunikacji
 \subsubsection{Zmienne dla serwera wirtualizacji}
 Playbook dla serwera wirtualizacji wykona wszystkie kroki opisane w rozdziale \ref{system_requirements.virtsrv_rquirements}.
 Aby tego dokonać należy zdefiniować dane dla tworzonego interfejsu typu bridge.
-Należy zdefiniować nazwę interfejsu sieciowego, który zostanie połączony do nowo tworzonego urządzenia bridge o nazwie zdefiniowanej w pliku.
-Playbook korzysta z NetworkManagera (\url{https://networkmanager.dev/}) do zmiany konfiguracji, zatem trzeba podać nazwę \textit{connection} (jednostka logiczna w NetworkManagerze) skojarzonego z początkowo wybranym interfejsem sieciowym.
+Należy podać nazwę interfejsu sieciowego, który zostanie połączony do nowo tworzonego urządzenia bridge o nazwie zawartej w pliku.
+Playbook korzysta z NetworkManagera (\url{https://networkmanager.dev/}) do zmiany konfiguracji, zatem trzeba przekazać nazwę \textit{connection} (jednostka logiczna w NetworkManagerze) skojarzonego z początkowo wybranym interfejsem sieciowym.
 
 \subsubsection{Zmienne dla nadzorcy}
 Aby uruchomić nadzorcę wystarczą wspólne wymagania dla wszystkich grup.
 
 \subsection{Wymagania szablonu maszyny wirtualnej}
 \label{system_requirements.vagrant_box}
-Maszyna wirtualna uruchamiana w ramach systemu OneClickDesktop musi być w postaci Vagrant Boxa.
+Maszyna wirtualna uruchamiana w ramach systemu OneClickDesktop musi być dostarczona w postaci Vagrant Boxa.
 Przykładowy box został utworzony w czasie rozwoju systemu i dostępny jest w chmurze Vagrant pod nazwą \texttt{smogork/archlinux-rdp} \parencite{ocd-vbox}.
 Box używa dystrybucji Arch Linux oraz spełnia wszystkie wymagania aby zostać uruchomionym w ramach systemu.
 
@@ -147,6 +153,8 @@ Jeżeli jednak potrzebne jest utworzenie niestandardowego szablonu to musi on:
   \item Przy uruchomieniu udostępniać usługę zdalnego pulpitu RDP. Przykładowy szablon korzysta z implementacji xrdp w wersji \texttt{0.9.17-1}
   \item Każdy nowy interfejs sieciowy powinien być tak skonfigurowany, aby uzyskać adres IP z usługi DHCP.
   \item Przy starcie systemu uruchamiać usługę \texttt{qemu-guest-agent}.
+  \item Autoryzować użytkowników za pomocą systemu katalogowego \parencite{ldap-wiki}. Dokładne dane do ustanowienia połączenia mogą być przekazane za pomocą playbooka.
+  \item Montować katalogi domowe użytkowników. Może to być również rozwiązane za pomocą playbooka.
 \end{itemize}
 Nie ma ograniczenia co do systemu operacyjnego uruchamianego wewnątrz systemu OneClickDesktop, tak długo jak jest on w stanie spełnić powyższe wymagania.
 
