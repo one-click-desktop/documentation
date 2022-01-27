@@ -17,6 +17,8 @@
 \usepackage{array}
 \usepackage{enumitem}
 \usepackage{seqsplit}
+\usepackage{longtable}
+\raggedbottom
 \graphicspath{
     {../screens}
     {../diagrams}
@@ -144,28 +146,28 @@
 % --------------------- Definicje, twierdzenia etc. ---------------
 
 
-\makeatletter
-\newtheoremstyle{definition}%    % Name
-{3ex}%                          % Space above
-{3ex}%                          % Space below
-{\upshape}%                      % Body font
-{}%                              % Indent amount
-{\bfseries}%                     % Theorem head font
-{.}%                             % Punctuation after theorem head
-{.5em}%                            % Space after theorem head, ' ', or \newline
-{\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}%  % Theorem head spec (can be left empty, meaning `normal')
-\makeatother
+% \makeatletter
+% \newtheoremstyle{definition}%    % Name
+% {3ex}%                          % Space above
+% {3ex}%                          % Space below
+% {\upshape}%                      % Body font
+% {}%                              % Indent amount
+% {\bfseries}%                     % Theorem head font
+% {.}%                             % Punctuation after theorem head
+% {.5em}%                            % Space after theorem head, ' ', or \newline
+% {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}%  % Theorem head spec (can be left empty, meaning `normal')
+% \makeatother
 
 % ----------------------------- POLSKI --------------------------------
 
-\theoremstyle{definition}
-\newtheorem{theorem}{Twierdzenie}[chapter]
-\newtheorem{lemma}[theorem]{Lemat}
-\newtheorem{example}[theorem]{Przykład}
-\newtheorem{proposition}[theorem]{Stwierdzenie}
-\newtheorem{corollary}[theorem]{Wniosek}
-\newtheorem{definition}[theorem]{Definicja}
-\newtheorem{remark}[theorem]{Uwaga}
+% \theoremstyle{definition}
+% \newtheorem{theorem}{Twierdzenie}[chapter]
+% \newtheorem{lemma}[theorem]{Lemat}
+% \newtheorem{example}[theorem]{Przykład}
+% \newtheorem{proposition}[theorem]{Stwierdzenie}
+% \newtheorem{corollary}[theorem]{Wniosek}
+% \newtheorem{definition}[theorem]{Definicja}
+% \newtheorem{remark}[theorem]{Uwaga}
 
 
 
@@ -231,7 +233,7 @@
 
 
 % ---------------------------- ABSTRAKTY -----------------------------
-% W PRACY PO POLSKU, NAPIERW STRESZCZENIE PL, POTEM ABSTRACT EN
+% W PRACY PO POLSKU, NAJPIERW STRESZCZENIE PL, POTEM ABSTRACT EN
 %
 %	Streszczenie powinno zajmować 1 stronę, (czcionką 12)
 %
@@ -281,17 +283,22 @@
 %
 %	komenda załączająca oświadczenie o autorstwie pracy
 %
-\includepdf[pages=-]{scans/oswiadczenie-o-autorstwie-pracy}
+% krzysiu
+\includepdf[pages=-]{scans/autorstwo-smogork}
+\null\thispagestyle{empty}\newpage
+% piotrek
+\includepdf[pages=-]{scans/autorstwo-widomskip}
 \null\thispagestyle{empty}\newpage
 
 % opcjonalne oświadczenie
 %
 %	komenda załączająca owiadczenie o udzieleniu licencji
 %
-\includepdf[pages=-]{scans/oswiadczenie-o-udzieleniu-licencji}
-%
-%	pliki .texowe odpowiadające powyższym plikom PDF znajdują się w folderze 3. declarations
-%
+% krzysiu
+\includepdf[pages=-]{scans/licencja-smogork}
+\null\thispagestyle{empty}\newpage
+% piotrek
+\includepdf[pages=-]{scans/licencja-widomskip}
 \null\thispagestyle{empty}\newpage
 
 % ------------------- 4. Spis treści ---------------------
@@ -306,7 +313,7 @@
 \null\thispagestyle{empty}\newpage
 \pagestyle{fancy}
 \pagenumbering{arabic}
-\setcounter{page}{11} % JEŻELI Z POWODU DUŻEJ ILOŚCI STRON W SPISIE TREŚCI SIĘ NIE ZGADZA, TRZEBA ZMODYFIKOWAĆ RĘCZNIE
+\setcounter{page}{19} % JEŻELI Z POWODU DUŻEJ ILOŚCI STRON W SPISIE TREŚCI SIĘ NIE ZGADZA, TRZEBA ZMODYFIKOWAĆ RĘCZNIE
 
 \chapter{Wstęp}
 % \markboth{}{Wstęp}
@@ -405,14 +412,14 @@
 
 % 10. Spis załączników - jak nie ma załączników, to zakomentować lub usunąć
 
-\chapter*{Spis załączników}
-\begin{enumerate}
-  \item \texttt{REST\_API\_Overseer.yaml} - dokładna specyfikacja API w standardzie OpenAPI
-        3.0.3
-        %   \item Załącznik 2
-        %   \item Jak nie występują, usunąć rozdział.
-\end{enumerate}
-\thispagestyle{empty}
+% \chapter*{Spis załączników}
+% \begin{enumerate}
+%   \item \texttt{REST\_API\_Overseer.yaml} - dokładna specyfikacja API w standardzie OpenAPI
+%         3.0.3
+%         %   \item Załącznik 2
+%         %   \item Jak nie występują, usunąć rozdział.
+% \end{enumerate}
+% \thispagestyle{empty}
 
 
 \end{document}

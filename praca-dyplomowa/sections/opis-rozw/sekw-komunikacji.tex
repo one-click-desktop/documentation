@@ -7,9 +7,9 @@
 
 Celem tej sekwencji komunikacji jest odnalezienie istniejącej już sesji lub stworzenie nowej.
 Zakładamy, że w systemie istnieje wolna maszyna.
-W przeciwnym przypadku zgłaszamy użytkownikowi błąd.
+W przeciwnym przypadku zgłaszamy użytkownikowi błąd. Proces przedstawiony jest na rysunku \ref{figure:diagrams:sequence_diagrams:tworzenie_sesji}.
 
-\begin{figure}[H]
+\begin{figure}[ht!]
   \centering
   \includegraphics[width=0.8\textwidth]{../diagrams/sequence_diagrams/tworzenie_sesji.png}
   \caption{Sekwencja komunikacji utworzenia sesji}
@@ -28,9 +28,9 @@ Jeżeli nie została jeszcze utworzona, to nadzorca przerywa wyszukiwanie lub wy
 \subsection{Zakończenie sesji}
 
 Sekwencja ta zainicjowana jest poprzez utracenie połączenia z użytkownikiem maszyny.
-Serwer powiadamia o tym fakcie nadzorców, po czym oczekuje na polecenie wyłączenia maszyny przesłane przez nadzorcę. Serwer może odmówić z powodu różnic modelu, lub jeżeli maszyna znów jest używana przez użytkownika, ignorując wiadomość.
+Serwer powiadamia o tym fakcie nadzorców, po czym oczekuje na polecenie wyłączenia maszyny przesłane przez nadzorcę. Serwer może odmówić z powodu różnic modelu, lub jeżeli maszyna znów jest używana przez użytkownika, ignorując wiadomość. Proces przedstawiony jest na rysunku \ref{figure:diagrams:sequence_diagrams:konczenie_sesji}.
 
-\begin{figure}[H]
+\begin{figure}[ht!]
   \centering
   \includegraphics[width=0.6\textwidth]{../diagrams/sequence_diagrams/konczenie_sesji.png}
   \caption{Sekwencja komunikacji zakończenia sesji}
@@ -39,11 +39,11 @@ Serwer powiadamia o tym fakcie nadzorców, po czym oczekuje na polecenie wyłąc
 
 \subsection{Aktualizacja stanu}
 
-Nadzorca może w każdej chwili poprosić wszystkie serwery wirtualizacji
+Rysunek \ref{figure:diagrams:sequence_diagrams:konczenie_sesji} przedstawia sekwencję aktualizacji modelu. Nadzorca może w każdej chwili poprosić wszystkie serwery wirtualizacji
 o przesłanie ich aktualnego stanu poprzez wspólną kolejkę do serwerów wirtualizacji (rozdział \ref{modules:broker}, kolejka \ref{modules:broker:queue-virtsrv}).
 Serwery muszą bezwarunkowo odpowiedzieć aktualnym stanem do wspólnej kolejki zwrotnej (rozdział \ref{modules:broker}, kolejka \ref{modules:broker:queue-overseers}).
 
-\begin{figure}[H]
+\begin{figure}[ht!]
   \centering
   \includegraphics[width=0.6\textwidth]{../diagrams/sequence_diagrams/aktualizacja_stanu.png}
   \caption{Sekwencja komunikacji aktualizacji stanu systemu}
@@ -56,7 +56,7 @@ Nadzorca może poprosić konkretny serwer wirtualizacji, aby utworzył maszynę 
 Jeżeli maszyna nie istnieje, to zostanie uruchomiona a serwer odeśle powiadomienie o zmianie modelu zbiorczą kolejką (rozdział \ref{modules:broker}, kolejka \ref{modules:broker:queue-overseers}).
 W przeciwnym wypadku nie zrobi nic.
 
-\begin{figure}[H]
+\begin{figure}[ht!]
   \centering
   \includegraphics[width=0.6\textwidth]{../diagrams/sequence_diagrams/wlaczenie_maszyny.png}
   \caption{Sekwencja komunikacji włączenia maszyny}
@@ -70,7 +70,7 @@ Jeżeli maszynę można wyłączyć to zostanie ona wyłączona.
 Następnie serwer wirtualizacji odeśle powiadomienie o zmianie modelu zbiorczą kolejką (rozdział \ref{modules:broker}, kolejka \ref{modules:broker:queue-overseers}).
 W przeciwnym wypadku nie zrobi nic.
 
-\begin{figure}[H]
+\begin{figure}[ht!]
   \centering
   \includegraphics[width=0.6\textwidth]{../diagrams/sequence_diagrams/wylaczenie_maszyny.png}
   \caption{Sekwencja komunikacji wyłączenia maszyny}

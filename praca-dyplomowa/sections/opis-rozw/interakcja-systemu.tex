@@ -24,7 +24,7 @@ Po wejściu na stronę panelu administracyjnego, administrator musi podać nazw�
 Jeżeli rzeczywiście podane konto jest kontem administratora przejdzie dalej do panelu.
 W przeciwnym wypadku zostanie zwrócony błąd dostępu.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
   \centering
   \includegraphics[width=\textwidth]{resources/admin_panel_login.png}
   \caption{Okno logowania panelu administracyjnego}
@@ -34,7 +34,7 @@ W przeciwnym wypadku zostanie zwrócony błąd dostępu.
 Po zalogowaniu administrator ma dostęp do głównego panelu z podsumowaniem wszystkich dostępnych zasobów.
 Po lewej stronie ma on dostępną listę wszystkich aktywnych serwerów wirtualizacji w systemie (rysunek \ref{figure:system_interaction.admin.panel}).
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
   \centering
   \includegraphics[width=\textwidth]{resources/admin_panel_home.png}
   \caption{Widok wszystkich zasobów systemu}
@@ -44,7 +44,7 @@ Po lewej stronie ma on dostępną listę wszystkich aktywnych serwerów wirtuali
 Po naciśnięciu na wybrany serwer wirtualizacji na środku pojawiają się szczegółowy opis zasobów konkretnego serwera (rysunek \ref{figure:system_interaction.admin.details}).
 Administrator, oprócz zasobów, może sprawdzić ile aktualnie jest uruchomionych maszyn (sekcja \textit{Running}) oraz ile jeszcze można uruchomić (sekcja \textit{Free}).
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
   \centering
   \includegraphics[width=\textwidth]{resources/admin_panel_details.png}
   \caption{Widok szczegółowych zasobów serwera wirtualizacji}
@@ -60,7 +60,7 @@ Po uruchomieniu aplikacji klienckiej użytkownik musi podać nazwę użytkownika
 Jeżeli użytkownik istnieje w bazie to przejdzie do ekranu głównego.
 W przeciwnym wypadku zostanie zwrócony błąd dostępu.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
   \centering
   \includegraphics[width=\textwidth]{resources/client_login.png}
   \caption{Ekran logowania aplikacji klienckiej}
@@ -70,7 +70,7 @@ W przeciwnym wypadku zostanie zwrócony błąd dostępu.
 Po zalogowaniu użytkownik trafia do ekranu głównego (rysunek \ref{figure:system_interaction.client.home}).
 Może tutaj zobaczyć ile jest dostępnych maszyn w systemie, poprosić o sesję oraz zmienić ustawienia aplikacji.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
   \centering
   \includegraphics[width=\textwidth]{resources/client_home.png}
   \caption{Ekran główny aplikacji klienckiej}
@@ -81,7 +81,7 @@ Przechodząc do ustawień (rysunek \ref{figure:system_interaction.client.setting
 Zmiana adresu nadzorcy będzie wymagać ponownego uruchomienia.
 Inne ustawienia zostaną zastosowane od razu po zmianie.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
   \centering
   \includegraphics[width=\textwidth]{resources/client_settings.png}
   \caption{Ekran ustawień aplikacji klienckiej}
@@ -90,7 +90,7 @@ Inne ustawienia zostaną zastosowane od razu po zmianie.
 
 Gdy użytkownik z ekranu głównego naciśnie przycisk \textit{Connect} zostanie zapytany o typ sesji, jaki system ma mu przypisać (rysunek \ref{figure:system_interaction.client.select}).
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
   \centering
   \includegraphics[width=\textwidth]{resources/client_select.png}
   \caption{Ekran wyboru typu maszyny do pracy}
@@ -108,7 +108,7 @@ Zamknięcie klienta RDP lub naciśniecie przycisku \textit{End session} spowoduj
 Od tego momentu użytkownik ma \texttt{DomainShutdownTimeout} minut na powrót do swojej sesji (szczegóły w rozdziale \ref{system_startup.overseer_conf}).
 Po upływie tego czasu sesja zostaje zamknięta, a maszyna z nią skojarzona wyłączona.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
   \centering
   \includegraphics[width=\textwidth]{resources/client_session.png}
   \caption{Ekran działającego połączenia RDP}
@@ -118,7 +118,7 @@ Po upływie tego czasu sesja zostaje zamknięta, a maszyna z nią skojarzona wy�
 W przypadku gdy użytkownik poprosi aby nie uruchamiać dołączonego klienta RDP, albo uruchomienie klienta RDP zakończy się błędem, zostaną mu przekazane dane dostępowe do przypisanej maszyny wirtualnej (rysunek \ref{figure:system_interaction.client.session_nordp}).
 Wtedy jedynym sposobem na zaznaczenie, że skończyło się pracę na maszynie, jest naciśnięcie przycisku \textit{End session}.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
   \centering
   \includegraphics[width=\textwidth]{resources/client_session_nordp.png}
   \caption{Ekran trwania połączenia w zewnętrznym kliencie RDP}

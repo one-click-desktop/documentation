@@ -16,7 +16,7 @@ Opracowywany system składa się z następujących modułów:
 
 Schematyczny obraz systemu przedstawiony został na rysunku \ref{figure:architecture:system}.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=\textwidth]{../diagrams/architecture.png}
   \caption{Schematyczna architektura systemu}
@@ -33,7 +33,7 @@ Połączenia oznaczone liczbami rzymskimi oznaczają kolejki komunikacji za poś
 
 W celu zarządzania systemem każdy z nadzorców musi posiadać dokładną wiedzę o jego aktualnym stanie. Informacje te przechowuje w strukturze nazywanej dalej modelem systemu. Ważne jest, że klasy modelu nie wykonują żadnych akcji poza modyfikacją przechowywanych danych. Wszystkie metody służą jedynie do zmiany stanu przechowywanego modelu w celu dopasowania go do rzeczywistego stanu systemu, na podstawie otrzymanych danych. Przyczyną takiego rozwiązania jest pierwsze z założeń komunikacji opisanych w sekcji \ref{communication:broker}. Sprawia ono, że zmiana modelu musi być następstwem pewnej akcji wykonanej przez serwer wirtualizacji. Schemat klas przedstawia rysunek \ref{figure:architecture:model}.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=\textwidth]{../diagrams/class_diagrams/system_model_v2.png}
   \caption{Schemat klas modelu systemu}
