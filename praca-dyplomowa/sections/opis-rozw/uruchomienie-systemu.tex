@@ -78,10 +78,11 @@ W przypadku uruchamiania aplikacji wewnątrz kontenera ustawione jest środowisk
 Aplikacja nadzorcy domyślnie przeszukuje folder \texttt{./config} w poszukiwaniu plików konfiguracyjnych.
 Można zmienić ścieżkę do folderu konfiguracyjnego poprzez parametr \texttt{-c path/to/other/config/folder/}.
 
-W pliku konfiguracyjnym nadzorca odczytuje dwie sekcji:
+W pliku konfiguracyjnym nadzorca odczytuje następujące sekcji:
 \begin{itemize}
   \item \texttt{JwtSettings} - przechowuje parametr wykorzystywany do generowania unikatowych tokenów autoryzacyjnych
   \item \texttt{OneClickDesktop} - przechowuje parametry związane z działaniem systemu OneClickDesktop.
+  \item \texttt{LDAP} - przechowuje parametry związane z integracją z systemem katalogowym przechowującym użytkowników.
 \end{itemize}
 Poza tymi sekcjami można tam umieścić dowolne sekcje, które będzie przetwarzać ASP.NET \parencite{asp-conf}.
 Jednak warte uwagi są następujące sekcje:
@@ -97,7 +98,7 @@ Pozostają jeszcze 2 ważne parametry bez sekcji zaimplementowane przez ASP.NET:
 \end{itemize}
 
 \subsubsection{Parametry sekcji \texttt{JwtSettings}}
-Sekcja ta zawiera jedynie parametr \texttt{Secret}. Należy go ustawić na dowolny napis. W przypadku uruchamiania więcej niż jednej instancji nadzorcy taka sama wartość parametru pozwala na zmianę nadzorcy bez konieczności ponownej autoryzacji.
+Sekcja ta zawiera jedynie parametr \texttt{Secret}. Należy go ustawić na dowolny napis. W przypadku uruchamiania więcej niż jednej instancji nadzorcy użycie identycznej wartości parametru może być porządane. Pozwala to na bezproblemową zmianę nadzorcy, z którym przebiega komunikacja, bez potrzeby ponownej autoryzacji.
 
 \subsubsection{Parametry sekcji \texttt{OneClickDesktop}}
 Sekcja zawiera parametry związane z komunikacją pomiędzy jednostkami systemu oraz kilka parametrów określających interwały czasowe zdarzeń.
@@ -109,6 +110,25 @@ W dostarczonej przykładowej konfiguracji wykomentowane wartości oznaczają war
   \item \texttt{ModelUpdateInterval} - ilość sekund co ile nadzorca prosi serwery wirtualizacji o aktualizacje modelu. Domyślnie przyjmuje wartośc \texttt{60}. Zalecane jest aby wartość tego parametru opisywała czas od 30 do 60 sekund.																												%wtf? ą nie działa we wnętrzu {}
   \item \texttt{DomainShutdownTimeout} - ilość minut jaka musi upłynąć od oznaczenia maszyny wirtualnej stanem \textit{Oczekiwanie na wyłączenie maszyny} do jej wyłączenia. Domyślnie przyjmuje wartość \texttt{15}.
   \item \texttt{DomainShutdownCounterInterval} - ilość sekund co ile nadzorca sprawdza czy maszyna wirtualna nadal oczekuje na zamknięcie. Zaleca się, aby ten czas dzielił czas z parametru \texttt{DomainShutdownTimeout} na równe części. Takich części nie powinno być mniej niż 10, ale także nie więcej niż 100. Każde takie sprawdzenie zużywa czas procesora.
+\end{itemize}
+
+\subsubsection{Parametry sekcji \texttt{LDAP}}
+Sekcja zawiera parametry związane z integracją aplikacji z istniejącym systemem katalogowym przechowującym użytkowników. Zalecamy użycie systemu wykorzystującego implementację OpenLDAP (\url{https://www.openldap.org/}). Integracja z innymi rozwiązaniami może nie działać prawidłowo. Dodatkowo przechowywanie folderów użytkowników w katalogu \texttt{\\home} może powodować konflikt z lokalnymi użytkownikami znajdującymi się w Vagrant Boxie.
+
+Użytkownicy zapisani w systemie katalogowym powinni dziedziczyć po klasie \texttt{posixAccount}. W takim przypadku parametry związane z nazwami atrybutów mogą przyjmować domyślną wartość.
+\begin{itemize}
+  \item \texttt{LdapHostname} - adres dostępowy systemu katalogowego. Domyślnie przyjmuje wartość \texttt{localhost}. Bez działającego systemu katalogowego pod tym adresem autoryzacja użytkowników nie będzie możliwa.
+  \item \texttt{LdapPort} - port dostępowy systemu katalogowego. Domyślnie przyjmuje wartość \texttt{localhost}. Bez działającego systemu katalogowego pod tym portem autoryzacja użytkowników nie będzie możliwa.
+  \item \texttt{Domain} - nazwa domeny systemu katalogowego. Jest to identyfikator korzenia drzewa katalogów. Domyślna wartość wynosi \texttt{dc=example,dc=org}.
+  \item \texttt{UserSearchBase} - lokalizacja w drzewie katalogów, pod którą znajdują się użytkownicy systemu OneClickDesktop. Lokalizacja musi być w formie ścieżki bezwzględnej od korzenia. Domyślna wartość wynosi \texttt{ou=users,dc=example,dc=org}.
+  \item \texttt{UseSsl} - informacja czy komunikacja z systemem katalogowym powinna być wykonywana z użyciem szyfrowanego protokołu. Wymaga poprawnego skonfigurowanych certyfikatów szyfrowania. Domyślna wartość wynosi \texttt{false}.
+  \item \texttt{UserGuidAttribute} - Nazwa atrybutu przechowującego unikatowy w skali systemu identyfikator użytkownika (GUID). Atrybut ten nie należy do domyślnych atrybutów znajdujących się w LDAPie. Można do jego przechowywania wykorzystać pole przechowujące napis lub specjalny typ. Domyślna wartość wynosi \texttt{guid}.
+  \item \texttt{UserGroupAttribute} - Nazwa atrybutu przechowującego identyfikator grupy, do której należy użytkownik. Atrybut musi zawierać wyłącznie jeden numer, który odpowiada grupie użytkowników lub administratorów systemu OneClickDesktop. Domyślna wartość wynosi \texttt{gidNumber}.
+  \item \texttt{UserNameAttribute} - Nazwa atrybutu przechowującego nazwę użytkownika. Domyślna wartość wynosi \texttt{uid}.
+  \item \texttt{UserGroupNumber} - identyfikator grupy użytkowników systemu OneClickDesktop. Domyślna wartość wynosi \texttt{502}.
+  \item \texttt{AdminGroupNumber} - identyfikator grupy administratorów systemu OneClickDesktop. Domyślna wartość wynosi \texttt{502}.
+  \item \texttt{ReadonlyUserName} - nazwa konta z prawami do odczytu. Wykorzystywane jest do pobrania z systemu katalogowego informacji o konkretnym użytkowniku. Uprawnienia muszą pozwalać na odczyt użytkowników systemu OneClickDestop i wymienionych wcześniej atrybutów. Domyślna wartość wynosi \texttt{readonly}.
+  \item \texttt{ReadonlyUserPassword} - hasło dostępowe konta z prawami odczytu. Domyślna wartość wynosi \texttt{readonly}.
 \end{itemize}
 
 \subsubsection{Przykładowa konfiguracja}
@@ -138,6 +158,20 @@ Konfiguracja ta umożliwia użycie protokołu HTTPS dzięki przekazaniu zabezpie
 	ModelUpdateInterval=60
 	DomainShutdownTimeout=15
 	DomainShutdownCounterInterval=30
+
+	[LDAP]
+	LdapHostname=localhost
+	LdapPort=389
+	UserSearchBase="ou=users,dc=example,dc=org"
+	Domain="dc=example,dc=org"
+	UseSsl=false
+	UserGuidAttribute=guid
+	UserGroupAttribute=gidNumber
+	UserNameAttribute=uid
+	UserGroupNumber=502
+	AdminGroupNumber=501
+	ReadOnlyUserName=readonly
+	ReadOnlyUserPassword=readonly
 \end{verbatim}
 
 \subsection{Konfiguracja serwera wirtualizacji}
