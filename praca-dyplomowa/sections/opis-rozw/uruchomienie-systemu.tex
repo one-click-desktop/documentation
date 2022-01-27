@@ -98,7 +98,7 @@ Pozostają jeszcze 2 ważne parametry bez sekcji zaimplementowane przez ASP.NET:
 \end{itemize}
 
 \subsubsection{Parametry sekcji \texttt{JwtSettings}}
-Sekcja ta zawiera jedynie parametr \texttt{Secret}. Należy go ustawić na dowolny napis. W przypadku uruchamiania więcej niż jednej instancji nadzorcy użycie identycznej wartości parametru może być porządane. Pozwala to na bezproblemową zmianę nadzorcy, z którym przebiega komunikacja, bez potrzeby ponownej autoryzacji.
+Sekcja ta zawiera jedynie parametr \texttt{Secret}. Należy go ustawić na dowolny napis. W przypadku uruchamiania więcej niż jednej instancji nadzorcy użycie identycznej wartości parametru może być pożądane. Pozwala to na bezproblemową zmianę nadzorcy, z którym przebiega komunikacja, bez potrzeby ponownej autoryzacji.
 
 \subsubsection{Parametry sekcji \texttt{OneClickDesktop}}
 Sekcja zawiera parametry związane z komunikacją pomiędzy jednostkami systemu oraz kilka parametrów określających interwały czasowe zdarzeń.
@@ -229,7 +229,7 @@ Sekcja \texttt{Ldap} zawiera parametry przekazywane do tworzonej maszyny wirtual
 	\item \texttt{UsersDn} - lokalizacja w drzewie katalogów, pod którą znajdują się użytkownicy systemu OneClickDesktop. Domyślnie przyjmuje wartość \texttt{ou=users,dc=example,dc=org}.
 \end{itemize}
 
-Sekcja \texttt{Nfs} zawiera następujące parametry:
+Sekcja \texttt{Nfs} zawiera następujące parametry związane z używaniem dysku sieciowego. Katalogi użytkowników montowane są wewnątrz maszyny wirtualnej za pomocą sieciowego systemu plików NFS \parencite{nfs}. Z tego powodu dysk sieciowy musi udostępniać katalogi użytkownika przy użyciu serwera NFS. Powiązane parametry to:
 \begin{itemize}
 	\item \texttt{ServerName} - adres dostępowy dysku sieciowego. Bez działającego, lub osiągalnego z poziomu maszyny wirtualnej, serwera NFS pod tym adresem przenoszenie danych między sesjami nie będzie możliwe. Domyślna wartość wynosi \texttt{localhost}.
 	\item \texttt{HomePath} - ścieżka wewnątrz serwera do katalogu przechowującego foldery użytkowników. Domyślna wartość wynosi \texttt{/}.
