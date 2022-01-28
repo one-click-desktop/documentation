@@ -16,7 +16,7 @@ Komunikacja wewnątrz systemu opiera się na kolejkach opisanych w rozdziale \re
   \item Do monitorowania utrzymania połączenia z brokerem użyty jest mechanizm zwracania wiadomości, które nie mogą zostać dostarczone \parencite{rabbit-unroutable}. Używając go nadzorcy mogą wykryć, kiedy poszczególne serwery wirtualizacji przestaną działać, a serwery wirtualizacji - kiedy wszyscy nadzorcy przestaną działać.
 \end{itemize}
 
-Opisane wyżej założenia pozwalają zminimalizować problem hazardu i wyścigów. Jeżeli wiele nadzorców wyśle do serwera wirtualizacji tą samą prośbę (np. o stworzenie sesji na konkretnej maszynie), to z atomowości obsługi sesja zostanie stworzona tylko dla pierwszego z nich. Serwer wirtualizacji wyśle wiadomość o aktualizacji stanu maszyn i zignoruje pozostałe prośby. Nadzorcy otrzymają zmianę stanów, co spowoduje wywołanie odpowiednich procedur. Dla pierwszego będzie to dalsza część procesu tworzenia sesji, a pozostali nadzorcy pozostaną w procesie wyszukiwania maszyny do sesji.
+Opisane wyżej założenia pozwalają zminimalizować problem hazardu i wyścigów. Jeżeli wiele nadzorców wyśle do serwera wirtualizacji tę samą prośbę (np. o stworzenie sesji na konkretnej maszynie), to z atomowości obsługi sesja zostanie stworzona tylko dla pierwszego z nich. Serwer wirtualizacji wyśle wiadomość o aktualizacji stanu maszyn i zignoruje pozostałe prośby. Nadzorcy otrzymają zmianę stanów, co spowoduje wywołanie odpowiednich procedur. Dla pierwszego będzie to dalsza część procesu tworzenia sesji, a pozostali nadzorcy pozostaną w procesie wyszukiwania maszyny do sesji.
 
 \subsection{Komunikacja zewnętrzna}
 \label{communication:api}
