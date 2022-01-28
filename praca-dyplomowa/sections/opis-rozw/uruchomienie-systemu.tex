@@ -417,6 +417,19 @@ Folder domowy użytkownika wykonawczego powinien być wykorzystany do tego celu.
 \end{verbatim}
 gdzie \texttt{HOME} to ścieżka do folderu domowego użytkownika wykonawczego.
 
+\subsection{Uruchomienie maszyny wirtualnej w trybie UEFI}
+
+W przypadku dostarczenia maszyny skonfigurowanej do pracy z UEFI trzeba dostarczyć libvirtowi obraz UEFI (najczęściej OVMF \parencite{ovmf}) oraz obraz zmiennych NVRAM odpowiedzialnych za prawidłowe uruchomienie maszyny.
+Jak w przypadku obrazu UEFI wystarczy jeden obraz dla każdego uruchamianego obrazu, tak zmienne NVRAM zależą od wcześniej przygotowanego obrazu maszyny wirtualnej.
+Przy uruchamianiu serwera wirtualizacji w Dockerze na trzeba przekazać obraz zmiennych umożliwiający uruchomienie Vagrant Boxa podanego w pliku konfiguracyjnym.
+Ścieżkę do obrazu NVRAM można podać w konfiguracji.
+
+Dla obrazu \texttt{smogork/archlinux-rdp}, gdzie NVRAM dostarczony jest w środku Vagrant Boxa przekazanie parametru wygląda następująco:
+\begin{verbatim}
+	${HOME}/.vagrant.d/boxes/smogork-VAGRANTSLASH-archlinux-rdp/0.2.1/libvirt/nvram.fd:
+	/app/nvram.fd
+\end{verbatim}
+
 \subsubsection{Plik konfiguracyjny}
 Aplikacja serwera wirtualizacji poszukuje plików konfiguracyjnych w lokalizacji \texttt{/app/config/docker-test/}.
 Należy przekazać folder zawierający konfiguracje z systemu uruchamiającego (\texttt{PATH\_TO\_CONFIGS}) do wnętrza kontenera pod dokładnie tą lokalizację pod postacią woluminu.
