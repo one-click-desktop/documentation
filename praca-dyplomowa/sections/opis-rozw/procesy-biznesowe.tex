@@ -17,7 +17,7 @@ Proces opisuje prośbę klienta o ustanowienie dla niego sesji. Sesja może już
 
 Jeżeli sesja już istnieje, to zostaje zwrócona użytkownikowi.
 W przeciwnym razie nadzorca, na podstawie modelu systemu, wybiera pewną wolną maszynę i wysyła do serwera wirtualizacji, na którym działa wybrana maszyna, prośbę o utworzenie sesji. Możliwość działania wielu nadzorców wymaga, aby proces ten był powtarzalny, czyli dla konkretnego stanu modelu musi zawsze zostać wybrana ta sama maszyna.
-W Przypadku braku wolnej maszyny użytkownikowi zgłoszony jest błąd.
+W przypadku braku wolnej maszyny użytkownikowi zgłoszony jest błąd.
 Z założenia taka sytuacja może zajść jedynie, gdy wszystkie maszyny zostały zajęte i brakuje zasobów na utworzenie nowych. Wynika to z tego, że system powinien w miarę możliwości trzymać pewien zapas wolnych maszyn.
 Może się zdarzyć, że model jest nieaktualny i nie można utworzyć sesji z wcześniej wybraną maszyną.
 Taka prośba zostaje odrzucona przez serwer wirtualizacji, ale odświeżenie modelu spowoduje powtórzenie procesu, tym razem wybierając inną maszynę.

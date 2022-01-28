@@ -61,7 +61,7 @@ Zadaniem serwera wirtualizacji jest uruchamianie i zarządzanie maszynami wirtua
 Moduł ten nie jest w stanie funkcjonować samodzielnie. Z tego powodu aplikacja nie uruchomi się, jeżeli nie jest w stanie nawiązać połączenia z aplikacją nadzorczą. Aplikacja zakończy się, gdy ostatni nadzorca w systemie zakończy działanie, pod warunkiem że nie ma żadnych działających sesji.
 
 Serwer wirtualizacji jest częścią systemu, która przechowuje fizyczne zasoby udostępniane użytkownikom.
-System zaprojektowany jest w taki sposób aby teoretycznie nie było ograniczenia na liczbę serwerów wirtualizacji działających jednocześnie.
+System zaprojektowany jest w taki sposób, aby teoretycznie nie było ograniczenia na liczbę serwerów wirtualizacji działających jednocześnie.
 
 \subsection{Aplikacja kliencka}
 \label{modules:client}
@@ -104,6 +104,6 @@ Zdefiniowane zostały następujące kolejki wiadomości (numeracja odpowiada rys
 
 Powyższe 4 grupy kolejek umożliwią prawidłowe działanie systemu.
 W trakcie uruchamiania każdy z modułów tworzy kolejki, z których odbiera wiadomości.
-Jedynym wymogiem prawidłowego uruchomienia komunikacji jest dostępny dla wszystkich serwerów wirtualizacji oraz nadzorców proces brokera.
+Jedynym wymogiem prawidłowego uruchomienia komunikacji jest proces brokera dostępny dla wszystkich serwerów wirtualizacji oraz nadzorców.
 
 \end{document}

@@ -98,7 +98,7 @@ Pozostają jeszcze 2 ważne parametry bez sekcji zaimplementowane przez ASP.NET:
 \end{itemize}
 
 \subsubsection{Parametry sekcji \texttt{JwtSettings}}
-Sekcja ta zawiera jedynie parametr \texttt{Secret}. Należy go ustawić na dowolny napis. W przypadku uruchamiania więcej niż jednej instancji nadzorcy użycie identycznej wartości parametru może być porządane. Pozwala to na bezproblemową zmianę nadzorcy, z którym przebiega komunikacja, bez potrzeby ponownej autoryzacji.
+Sekcja ta zawiera jedynie parametr \texttt{Secret}. Należy go ustawić na dowolny napis. W przypadku uruchamiania więcej niż jednej instancji nadzorcy użycie identycznej wartości parametru może być pożądane. Pozwala to na bezproblemową zmianę nadzorcy, z którym przebiega komunikacja, bez potrzeby ponownej autoryzacji.
 
 \subsubsection{Parametry sekcji \texttt{OneClickDesktop}}
 Sekcja zawiera parametry związane z komunikacją pomiędzy jednostkami systemu oraz kilka parametrów określających interwały czasowe zdarzeń.
@@ -190,9 +190,11 @@ Aplikacja serwera wirtualizacji domyślnie przeszukuje folder \texttt{./config} 
 Można zmienić ścieżkę do folderu konfiguracyjnego poprzez parametr \texttt{-c\ path/to/other/config/folder/}.
 
 \subsubsection{Główny plik konfiguracyjny}
-W głównym pliku konfiguracyjnym możemy wyróżnić 2 sekcje:
+W głównym pliku konfiguracyjnym możemy wyróżnić następujące sekcje:
 \begin{itemize}
   \item \texttt{OneClickDesktop} - przechowuje parametry związane z działaniem systemu OneClickDesktop.
+  \item \texttt{Ldap} - zawiera parametry systemu katalogowego przechowującego użytkowników.
+  \item \texttt{Nfs} - przechowuje dane dysku sieciowego, na którym znajdują się katalogi domowe użytkowników.
   \item \texttt{ServerResources} - przechowuje parametry określające wszystkie udostępnione zasoby.
 \end{itemize}
 
@@ -204,6 +206,8 @@ W sekcji \texttt{OneClickDesktop} występują parametry:
   \item \texttt{VagrantFilePath} - ścieżka do specjalnie przygotowanego pliku wsadowego dla Vagranta. Wykorzystywany jest przez system do uruchamiania i wyłączania maszyn wirtualnych. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
   \item \texttt{PostStartupPlaybook} - skrypt wykonywany przy pomocy Ansible'a zaraz po uruchomieniu maszyny wirtualnej. Koniecznie należy przetestować czy konfiguracja wykonuje się prawidłowo. Przy każdym błędzie wykonania skryptu maszyna wirtualna zostanie usunięta. Domyślnie przyjmuje wartość \texttt{res/poststartup\_playbook.yml}.
   \item \texttt{VagrantboxUri} - identyfikator szablonowej maszyny wirtualnej. Musi ona spełniać szereg wymogów opisanych w sekcji \ref{system_requirements.vagrant_box}. W przeciwnym wypadku system nie będzie w stanie uruchomić takiego szablonu. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
+  \item \texttt{UefiPath} - ścieżka do obrazu UEFI znajdującego się na maszynie uruchamiającej. Prawidłowo ustawiona wartość jest wymagana do poprawnego zbudowania Vagrant Boxa. % ? smogork: możesz coś dodać jak chcesz
+  \item \texttt{NvramPath} - % TODO: smogork dodać
   \item \texttt{BridgeInterfaceName} - nazwa interfejsu sieciowego w skonfigurowanego w trybie bridge, do którego zostanie podłączona każda uruchomiona maszyna wirtualna. Domyślnie przyjmuje wartość \texttt{br0}.
   \item \texttt{BridgedNetwork} - adres sieci, do której podłączona zostanie maszyna wirtualna poprzez \texttt{BridgeInterfaceName}, podany w formacie CIDR. Jeżeli maszyna nie będzie posiadać adresu z podanej sieci po uruchomieniu to zostanie wyłączona. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
   \item \texttt{InternalRabbitMQHostname} - adres dostępowy wewnętrznego brokera wiadomości. Domyślnie przyjmuje wartość \texttt{localhost}. Bez działającego procesu brokera pod tym adresem aplikacja wyłączy się z błędem zaraz po uruchomieniu.
@@ -214,12 +218,29 @@ W sekcji \texttt{OneClickDesktop} występują parametry:
   \item \texttt{ClientHeartbeatChecksDelay} - czas w milisekundach pomiędzy sprawdzeniami, czy aplikacja kliencka nadal jest połączona do maszyny wirtualnej. Domyślnie przyjmuje wartość \texttt{10000}
 \end{itemize}
 
+Sekcja \texttt{Ldap} zawiera parametry przekazywane do tworzonej maszyny wirtualnej w celu umożliwienia autoryzacji za pośrednictwem systemu katalogowego. Dostępne parametry to:
+\begin{itemize}
+	\item \texttt{Uri} - adres systemu katalogowego w formacie URI. Bez działającego systemu katalogowego pod tym adresem autoryzacja użytkowników nie będzie możliwa. Domyślnie przyjmuje wartość \texttt{ldpa://localhost}. Domyślnie przyjmuje wartość \texttt{ldpa://localhost}.
+	\item \texttt{Domain} - nazwa domeny systemu katalogowego. Jest to identyfikator korzenia drzewa katalogów. Domyślna wartość wynosi \texttt{dc=example,dc=org}.
+	\item \texttt{ReadonlyUserName} - lokalizacja w drzewie katalogów, pod którą znajduje się konto z prawami do odczytu. Jeżeli system pozwala na anonimowy odczyt, to możliwe jest przekazanie pustej wartości. Domyślnie przyjmuje wartość \texttt{cn=readonly,dc=example,dc=org}.
+	\item \texttt{ReadonlyUserPassword} - hasło dostępowe konta z prawami odczytu. Domyślna wartość wynosi \texttt{readonly}.
+	\item \texttt{AdminDn} - lokalizacja w drzewie katalogów, pod którą znajduje się konto administracyjne. Używane do poprawnego wykonywania zmian w systemie katalogowym. Domyślnie przyjmuje wartość \texttt{cn=admin,dc=example,dc=org}.
+	\item \texttt{GroupsDn} - lokalizacja w drzewie katalogów, pod którą znajdują się grupy użytkowników systemu OneClickDesktop. Domyślnie przyjmuje wartość \texttt{ou=groups,dc=example,dc=org}.
+	\item \texttt{UsersDn} - lokalizacja w drzewie katalogów, pod którą znajdują się użytkownicy systemu OneClickDesktop. Domyślnie przyjmuje wartość \texttt{ou=users,dc=example,dc=org}.
+\end{itemize}
+
+Sekcja \texttt{Nfs} zawiera następujące parametry związane z używaniem dysku sieciowego. Katalogi użytkowników montowane są wewnątrz maszyny wirtualnej za pomocą sieciowego systemu plików NFS \parencite{nfs}. Z tego powodu dysk sieciowy musi udostępniać katalogi użytkownika przy użyciu serwera NFS. Powiązane parametry to:
+\begin{itemize}
+	\item \texttt{ServerName} - adres dostępowy dysku sieciowego. Bez działającego, lub osiągalnego z poziomu maszyny wirtualnej, serwera NFS pod tym adresem przenoszenie danych między sesjami nie będzie możliwe. Domyślna wartość wynosi \texttt{localhost}.
+	\item \texttt{HomePath} - ścieżka wewnątrz serwera do katalogu przechowującego foldery użytkowników. Domyślna wartość wynosi \texttt{/}.
+\end{itemize}
+
 W sekcji \texttt{ServerResources} występują parametry:
 \begin{itemize}
   \item \texttt{Cpus} - liczba wątków, które może wykorzystać system. Domyślnie przyjmuje wartość \texttt{2}.
   \item \texttt{Memory} - ilość pamięci operacyjnej w MiB jaką może wykorzystać system. Domyślnie przyjmuje wartość \texttt{2048}.
   \item \texttt{Storage} - ilość przestrzeni dyskowej w GiB jaką może wykorzystać system. Domyślnie przyjmuje wartość \texttt{100}.
-  \item \texttt{GPUsCount} - ilość kart graficznych przekazanych do systemu. Domyslnie przyjmuje wartośc \texttt{0}.
+  \item \texttt{GPUsCount} - ilość kart graficznych przekazanych do systemu. Domyślnie przyjmuje wartośc \texttt{0}.
   \item \texttt{MachineTypes} - lista typów maszyn wirtualnych. Każda nazwa typu jest oddzielona od sąsiednich przecinkiem. Nazwa typu musi składać się ze znaków opisanych następującym wyrażeniem regularnym \texttt{[a-zA-Z0-9\textbackslash-]}. Dla każdej z nazw wyszukiwany jest plik konfiguracyjny o o nazwie zaczynającej się nazwą typu i kończącą się \texttt{\_template.ini}.
 \end{itemize}
 
@@ -239,8 +260,10 @@ Przykładowa zawartość głównego pliku konfiguracyjnego:
 	OversserCommunicationShutdownTimeout=120
 	LibvirtUri=qemu:///system
 	VagrantFilePath=res/Vagrantfile
-	PostStartupPlaybook=res/poststartup_playbook.yml
 	VagrantboxUri=smogork/archlinux-rdp
+	UefiPath=/usr/share/edk2-ovmf/x64/OVMF_CODE.fd
+	NvramPath=/app/nvram.fd
+	PostStartupPlaybook=res/poststartup_playbook.yml
 
 	BridgeInterfaceName=br0
 	BridgedNetwork=1.2.3.0/24
@@ -253,6 +276,19 @@ Przykładowa zawartość głównego pliku konfiguracyjnego:
 
 	ClientHeartbeatChecksForMissing=2
 	ClientHeartbeatChecksDelay=10000
+
+	[Ldap]
+	Uri=ldap://1.2.3.4
+	Domain=dc=example,dc=org
+	ReadOnlyDn=cn=readonly,dc=example,dc=org
+	ReadOnlyPassword=readonly
+	AdminDn=cn=admin,dc=example,dc=org
+	GroupsDn=ou=groups,dc=example,dc=org
+	UsersDn=ou=users,dc=example,dc=org
+
+	[Nfs]
+	ServerName=1.2.3.4
+	HomePath=/
 
 	[ServerResources]
 	Cpus=6
