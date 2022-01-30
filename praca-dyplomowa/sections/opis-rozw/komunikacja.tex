@@ -11,7 +11,7 @@ Komunikacja wewnątrz systemu opiera się na kolejkach opisanych w rozdziale \re
 \begin{itemize}
   \item Nadzorca może zmienić stan systemu jedynie w reakcji na odpowiedź serwera wirtualizacji. Odpowiedzi te wysyłane są do wszystkich nadzorców, dzięki czemu każdy nadzorca ma taki sam model systemu.
   \item Wiadomości przetwarzane są przez serwer wirtualizacji w sposób atomowy. Pojedyncza wiadomość musi zostać w pełni obsłużona zanim program przejdzie do obsługi kolejnej.
-  \item Serwer wirtualizacji odpowiada na wiadomości wysyłając nowy stan maszyn. Jeżeli żądanie nie może być spełnione z powodu jego nieaktualności, to serwer na nie nie odpowiada. Wyjątkiem jest żądanie o wysłanie aktualnego stanu maszyn.
+  \item Serwer wirtualizacji odpowiada na wiadomości wysyłając nowy stan maszyn. Jeżeli żądanie nie może być spełnione z powodu jego nieaktualności, to serwer nie odpowie. Wyjątkiem jest żądanie o wysłanie aktualnego stanu maszyn.
   \item Z powodu asynchroniczności wiadomości moduły nie oczekują na odpowiedź. W przypadku nadzorcy dalsze przetwarzanie zostanie uruchomione przez zmianę modelu.
   \item Do monitorowania utrzymania połączenia z brokerem użyty jest mechanizm zwracania wiadomości, które nie mogą zostać dostarczone \parencite{rabbit-unroutable}. Używając go nadzorcy mogą wykryć, kiedy poszczególne serwery wirtualizacji przestaną działać, a serwery wirtualizacji - kiedy wszyscy nadzorcy przestaną działać.
 \end{itemize}
@@ -42,7 +42,7 @@ Poniżej znajduje się zestawienie oraz opis dostępnych endpointów.
 Ważną informacją jaką musi posiadać system jest fakt, czy użytkownik rzeczywiście jest podłączony do maszyny wirtualnej.
 System uzyskuje tą informację komunikując się z brokerem wiadomości odpowiedzialnym za komunikację z użytkownikami.
 Każda aplikacja kliencka, po uzyskaniu gotowej sesji, tworzy kolejkę o takiej nazwie jak uzyskany identyfikator sesji.
-Serwer wirtualizacji sprawdza co jakiś czas czy na końcu kolejki istnieje jakikolwiek konsument.
+Serwer wirtualizacji sprawdza co jakiś czas, czy na końcu kolejki istnieje jakikolwiek konsument.
 Gdy użytkownik się rozłączy to aplikacja kliencka usuwa kolejkę, co pozwala serwerowi wykryć zakończenie pracy.
 
 \end{document}

@@ -15,13 +15,15 @@ Najważniejszym obiektem biznesowym w systemie jest maszyna wirtualna, do które
 
 Maszyna, aby być całkowicie uruchomiona, musi zostać zaopatrzona we wszystkie konfiguracje.
 Stan \textit{Wolna} oznacza możliwość przypisania sesji.
-Po przypisaniu do sesji, maszyna przechodzi ona w stan oczekiwania na użytkownika. Czas oczekiwania jest konfigurowalny, a po jego upłynięciu przechodzi w stan oczekiwania na wyłączenie.
-W tym stanie oczekuje na ponowne połączenie, pozwalając użytkownikowi na bezproblemowy powrót do sesji w przypadku nieoczekiwanego utracenia połączenia. Jeżeli użytkownik nie powróci do sesji, to system wyłącza maszynę.
+Po przypisaniu do sesji maszyna przechodzi w stan oczekiwania na użytkownika.
+Czas oczekiwania jest konfigurowalny, a po jego upłynięciu przechodzi w stan oczekiwania na wyłączenie.
+W tym stanie oczekuje na ponowne połączenie, pozwalając użytkownikowi na bezproblemowy powrót do sesji w przypadku nieoczekiwanego utracenia połączenia.
+Jeżeli użytkownik nie powróci do sesji, to system wyłącza maszynę.
 Maszyna jest w stanie \textit{Zajęta}, gdy aktualnie pracuje na niej użytkownik. Monitorowanie zajętości realizowane jest przy użyciu odpowiedniej kolejki wiadomości (rozdział \ref{modules:broker}, kolejka \ref{modules:broker:queue-users}).
 
 \subsection{Serwer wirtualizacji}
 
-Serwer wirtualizacji monitoruje zasoby zużywane przez uruchomione na nim maszyny wirtualne oraz fakt stan połączenia użytkowników.
+Serwer wirtualizacji monitoruje zasoby zużywane przez uruchomione na nim maszyny wirtualne oraz stan połączenia użytkowników.
 
 \begin{figure}[H]
   \centering
@@ -47,6 +49,6 @@ W przypadku gdy podłączony jest do niego przynajmniej jeden użytkownik, serwe
 
 Użytkownik z perspektywy systemu po zalogowaniu może być w dwóch stanach: pracuje w ramach swojej sesji lub też nie.
 W stanie \textit{Połączony} aplikacja kliencka powiadamia serwer wirtualizacji, że ciągle jest obecny.
-Przy zmianie stanu do innego informowanie musi ustać, aby serwer mógł wykryć odłączenie się użytkownika.
+Przy zmianie stanu na inny informowanie musi ustać, aby serwer mógł wykryć odłączenie się użytkownika.
 
 \end{document}

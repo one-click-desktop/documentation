@@ -31,7 +31,7 @@ Broker zewnętrzny powinien być osiągalny przez każdy serwer wirtualizacji or
 Jest to wymagane do stwierdzenia, czy użytkownik nadal jest podłączony do maszyny wirtualnej.
 
 \subsubsection{Dostępność nadzorców}
-Nadzorcy powinni być widoczny przez aplikacje klienckie, które poprzez nich komunikują się z resztą systemu.
+Nadzorcy powinni być widoczni dla aplikacji klienckich, które poprzez nich komunikują się z resztą systemu.
 Administrator podczas używania panelu administracyjnego z poziomu serwera HTTP powinien móc wysyłać zapytania do nadzorców.
 
 \subsubsection{Dostępność serwerów wirtualizacji}
@@ -134,7 +134,7 @@ Dla każdej maszyny z osobna należy zdefiniować dane dostępowe do komunikacji
 Playbook dla serwera wirtualizacji wykona wszystkie kroki opisane w rozdziale \ref{system_requirements.virtsrv_rquirements}.
 Aby tego dokonać należy zdefiniować dane dla tworzonego interfejsu typu bridge.
 Należy podać nazwę interfejsu sieciowego, który zostanie połączony do nowo tworzonego urządzenia bridge o nazwie zawartej w pliku.
-Playbook korzysta z NetworkManagera (\url{https://networkmanager.dev/}) do zmiany konfiguracji, zatem trzeba przekazać nazwę \textit{connection} (jednostka logiczna w NetworkManagerze) skojarzonego z początkowo wybranym interfejsem sieciowym.
+Playbook korzysta z NetworkManagera (\url{https://networkmanager.dev/}) do zmiany konfiguracji.
 
 \subsubsection{Zmienne dla nadzorcy}
 Aby uruchomić nadzorcę wystarczą wspólne wymagania dla wszystkich grup.

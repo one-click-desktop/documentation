@@ -19,7 +19,7 @@ Jest to zalecany sposób uruchamiania tych trzech modułów.
 
 \subsubsection{Ujednolicony sposób budowania kontenerów}
 Każdy z tych 3 modułów ma przygotowany skrypt \texttt{build.sh}, który powinien prawidłowo zbudować kontener.
-Skrypt ten wykona polecenie do budowania i oznaczy kontener odpowiednią nazwą.
+Skrypt ten wykona polecenie budowania i oznaczy kontener odpowiednią nazwą.
 Należy wykonać go zawsze z poziomu głównego folderu repozytorium modułu.
 Każdy kontener przy starcie wykona skrypt \texttt{assets/entry\_point.sh}.
 
@@ -47,7 +47,7 @@ Przy wdrażaniu systemu najszybciej i najbezpieczniej jest skorzystać z metod o
 \subsubsection{Moduły napisane w technologii .NET}
 W przypadku budowania modułu nadzorcy i serwera wirtualizacji potrzebne są narzędzia deweloperskie .NET 5.0.
 W trakcie budowania aplikacji wszystkie użyte biblioteki zostaną pobrane przy użyciu menadżera pakietów Nuget.
-Przy uruchomieniu serwera wirtualizacji potrzebny jest, poza wymaganiami zdefiniowanymi w rozdziale \ref{system_requirements.virtsrv_rquirements}, zainstalowany Vagrant wraz z wtyczka vagrant-libvirt w wersji przynajmniej 0.7.0.
+Przy uruchomieniu serwera wirtualizacji potrzebny jest, poza wymaganiami zdefiniowanymi w rozdziale \ref{system_requirements.virtsrv_rquirements}, zainstalowany Vagrant wraz z wtyczka vagrant-libvirt w wersji przynajmniej 0.7.1 (wersje wcześniejsze zawierają błąd uniemożliwiający uruchomienie maszyny wirtualnej w trybie UEFI \parencite{vagrant-libvirt-nvram-error}).
 
 \subsubsection{Moduły napisane w technologii Node}
 W przypadku budowania modułów aplikacji klienckiej oraz panelu administracyjnego potrzebny będzie pakiet Node. Przed zbudowaniem aplikacji należy pobrać wszystkie wymagane biblioteki przy użyciu menadżera pakietów npm poleceniem \texttt{npm install}.
@@ -107,7 +107,7 @@ W dostarczonej przykładowej konfiguracji wykomentowane wartości oznaczają war
   \item \texttt{OverseerId} - identyfikator nadzorcy używany w komunikacji poprzez wewnętrznego brokera wiadomości. Powinna być unikatowa w skali jednej instancji systemu OneClickDesktop. Domyślnie przyjmuje wartość \texttt{overseer-test}.
   \item \texttt{RabbitMQHostname} - adres dostępowy wewnętrznego brokera wiadomości. Domyślnie przyjmuje wartość \texttt{localhost}. Bez działającego procesu brokera pod tym adresem aplikacja wyłączy się z błędem zaraz po uruchomieniu.
   \item \texttt{RabbitMQPort} - port dostępowy wewnętrznego brokera wiadomości. Domyślnie przyjmuje wartość \texttt{5672}. Bez działającego procesu brokera pod tym portem aplikacja wyłączy się z błędem zaraz po uruchomieniu.
-  \item \texttt{ModelUpdateInterval} - ilość sekund co ile nadzorca prosi serwery wirtualizacji o aktualizacje modelu. Domyślnie przyjmuje wartośc \texttt{60}. Zalecane jest aby wartość tego parametru opisywała czas od 30 do 60 sekund.																												%wtf? ą nie działa we wnętrzu {}
+  \item \texttt{ModelUpdateInterval} - ilość sekund co ile nadzorca prosi serwery wirtualizacji o aktualizację modelu. Domyślnie przyjmuje wartość \texttt{60}. Zalecane jest aby wartość tego parametru opisywała czas od 30 do 60 sekund.																												%wtf? ą nie działa we wnętrzu {}
   \item \texttt{DomainShutdownTimeout} - ilość minut jaka musi upłynąć od oznaczenia maszyny wirtualnej stanem \textit{Oczekiwanie na wyłączenie maszyny} do jej wyłączenia. Domyślnie przyjmuje wartość \texttt{15}.
   \item \texttt{DomainShutdownCounterInterval} - podany w sekundach okres czasu pomiędzy sprawdzeniem czy maszyna wirtualna nadal oczekuje na zamknięcie. Zaleca się, aby ten czas dzielił czas z parametru \texttt{DomainShutdownTimeout} na równe części. Takich części nie powinno być mniej niż 10, ale także nie więcej niż 100. Każde takie sprawdzenie zużywa czas procesora.
 \end{itemize}
@@ -183,7 +183,7 @@ Głównym plikiem konfiguracyjnym jest \texttt{virtsrv.ini}.
 Zawiera on parametry związane z komunikacją wewnątrz i na zewnątrz systemu.
 Dodatkowo znajdują się tam informacje o zasobach udostępnionych dla serwera wirtualizacji.
 Dodatkowe pliki konfiguracyjne reprezentują typy maszyn wirtualnych uruchamianych na tym serwerze wirtualizacji.
-Jedynym odstępstwem od reguły jest plik konfiguracyjny dla pakietu NLog.
+Jedynym odstępstwem od reguły jest plik konfiguracyjny dla pakietu NLog (\url{https://nlog-project.org/}).
 Musi się on znajdować w tym samym folderze co aplikacja oraz nazywać \texttt{NLog.config}.
 
 Aplikacja serwera wirtualizacji domyślnie przeszukuje folder \texttt{./config} w poszukiwaniu plików konfiguracyjnych.
@@ -354,7 +354,7 @@ W przeciwnym wypadku aplikacja nadzorcy zakończy się z błędem.
 Serwer wirtualizacji także zakończy się z błędem, jeżeli zabraknie brokerów wiadomości lub nadzorców.
 
 \subsection{Parametry uruchomienia kontenera panelu administracyjnego}
-Kontener zawierający panel administracyjny udostępnia aplikację poprzez serwer HTTP nginx.
+Kontener zawierający panel administracyjny udostępnia aplikację poprzez serwer HTTP nginx (\url{https://www.nginx.com/}).
 Do komunikacji wystawia on porty 80 (HTTP) oraz 443 (HTTPS), które należy przekierować na odpowiednie porty uruchamiającego systemu.
 
 \subsubsection{Adres dostępu do nadzorców}
@@ -427,13 +427,13 @@ Obraz zmiennych, odpowiadających Vagrant Boxowi podanemu w pliku konfiguracyjny
 
 Dla obrazu \texttt{smogork/archlinux-rdp}, gdzie NVRAM dostarczony jest wewnątrz Vagrant Boxa, przekazanie parametru wygląda następująco:
 \begin{verbatim}
-	${HOME}/.vagrant.d/boxes/smogork-VAGRANTSLASH-archlinux-rdp/0.2.1/libvirt/nvram.fd:
-	/app/nvram.fd
+	-v ${HOME}/.vagrant.d/boxes/smogork-VAGRANTSLASH-archlinux-rdp/0.2.1/libvirt/\
+	nvram.fd:/app/nvram.fd
 \end{verbatim}
 
 \subsubsection{Plik konfiguracyjny}
 Aplikacja serwera wirtualizacji poszukuje plików konfiguracyjnych w lokalizacji \texttt{/app/config/docker-test/}.
-Należy przekazać folder zawierający konfiguracje z systemu uruchamiającego (\texttt{PATH\_TO\_CONFIGS}) do wnętrza kontenera pod dokładnie tą lokalizację pod postacią woluminu.
+Należy przekazać folder zawierający konfiguracje z systemu uruchamiającego (\texttt{PATH\_TO\_CONFIGS}) do wnętrza kontenera pod dokładnie tą lokalizację jako wolumin.
 \begin{verbatim}
 	-v {PATH_TO_CONFIGS_DIR}:/app/config/
 \end{verbatim}

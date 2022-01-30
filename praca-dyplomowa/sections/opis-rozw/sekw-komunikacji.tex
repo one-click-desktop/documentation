@@ -22,7 +22,7 @@ W przeciwnym przypadku nadzorca powtarza wyszukanie wolnej maszyny.
 Stan otrzymanej maszyny decyduje, czy nadzorca musi powtórzyć wyszukiwanie (m.in. czy sesja do niej przypisana należy do tego użytkownika).
 
 Może się zdarzyć, że użytkownik anuluje wyszukiwanie.
-Jeżeli maszyna jest już przydzielona użytkownikowi, to serwer wirtualizacji jest powiadamiany o anulowaniu sesji.
+Jeżeli maszyna jest już przydzielona, to serwer wirtualizacji jest powiadamiany o anulowaniu sesji.
 Jeżeli nie została jeszcze utworzona, to nadzorca przerywa wyszukiwanie lub wyłącza ją.
 
 \subsection{Zakończenie sesji}
@@ -52,8 +52,8 @@ Serwery muszą bezwarunkowo odpowiedzieć aktualnym stanem do wspólnej kolejki 
 
 \subsection{Włączenie maszyny}
 
-Nadzorca może poprosić konkretny serwer wirtualizacji, aby utworzył maszynę o konkretnej nazwie.
-Jeżeli maszyna nie istnieje, to zostanie uruchomiona a serwer odeśle powiadomienie o zmianie modelu zbiorczą kolejką (rozdział \ref{modules:broker}, kolejka \ref{modules:broker:queue-overseers}).
+Nadzorca może poprosić konkretny serwer wirtualizacji, aby utworzył maszynę o wybranej nazwie.
+Jeżeli maszyna nie istnieje, to zostanie uruchomiona, a serwer odeśle powiadomienie o zmianie modelu zbiorczą kolejką (rozdział \ref{modules:broker}, kolejka \ref{modules:broker:queue-overseers}).
 W przeciwnym wypadku nie zrobi nic.
 
 \begin{figure}[ht!]
@@ -66,7 +66,7 @@ W przeciwnym wypadku nie zrobi nic.
 \subsection{Wyłączenie maszyny}
 
 Nadzorca może poprosić konkretny serwer wirtualizacji, aby wyłączył konkretną maszynę wirtualną.
-Jeżeli maszynę można wyłączyć to zostanie ona wyłączona.
+Jeżeli maszynę można wyłączyć, to zostanie ona wyłączona.
 Następnie serwer wirtualizacji odeśle powiadomienie o zmianie modelu zbiorczą kolejką (rozdział \ref{modules:broker}, kolejka \ref{modules:broker:queue-overseers}).
 W przeciwnym wypadku nie zrobi nic.
 

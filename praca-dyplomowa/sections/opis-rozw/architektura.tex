@@ -47,7 +47,9 @@ Klasa \texttt{Resources} oraz klasy pochodne opisują zasoby systemowe i są uż
 \subsection{Nadzorca}
 \label{modules:overseer}
 
-Aplikacja mająca za zadanie obsługiwać komunikację z aplikacjami klienckimi oraz wysyłać polecenia do serwerów wirtualizacji. Udostępnia REST API (sekcja \ref{communication:api}), służące do komunikacji z aplikacjami klienckimi. Do komunikacji z serwerami wirtualizacji wykorzystuje kolejki wiadomości (sekcja \ref{modules:broker}).
+Aplikacja mająca za zadanie obsługiwać komunikację z aplikacjami klienckimi oraz wysyłać polecenia do serwerów wirtualizacji.
+Udostępnia REST API (sekcja \ref{communication:api}), służące do komunikacji z aplikacjami klienckimi.
+Do komunikacji z serwerami wirtualizacji wykorzystuje kolejki wiadomości (sekcja \ref{modules:broker}).
 
 Nadzorca przechowuje wewnętrznie model systemu zawierający informację o działających serwerach wirtualizacji i stanie ich maszyn. Na podstawie tego modelu moduł stwierdza, do której maszyny przypisać nowo utworzoną sesję. Wewnętrzne procesy skupione są wokół zmian modelu. Jeżeli proces wysłał do serwera wirtualizacji prośbę o zmianę stanu, to dalsze przetwarzanie odbywa się, gdy stan modelu został zaktualizowany i na tej podstawie podejmowane są decyzje.
 
@@ -58,7 +60,7 @@ Dzięki zastosowaniu kolejek wiadomości (sekcja \ref{modules:broker}) oraz zasa
 
 Zadaniem serwera wirtualizacji jest uruchamianie i zarządzanie maszynami wirtualnymi, z którymi łączy się użytkownik systemu. Komunikuje się on z nadzorcami i wykonuje operacje na maszynach wirtualnych zgodnie z żądaniami.
 
-Moduł ten nie jest w stanie funkcjonować samodzielnie. Z tego powodu aplikacja nie uruchomi się, jeżeli nie jest w stanie nawiązać połączenia z aplikacją nadzorczą. Aplikacja zakończy się, gdy ostatni nadzorca w systemie zakończy działanie, pod warunkiem że nie ma żadnych działających sesji.
+Moduł ten nie jest w stanie funkcjonować samodzielnie. Z tego powodu aplikacja nie uruchomi się, jeżeli nie jest w stanie nawiązać połączenia z aplikacją nadzorczą. Aplikacja zakończy się, gdy ostatni nadzorca w systemie zakończy działanie oraz nie ma żadnych działających na niej sesji.
 
 Serwer wirtualizacji jest częścią systemu, która przechowuje fizyczne zasoby udostępniane użytkownikom.
 System zaprojektowany jest w taki sposób, aby teoretycznie nie było ograniczenia na liczbę serwerów wirtualizacji działających jednocześnie.
