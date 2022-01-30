@@ -21,4 +21,14 @@ Protokół RDP został wybrany ze względu na swoją popularność oraz łatwoś
 Dodanie wsparcia wymagałoby Vagrant Boxów posiadających skonfigurowany serwer wszystkich wspieranych protokołów. Dodatkowym protokołem, którego wsparcie może być trudniejsze, jest NVIDIA GameStream (\url{https://www.nvidia.com/en-us/shield/support/shield-tv/gamestream/}).
 Protokół ten umożliwia zdalne uruchamianie gier na komputerach wyposażonych w karty graficzne firmy NVIDIA.
 
+\subsection{Możliwość zachowania obrazu maszyny pomiędzy sesjami}
+Użytkownicy czasami potrzebują zainstalować tymczasowo dodatkowe oprogramowanie.
+Praktycznym rozwiązaniem będzie danie możliwości zapisania takiego stanu maszyny pomiędzy sesjami w postanie snapshota dysku wirtualnego \parencite{libvirt-snapshot}.
+Taki snapshot można albo wysłać do użytkownika, albo zachować we wnętrzu systemu.
+Przy utworzeniu sesji użytkownik miałby możliwość utworzenia sesji z wcześniej odłożonego snapshota albo utworzyć nową z ogólnego obrazu.
+
+\subsection{Możliwość pracy na więcej niż jednej sesji}
+Praktycznym rozwiązanie byłoby korzystanie z wielu sesji jednocześnie przy pomocy jednej aplikacji klienckiej.
+W przypadku czasochłonnych obliczeń użytkownik nadal mógłby pracować na innej sesji wybranego typu.
+
 \end{document}
