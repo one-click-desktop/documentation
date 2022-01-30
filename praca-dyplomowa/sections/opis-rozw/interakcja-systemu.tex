@@ -108,6 +108,19 @@ Zamknięcie klienta RDP lub naciśniecie przycisku \textit{End session} spowoduj
 Od tego momentu użytkownik ma \texttt{DomainShutdownTimeout} minut na powrót do swojej sesji (szczegóły w rozdziale \ref{system_startup.overseer_conf}).
 Po upływie tego czasu sesja zostaje zamknięta, a maszyna z nią skojarzona wyłączona.
 
+Użytkownik może być podłączony tylko do jednej sesji jednocześnie.
+Przy poproszeniu o sesje, która ciągle istnieje, otrzyma informacje o tej utworzonej wcześniej sesji.
+Nie może on dostać następnej sesji tego samego typu.
+Istnieje jednak możliwość korzystania z dwóch sesji różnych typów w tym samym momencie.
+Aby to wykonać należy uruchomić następna aplikacje kliencką, zalogować się do niej tymi samymi danymi dostępowymi oraz poprosić o sesję innego typu niż w przypadku pierwszej aplikacji klienckiej.
+Wtedy każda aplikacja kliencka będzie śledzić jeden proces klienta RDP.
+
+Gdy użytkownik już będzie korzystać z maszyny wirtualnej ma na niej dostęp do przygotowanych wcześniej przez administratora aplikacji.
+Może na niej tak na prawdę zrobić wszystko, jednak tylko zawartość folderu domowego przeniesie się do następnie uruchomionej sesji.
+Maszyna po każdej zakończonej sesji zostanie zniszczona.
+Jedyne czego nie może zrobić użytkownik to wyłączać lub restartować maszyny.
+Spowoduje to niespójność modelu i ostatecznie będzie wymagało restartu wybranych serwerów wirtualizacji. 
+
 \begin{figure}[ht!]
   \centering
   \includegraphics[width=\textwidth]{resources/client_session.png}
