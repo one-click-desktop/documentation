@@ -109,7 +109,7 @@ W dostarczonej przykładowej konfiguracji wykomentowane wartości oznaczają war
   \item \texttt{RabbitMQPort} - port dostępowy wewnętrznego brokera wiadomości. Domyślnie przyjmuje wartość \texttt{5672}. Bez działającego procesu brokera pod tym portem aplikacja wyłączy się z błędem zaraz po uruchomieniu.
   \item \texttt{ModelUpdateInterval} - ilość sekund co ile nadzorca prosi serwery wirtualizacji o aktualizacje modelu. Domyślnie przyjmuje wartośc \texttt{60}. Zalecane jest aby wartość tego parametru opisywała czas od 30 do 60 sekund.																												%wtf? ą nie działa we wnętrzu {}
   \item \texttt{DomainShutdownTimeout} - ilość minut jaka musi upłynąć od oznaczenia maszyny wirtualnej stanem \textit{Oczekiwanie na wyłączenie maszyny} do jej wyłączenia. Domyślnie przyjmuje wartość \texttt{15}.
-  \item \texttt{DomainShutdownCounterInterval} - ilość sekund co ile nadzorca sprawdza czy maszyna wirtualna nadal oczekuje na zamknięcie. Zaleca się, aby ten czas dzielił czas z parametru \texttt{DomainShutdownTimeout} na równe części. Takich części nie powinno być mniej niż 10, ale także nie więcej niż 100. Każde takie sprawdzenie zużywa czas procesora.
+  \item \texttt{DomainShutdownCounterInterval} - podany w sekundach okres czasu pomiędzy sprawdzeniem czy maszyna wirtualna nadal oczekuje na zamknięcie. Zaleca się, aby ten czas dzielił czas z parametru \texttt{DomainShutdownTimeout} na równe części. Takich części nie powinno być mniej niż 10, ale także nie więcej niż 100. Każde takie sprawdzenie zużywa czas procesora.
 \end{itemize}
 
 \subsubsection{Parametry sekcji \texttt{LDAP}}
@@ -201,15 +201,15 @@ W głównym pliku konfiguracyjnym możemy wyróżnić następujące sekcje:
 W sekcji \texttt{OneClickDesktop} występują parametry:
 \begin{itemize}
   \item \texttt{VirtualizationServerId} - identyfikator serwera wirtualizacji używany w komunikacji poprzez wewnętrznego brokera wiadomości. Powinna być unikatowa w skali jednej instancji systemu OneClickDesktop. Domyślnie przyjmuje wartość \texttt{virtsrv-test}.
-  \item \texttt{OversserCommunicationShutdownTimeout} - po upływie tylu sekund bez komunikacji od jakiegokolwiek nadzorcy serwer wirtualizacji uznaje, że zabrakło nadzorców w systemie. Nastąpi wtedy wyłączenie aplikacji serwera wirtualizacji. Domyślnie parametr przyjmuje wartość \texttt{120}. Zaleca się aby wartość parametru była większa niż dwukrotność parametru \texttt{ModelUpdateInterval} z konfiguracji nadzorcy opisanej w sekcji \ref{system_startup.overseer_conf}.
-  \item \texttt{LibvirtUri} - adres do połaczenia z usługą libvirta. Vagrant jak i biblioteka libvirta skorzysta z tego adresu do połączenia. Specyfikacja libvirta dokładnie opisuje format tego adresu \parencite{libvirt-uri}.
+  \item \texttt{OversserCommunicationShutdownTimeout} - po upływie tylu sekund bez komunikacji od jakiegokolwiek nadzorcy serwer wirtualizacji uznaje, że zabrakło nadzorców w systemie. Nastąpi wtedy wyłączenie aplikacji serwera wirtualizacji. Domyślnie parametr przyjmuje wartość \texttt{120}. Zaleca się, aby wartość parametru była większa niż dwukrotność parametru \texttt{ModelUpdateInterval} z konfiguracji nadzorcy opisanej w sekcji \ref{system_startup.overseer_conf}.
+  \item \texttt{LibvirtUri} - adres do połączenia z usługą libvirta. Vagrant i biblioteka libvirta skorzystają z tego adresu do nawiązania łączności. Specyfikacja libvirta dokładnie opisuje format tego adresu \parencite{libvirt-uri}.
   \item \texttt{VagrantFilePath} - ścieżka do specjalnie przygotowanego pliku wsadowego dla Vagranta. Wykorzystywany jest przez system do uruchamiania i wyłączania maszyn wirtualnych. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
-  \item \texttt{PostStartupPlaybook} - skrypt wykonywany przy pomocy Ansible'a zaraz po uruchomieniu maszyny wirtualnej. Koniecznie należy przetestować czy konfiguracja wykonuje się prawidłowo. Przy każdym błędzie wykonania skryptu maszyna wirtualna zostanie usunięta. Domyślnie przyjmuje wartość \texttt{res/poststartup\_playbook.yml}.
+  \item \texttt{PostStartupPlaybook} - skrypt wykonywany przy pomocy Ansible'a zaraz po uruchomieniu maszyny wirtualnej. Koniecznie należy przetestować, czy konfiguracja wykonuje się prawidłowo. Przy każdym błędzie wykonania skryptu maszyna wirtualna zostanie usunięta. W przypadku ustawienia pustej wartości Vagrant nie wykona operacji zaopatrzenia maszyny. Domyślnie parametr przyjmuje pustą wartość.
   \item \texttt{VagrantboxUri} - identyfikator szablonowej maszyny wirtualnej. Musi ona spełniać szereg wymogów opisanych w sekcji \ref{system_requirements.vagrant_box}. W przeciwnym wypadku system nie będzie w stanie uruchomić takiego szablonu. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
-  \item \texttt{UefiPath} - ścieżka do obrazu UEFI znajdującego się na maszynie uruchamiającej. Prawidłowo ustawiona wartość jest wymagana do poprawnego zbudowania Vagrant Boxa. Gdy wartośc nie zostanie ustawiona maszyna włączy się w trybie BIOS.
+  \item \texttt{UefiPath} - ścieżka do obrazu UEFI znajdującego się na maszynie uruchamiającej. Prawidłowo ustawiona wartość jest wymagana do poprawnego zbudowania Vagrant Boxa. Gdy wartość nie zostanie ustawiona maszyna włączy się w trybie BIOS.
   \item \texttt{NvramPath} - ścieżka do obrazu NVRAM wymaganego do prawidłowego uruchomienia maszyny w trybie UEFI. Przed uruchomieniem maszyny wykonywana jest kopia do \texttt{/var/lib/libvirt/qemu/nvram/}, w celu uniknięcia usunięcia oryginalnego obrazu podczas jej wyłączania. Gdy wartość nie zostanie ustawiona maszyna włączy się w trybie BIOS. W przypadku uruchamiania przy użyciu Dockera należy podać ścieżkę wewnątrz kontenera. Kopiowanie musi odbyć się do wolumenu, którego zawartość jest dostępna z poziomu systemu uruchamiającego.
   \item \texttt{BridgeInterfaceName} - nazwa interfejsu sieciowego w skonfigurowanego w trybie bridge, do którego zostanie podłączona każda uruchomiona maszyna wirtualna. Domyślnie przyjmuje wartość \texttt{br0}.
-  \item \texttt{BridgedNetwork} - adres sieci, do której podłączona zostanie maszyna wirtualna poprzez \texttt{BridgeInterfaceName}, podany w formacie CIDR. Jeżeli maszyna nie będzie posiadać adresu z podanej sieci po uruchomieniu to zostanie wyłączona. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
+  \item \texttt{BridgedNetwork} - adres sieci, do której podłączona zostanie maszyna wirtualna poprzez \texttt{BridgeInterfaceName}, podany w formacie CIDR. Jeżeli maszyna nie będzie posiadać adresu z podanej sieci po uruchomieniu, to zostanie wyłączona. Aplikacja nie zadziała prawidłowo bez ustawionej wartości parametru.
   \item \texttt{InternalRabbitMQHostname} - adres dostępowy wewnętrznego brokera wiadomości. Domyślnie przyjmuje wartość \texttt{localhost}. Bez działającego procesu brokera pod tym adresem aplikacja wyłączy się z błędem zaraz po uruchomieniu.
   \item \texttt{InternalRabbitMQPort} - port dostępowy wewnętrznego brokera wiadomości. Domyślnie przyjmuje wartość \texttt{5672}. Bez działającego procesu brokera pod tym portem aplikacja wyłączy się z błędem zaraz po uruchomieniu.
   \item \texttt{ExternalRabbitMQHostname} - adres dostępowy zewnętrznego brokera wiadomości. Domyślnie przyjmuje wartość \texttt{localhost}. Bez działającego procesu brokera pod tym adresem aplikacja wyłączy się z błędem zaraz po uruchomieniu.
@@ -240,8 +240,8 @@ W sekcji \texttt{ServerResources} występują parametry:
   \item \texttt{Cpus} - liczba wątków, które może wykorzystać system. Domyślnie przyjmuje wartość \texttt{2}.
   \item \texttt{Memory} - ilość pamięci operacyjnej w MiB jaką może wykorzystać system. Domyślnie przyjmuje wartość \texttt{2048}.
   \item \texttt{Storage} - ilość przestrzeni dyskowej w GiB jaką może wykorzystać system. Domyślnie przyjmuje wartość \texttt{100}.
-  \item \texttt{GPUsCount} - ilość kart graficznych przekazanych do systemu. Domyślnie przyjmuje wartośc \texttt{0}.
-  \item \texttt{MachineTypes} - lista typów maszyn wirtualnych. Każda nazwa typu jest oddzielona od sąsiednich przecinkiem. Nazwa typu musi składać się ze znaków opisanych następującym wyrażeniem regularnym \texttt{[a-zA-Z0-9\textbackslash-]}. Dla każdej z nazw wyszukiwany jest plik konfiguracyjny o o nazwie zaczynającej się nazwą typu i kończącą się \texttt{\_template.ini}.
+  \item \texttt{GPUsCount} - ilość kart graficznych przekazanych do systemu. Domyślnie przyjmuje wartość \texttt{0}.
+  \item \texttt{MachineTypes} - lista typów maszyn wirtualnych. Każda nazwa typu jest oddzielona od sąsiednich przecinkiem. Nazwa typu musi składać się ze znaków opisanych następującym wyrażeniem regularnym \texttt{[a-zA-Z0-9\textbackslash-]}. Dla każdej z nazw wyszukiwany jest plik konfiguracyjny o nazwie zaczynającej się nazwą typu i kończącą się \texttt{\_template.ini}.
 \end{itemize}
 
 Gdy $n = \texttt{GPUsCount}$ jest większy od 0, wtedy w pliku muszą znaleźć się sekcje od \texttt{ServerGPU.1} do \texttt{ServerGPU.$n$} włącznie.
@@ -304,14 +304,15 @@ Przykładowa zawartość głównego pliku konfiguracyjnego:
 \end{verbatim}
 
 \subsubsection{Pliki konfiguracyjne opisujące typy maszyn wirtualnych}
-W pliku opisującym typy zawarte jest o zasobach wymaganych do uruchomienia maszyny danego typu.
+Plik opisuje wymagane zasoby do uruchomienia zdefiniowanego typu maszyny wirtualnej.
 
-Każdy typ ma przypisaną nazwę. Oznaczmy ją jako \texttt{\$\{template\_name\}}.
+Każdy z typów jest opisany oddzielnym plikiem oraz posiada swoją nazwę.
+Oznaczmy ją jako \texttt{\$\{template\_name\}}.
 Nazwa typu powinna być unikatowa w skali systemu.
 Jeżeli chcemy udostępnić ten sam typ na wielu serwerach wirtualizacji, należy nadać mu takie same zasoby.
 System może nieprawidłowo zarządzać zasobami, gdy uzyska dwa różne wzorce zasobów dla tego samego typu maszyny.
 Plik opisujący typ musi mieć nazwę \texttt{\$\{template\_name\}\_template.ini} oraz znajdować się w folderze z pozostałymi plikami konfiguracyjnymi.
-Jeżeli dla jakiejkolwiek nazwy typu aplikacja nie znajdzie pliku konfiguracyjnego to zakończy się z błędem zaraz po uruchomieniu.
+Jeżeli dla jakiejkolwiek nazwy typu aplikacja nie znajdzie pliku konfiguracyjnego, to zakończy się z błędem zaraz po uruchomieniu.
 
 W znalezionym pliku musi być sekcja o nazwie \texttt{\$\{template\_name\}\_template} z parametrami:
 \begin{itemize}
