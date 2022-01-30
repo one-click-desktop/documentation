@@ -4,7 +4,7 @@
 
 \subsection{Konfiguracja połączenia RabbitMQ}
 
-Klient RabbitMQ używany przez moduły wewnętrzne do połączenia z instancją brokera udostępnia wiele opcji konfiguracji, które nie są udostępniane przez moduły. Konfiguracja ta definiuje opcje połączenia, takie jak hasło autoryzacji, czy niestandardowe ścieżki połączenia. W przypadku korzystania z niestandardowej instancji brokera konfiguracja ta może okazać się niezbędna. Z tego powodu powinno być możliwe przekazanie ustawień połączenia z brokerem wiadomości w plikach konfiguracyjnych modułów wewnętrznych.
+Klient RabbitMQ, używany przez moduły wewnętrzne do połączenia z instancją brokera, udostępnia wiele opcji konfiguracji, które nie są udostępniane przez moduły. Konfiguracja ta definiuje opcje połączenia, takie jak hasło autoryzacji, czy niestandardowe ścieżki połączenia. W przypadku korzystania z niestandardowej instancji brokera konfiguracja ta może okazać się niezbędna. Z tego powodu powinno być możliwe przekazanie ustawień połączenia z brokerem wiadomości w plikach konfiguracyjnych modułów wewnętrznych.
 
 \subsection{Monitorowanie stanu połączenia klienta}
 
@@ -15,5 +15,39 @@ Do monitorowania stanu połączenia z maszyną wirtualną wykorzystywany jest br
 Pomimo przywiązania dużej uwagi do zaprojektowania komunikacji i procesów w sposób niwelujący ilość możliwych problemów wynikających z konkurencji wciąż istnieją miejsca, w których mogą one wystąpić. Znanym problemem jest możliwość uruchomienia dwa razy więcej maszyn niż zamierzono podczas startu systemu. Spowodowane jest to tym, że nadzorca otrzymując informację o dostępności serwera wirtualizacji poprosi go o utworzenie wymaganych maszyn wirtualnych. Jeżeli zanim serwer prześle informację o wykonaniu zadania, drugi serwer wirtualizacji również stanie się dostępny, nadzorca poprosi go o utworzenie tych samych maszyn. Taki ciąg wydarzeń doprowadzi do działania dwa razy większej liczby maszyn niż było zamierzone.
 
 Możliwym rozwiązaniem problemu może być przeprojektowanie procesu uruchamiania wymaganych maszyn w celu uwzględnienia możliwości pojawienia się kolejnych instancji serwera wirtualizacji.
+
+\subsection{Brak możliwości dodawania parametrów do wywołania klienta RDP}
+
+Pewnym problemem związanym z wybraniem konkretnego klienta RDP i integracji z nim jest brak możliwości personalizacji połączenia.
+W czasie testów okazało się, że niektórzy użytkownicy chcieliby zmienić rozmiar okienka klienta FreeRDP, ponieważ nie mieściło im się na ekranie.
+Niestety w aktualnej implementacji użytkownik nie ma wpływu na parametry uruchomienia FreeRDP.
+Prostym i wydajnym rozwiązaniem jest możliwość zdefiniowania dodatkowych parametrów uruchomienia przez użytkownika z poziomu ustawień.
+FreeRDP posiada liczne parametry do konfiguracji \parencite{freerdp-manual} uruchomienia, co powinno rozwiązać problem rozmiaru okienka.
+
+\subsection{Niezgodność stanu maszyny w systemie po interakcji z użytkownikiem}
+
+Aktualnie system zakłada, że tylko on może zmienić stan maszyny wirtualnej.
+Jakakolwiek wyłączenie maszyny przez użytkownika lub administratora wywoła niespójność modelu.
+W najgorszym wypadku może spowodować to permanentne zajęcie zasobów w systemie i konieczność restartu serwera wirtualizacji, na którym doszło do błędu.
+W bibliotece libvirta od IDNT istnieje możliwość śledzenia stanów maszyn wirtualnych zaprezentowanym w dokumentacji libvirta \parencite{libvirt-vm-states}.
+W przypadku przejścia maszyny do innego stanu niż \textit{Running} możemy odpowiednio zmodyfikować nasz model odzwierciedlając rzeczywisty stan maszyn wirtualnych.
+Konkretna implementacja tej zmiany wymaga jeszcze dokładnego przemyślenia.
+
+\subsection{Odporność systemu na ataki siłowe}
+
+W tym momencie system jest nie odporny na ataki siłowe zgadnięcia hasła.
+Przyjmie dowolnie dużo zapytań, jeżeli pozwolą mu na to zasoby.
+Prostym i wydajnym sposobem będzie wypisywanie informacji o nieudanym logowaniu do procesu sysloga.
+Jeżeli w tym wpisie będzie zawarta informacja o adresie wysyłającego zapytania można zastosować system fail2ban (\url{https://www.fail2ban.org/wiki/index.php/Main_Page}).
+Zablokuje on z poziomu zapory sieciowej adres, który wysyła zbyt dużo błędnych prób logowania.
+
+\subsection{Publiczny dostęp do systemu}
+
+System w aktualnym stanie zakłada, że klienci sa w stanie skomunikować się z maszynami wirtualnymi za pomocą ich adresów lokalnych.
+Jeżeli system miałby być udostępniony publicznie, to należy udostępnić użytkownikom dostęp do takiej sieci przy pomocy protokołu VPN.
+Problemem jest przekazywanie do aplikacji klienckiej adresów lokalnych maszyn wirtualnych.
+Aby rozszerzyć jego działanie poza siec lokalną  system musiałby posiadać jakąś wiedzę na temat tłumaczenia adresów lokalnych na publiczne.
+Pewna możliwością byłoby przechwytywanie odpowiedzi z adresami maszyn przez zewnętrzną aplikacje znająca takie tłumaczenia.
+Jednak zwiększyłaby ona złożoność systemu.
 
 \end{document}
