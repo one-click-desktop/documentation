@@ -3,16 +3,16 @@
 \begin{document}
 \label{final_system_form}
 
-System, w swojej ostatecznej postaci, spełnia wszystkie postawione mu wymagania. Mimo trudności w implementacji niektórych funkcjonalności, w szczególności zarządzania maszynami wirtualnymi z poziomu kodu C\#, ostateczny projekt działa zgodnie z oczekiwaniami. Projekt tworzony w ramach tej pracy uznajemy zatem za udany.
+System, w~swojej ostatecznej postaci, spełnia wszystkie postawione mu wymagania. Mimo trudności w~implementacji niektórych funkcjonalności, w~szczególności zarządzania maszynami wirtualnymi z~poziomu kodu C\#, ostateczny projekt działa zgodnie z~oczekiwaniami. Projekt tworzony w~ramach tej pracy uznajemy zatem za udany.
 
-Elementem, który mógł być lepiej wykonany, jest zarządzanie maszynami wirtualnymi przy pomocy Vagranta. Z powodu braku interfejsu programistycznego udostępnianego przez ten program wykorzystywany jest za pośrednictwem wywołań poleceń powłoki. Nie jest to najlepsze rozwiązanie o czym świadczy liczba błędów, które wynikły podczas tworzenia rozwiązania. Jest to w naszym przekonaniu najbardziej podatny na błędy element systemu. Taki sposób rozwiązania jest spowodowany chęcią skorzystania z Vagranta podczas projektowania. Na tamtym etapie nie sprawdziliśmy czy dostępne są narzędzia umożliwiające korzystanie z niego z poziomu kodu. W momencie odkrycia braku takich narzędzi było już za późno na zastąpienie Vagranta innym rozwiązaniem.
+Elementem, który mógł być lepiej wykonany, jest zarządzanie maszynami wirtualnymi przy pomocy Vagranta. Z~powodu braku interfejsu programistycznego udostępnianego przez ten program wykorzystywany jest za pośrednictwem wywołań poleceń powłoki. Nie jest to najlepsze rozwiązanie o~czym świadczy liczba błędów, które wynikły podczas tworzenia rozwiązania. Jest to w~naszym przekonaniu najbardziej podatny na błędy element systemu. Taki sposób rozwiązania jest spowodowany chęcią skorzystania z~Vagranta podczas projektowania. Na tamtym etapie nie sprawdziliśmy czy dostępne są narzędzia umożliwiające korzystanie z~niego z~poziomu kodu. W~momencie odkrycia braku takich narzędzi było już za późno na zastąpienie Vagranta innym rozwiązaniem.
 
 Projektując komunikację wewnętrzną za pośrednictwem RabbitMQ postawiliśmy na wykorzystanie po jednej kolejce na odbieranie wiadomości bezpośrednich oraz zbiorczych.
-Z powodu różnych typów wysyłanych wiadomości musieliśmy deserializować wiadomości na różne typy obiektów, które zależą od typu otrzymanej wiadomości.
-Naszym zdaniem problem ten nie został przez nas rozwiązany zadowalająco i mógłby być wykonany lepiej.
+Z~powodu różnych typów wysyłanych wiadomości musieliśmy deserializować wiadomości na różne typy obiektów, które zależą od typu otrzymanej wiadomości.
+Naszym zdaniem problem ten nie został przez nas rozwiązany zadowalająco i~mógłby być wykonany lepiej.
 
-Z pominięciem wyżej wymienionych aspektów uważamy projekt komunikacji i procesów biznesowych za dobrze wykonany.
-Dzięki głęboko przemyślanym rozwiązaniom w tych płaszczyznach ich implementacja była mało problematyczna.
-Podczas testów nie wystąpiły żadne problemy, które wymagałyby modyfikacji ustalonych procesów i sekwencji.
+Z~pominięciem wyżej wymienionych aspektów uważamy projekt komunikacji i~procesów biznesowych za dobrze wykonany.
+Dzięki głęboko przemyślanym rozwiązaniom w~tych płaszczyznach ich implementacja była mało problematyczna.
+Podczas testów nie wystąpiły żadne problemy, które wymagałyby modyfikacji ustalonych procesów i~sekwencji.
 
 \end{document}

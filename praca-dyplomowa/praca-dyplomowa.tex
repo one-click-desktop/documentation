@@ -32,7 +32,7 @@
 \usepackage[backend=bibtex]{biblatex}
 \addbibresource{links.bib}
 
-\usepackage{commath} % różne komendy ułatwiające pisanie wyrażeń matematycznych --- warto zapoznać się z dokumentacją: https://ctan.gust.org.pl/tex-archive/macros/latex/contrib/commath/commath.pdf
+\usepackage{commath} % różne komendy ułatwiające pisanie wyrażeń matematycznych --- warto zapoznać się z~dokumentacją: https://ctan.gust.org.pl/tex-archive/macros/latex/contrib/commath/commath.pdf
 
 \usepackage[hidelinks]{hyperref} % dla hiperlinków, m.in url , odnośników do równań, czy bibliografii --- opcja hideboxes usuwa prostokąty wokół kiperlinków
 
@@ -44,7 +44,7 @@
 \linespread{1.5}
 \allowdisplaybreaks
 
-\usepackage{indentfirst} % opcjonalnie; pierwszy akapit z wcięciem
+\usepackage{indentfirst} % opcjonalnie; pierwszy akapit z~wcięciem
 \setlength{\parindent}{5mm}
 
 
@@ -63,7 +63,7 @@
 \renewcommand{\chaptermark}[1]{
 \markboth{\thechapter.\ #1}{}}
 
-% kreski oddzielające paginy (górną i dolną):
+% kreski oddzielające paginy (górną i~dolną):
 \renewcommand{\headrulewidth}{0 pt} % 0 - nie ma, 0.5 - jest linia
 
 
@@ -136,11 +136,11 @@
 
 
 
-% ---------------------- Spisy tabel i obrazków ----------------------
+% ---------------------- Spisy tabel i~obrazków ----------------------
 
 \renewcommand*{\thetable}{\arabic{chapter}.\arabic{table}}
 \renewcommand*{\thefigure}{\arabic{chapter}.\arabic{figure}}
-%\let\c@table\c@figure % jeśli włączone, numeruje tabele i obrazki razem
+%\let\c@table\c@figure % jeśli włączone, numeruje tabele i~obrazki razem
 
 
 % --------------------- Definicje, twierdzenia etc. ---------------
@@ -202,7 +202,7 @@
 
 % --------------------- Ustawienia użytkownika ------------------
 
-\newcommand{\tytul}{System do zdalnej pracy w środowisku graficznym wykorzystujący maszyny wirtualne QEMU z akceleracją sprzętową}
+\newcommand{\tytul}{System do zdalnej pracy w~środowisku graficznym wykorzystujący maszyny wirtualne QEMU z~akceleracją sprzętową}
 \renewcommand{\title}{Environment for remote work with Graphical User Interface using QEMU virtual machines with hardware acceleration}
 \newcommand{\type}{inżyniers} % magisters, licencjac
 \newcommand{\supervisor}{dr inż. Marek Kozłowski}
@@ -215,7 +215,7 @@
 \includepdf[pages=-]{titlepage/titlepage}
 
 
-% ------------------ STRONA Z PODPISAMI AUTORA/AUTORÓW I PROMOTORA ------------------
+% ------------------ STRONA Z~PODPISAMI AUTORA/AUTORÓW I~PROMOTORA ------------------
 
 
 \thispagestyle{empty}\newpage
@@ -233,7 +233,7 @@
 
 
 % ---------------------------- ABSTRAKTY -----------------------------
-% W PRACY PO POLSKU, NAJPIERW STRESZCZENIE PL, POTEM ABSTRACT EN
+% W~PRACY PO POLSKU, NAJPIERW STRESZCZENIE PL, POTEM ABSTRACT EN
 %
 %	Streszczenie powinno zajmować 1 stronę, (czcionką 12)
 %
@@ -245,12 +245,12 @@
     \tytul
   \end{center}
 
-  Celem projektu jest stworzenie systemu do zdalnej pracy, za pomocą zdalnego pulpitu, wykorzystującego maszyny wirtualne. Jednym z głównych wyróżników projektu jest możliwość użycia maszyn z akceleracją sprzętową oraz integracja z zewnętrznym systemem katalogowym.
+  Celem projektu jest stworzenie systemu do zdalnej pracy, za pomocą zdalnego pulpitu, wykorzystującego maszyny wirtualne. Jednym z~głównych wyróżników projektu jest możliwość użycia maszyn z~akceleracją sprzętową oraz integracja z~zewnętrznym systemem katalogowym.
 
-  Na wstępie projektu przedstawiony został problem wynikający ze zdalnej pracy oraz wizja systemu, który ma go niwelować wraz z nałożonymi na niego wymaganiami.
-  W następnym rozdziale znajduje się dokładny opis rozwiązania z wyróżnieniem poszczególnych modułów oraz procesów. Zawarte zostały również wykorzystane technologie, instrukcja uruchomienia systemu oraz sposób użytkowania.
+  Na wstępie projektu przedstawiony został problem wynikający ze zdalnej pracy oraz wizja systemu, który ma go niwelować wraz z~nałożonymi na niego wymaganiami.
+  W~następnym rozdziale znajduje się dokładny opis rozwiązania z~wyróżnieniem poszczególnych modułów oraz procesów. Zawarte zostały również wykorzystane technologie, instrukcja uruchomienia systemu oraz sposób użytkowania.
   Kolejny rozdział przedstawia analizę rozwiązania skupiającą się na sposobie testowania poprawności działania systemu oraz jego wynikach.
-  Zakończenie opisuje ostateczny stan projektu z wyróżnieniem elementów, które naszym zdaniem wyróżniają się gorszą jakością. Wymienione zostały aspekty o widocznych możliwościach rozwoju oraz znane problemy.
+  Zakończenie opisuje ostateczny stan projektu z~wyróżnieniem elementów, które naszym zdaniem wyróżniają się gorszą jakością. Wymienione zostały aspekty o~widocznych możliwościach rozwoju oraz znane problemy.
 
   \noindent \textbf{Słowa kluczowe:} maszyny wirtualne, zdalny pulpit, libvirt, chmura, praca zdalna
 \end{abstract}
@@ -279,9 +279,9 @@
 % --------------------- OŚWIADCZENIA -----------------------------------------
 
 %
-%	KONIECZNE JEST ZAŁĄCZENIE WYPEŁNIONEGO SKANU OŚWIADCZENIA O AUTORSTWIE PRACY. SKAN (W FORMACIE PDF) NALEŻY UMIEŚCIĆ W FOLDERZE scans I NAZWAĆ GO, NP.  oswiadczenie_o_autorstwie_pracy.pdf (W PRZYPADKU INNEJ NAZWY, LUB UMIESZCZENIA W INNYM FOLDERZE KONIECZNE JEST ADEKWATNE ZMODYFIKOWANIE ŚCIEŻKI W PONIŻSZEJ KOMENDZIE.
+%	KONIECZNE JEST ZAŁĄCZENIE WYPEŁNIONEGO SKANU OŚWIADCZENIA O~AUTORSTWIE PRACY. SKAN (W FORMACIE PDF) NALEŻY UMIEŚCIĆ W~FOLDERZE scans I~NAZWAĆ GO, NP.  oswiadczenie_o_autorstwie_pracy.pdf (W PRZYPADKU INNEJ NAZWY, LUB UMIESZCZENIA W~INNYM FOLDERZE KONIECZNE JEST ADEKWATNE ZMODYFIKOWANIE ŚCIEŻKI W~PONIŻSZEJ KOMENDZIE.
 %
-%	komenda załączająca oświadczenie o autorstwie pracy
+%	komenda załączająca oświadczenie o~autorstwie pracy
 %
 % krzysiu
 \includepdf[pages=-]{scans/autorstwo-smogork}
@@ -292,7 +292,7 @@
 
 % opcjonalne oświadczenie
 %
-%	komenda załączająca owiadczenie o udzieleniu licencji
+%	komenda załączająca owiadczenie o~udzieleniu licencji
 %
 % krzysiu
 \includepdf[pages=-]{scans/licencja-smogork}
@@ -313,7 +313,7 @@
 \null\thispagestyle{empty}\newpage
 \pagestyle{fancy}
 \pagenumbering{arabic}
-\setcounter{page}{19} % JEŻELI Z POWODU DUŻEJ ILOŚCI STRON W SPISIE TREŚCI SIĘ NIE ZGADZA, TRZEBA ZMODYFIKOWAĆ RĘCZNIE
+\setcounter{page}{19} % JEŻELI Z~POWODU DUŻEJ ILOŚCI STRON W~SPISIE TREŚCI SIĘ NIE ZGADZA, TRZEBA ZMODYFIKOWAĆ RĘCZNIE
 
 \chapter{Wstęp}
 % \markboth{}{Wstęp}
@@ -337,17 +337,17 @@
 \chapter{Podsumowanie}
 \label{summary}
 
-% Podsymowianie - co osiągneliśmy i co dalej
+% Podsymowianie - co osiągneliśmy i~co dalej
 \subfile{sections/podsumowanie.tex}
 
 % \begin{table}% Koniecznie label po caption, inaczej jest zła numeracja
-%   \caption[Opis skrócony]{Opcje dodatkowe dla tabel i rysunków}
+%   \caption[Opis skrócony]{Opcje dodatkowe dla tabel i~rysunków}
 %   \label{opcje}
 %   \centering
 %   \begin{tabular}{|c|p{0.8\textwidth}|}
 %     \hline
 %     symbol opcji & efekt                                                                                                                                                               \\ \hline
-%     \texttt{h}   & bez przemieszczenia, dokładnie w miejscu użycia (uzyteczne w odniesieniu do niewielkich wstawek); raczej niestosowane                                               \\
+%     \texttt{h}   & bez przemieszczenia, dokładnie w~miejscu użycia (uzyteczne w~odniesieniu do niewielkich wstawek); raczej niestosowane                                               \\
 %     \texttt{t}   & na górze strony; stosowane najczęściej                                                                                                                              \\
 %     \texttt{b}   & na dole strony                                                                                                                                                      \\
 %     \texttt{p}   & na stronie zawierającej wyłącznie wstawki                                                                                                                           \\
@@ -355,7 +355,7 @@
 %   \end{tabular}
 % \end{table}
 
-% W tablicy \ref{opcje} znajdują się opcje dodatkowe otoczeń \texttt{table} i \texttt{figure}.
+% W~tablicy \ref{opcje} znajdują się opcje dodatkowe otoczeń \texttt{table} i~\texttt{figure}.
 
 % \begin{figure}[h!]
 
@@ -375,20 +375,20 @@
 %     \end{picture}
 
 %   \end{center}
-%   \caption{Przykładowy rysunek, który można wygenerować w \LaTeX -u}
+%   \caption{Przykładowy rysunek, który można wygenerować w~\LaTeX -u}
 % \end{figure}
 
 % -------------------- 6. Bibliografia -----------------------
 % Bibliografia leksykograficznie wg nazwisk autorów
-% Dla ambitnych - można skorzystać z BibTeX-a
+% Dla ambitnych - można skorzystać z~BibTeX-a
 \subfile{sections/bibliografia.tex}
 
 \thispagestyle{empty}
 \pagenumbering{gobble}
 
 
-% --- 7. Wykaz symboli i skrótów - jeśli nie ma, zakomentować
-\chapter*{Wykaz symboli i skrótów}
+% --- 7. Wykaz symboli i~skrótów - jeśli nie ma, zakomentować
+\chapter*{Wykaz symboli i~skrótów}
 
 \begin{tabular}{cl}
   RDP     & Remote Desktop Protocol                       \\
@@ -431,7 +431,7 @@
 
 % \chapter*{Spis załączników}
 % \begin{enumerate}
-%   \item \texttt{REST\_API\_Overseer.yaml} - dokładna specyfikacja API w standardzie OpenAPI
+%   \item \texttt{REST\_API\_Overseer.yaml} - dokładna specyfikacja API w~standardzie OpenAPI
 %         3.0.3
 %         %   \item Załącznik 2
 %         %   \item Jak nie występują, usunąć rozdział.

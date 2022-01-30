@@ -2,7 +2,7 @@
 
 \begin{document}
 
-Opracowywany system składa się z następujących modułów:
+Opracowywany system składa się z~następujących modułów:
 
 \begin{itemize}
   \item nadzorcy,
@@ -23,7 +23,7 @@ Schematyczny obraz systemu przedstawiony został na rysunku \ref{figure:architec
   \label{figure:architecture:system}
 \end{figure}
 
-Połączenia oznaczone liczbami rzymskimi oznaczają kolejki komunikacji za pośrednictwem brokera wiadomości, które opisane zostały w sekcji \ref{modules:broker}. Z założenia system powinien móc skalować się w dwóch wymiarach, to znaczy:
+Połączenia oznaczone liczbami rzymskimi oznaczają kolejki komunikacji za pośrednictwem brokera wiadomości, które opisane zostały w~sekcji \ref{modules:broker}. Z~założenia system powinien móc skalować się w~dwóch wymiarach, to znaczy:
 \begin{itemize}
   \item Zwiększanie liczby serwerów wirtualnych - zwiększenie liczby istniejących jednocześnie sesji.
   \item Zwiększenie liczby nadzorców - zwiększenie liczby obsługiwanych jednocześnie klientów oraz niezawodności systemu.
@@ -31,7 +31,7 @@ Połączenia oznaczone liczbami rzymskimi oznaczają kolejki komunikacji za poś
 
 \subsection{Model systemu}
 
-W celu zarządzania systemem każdy z nadzorców musi posiadać dokładną wiedzę o jego aktualnym stanie. Informacje te przechowuje w strukturze nazywanej dalej modelem systemu. Ważne jest, że klasy modelu nie wykonują żadnych akcji poza modyfikacją przechowywanych danych. Wszystkie metody służą jedynie do zmiany stanu przechowywanego modelu w celu dopasowania go do rzeczywistego stanu systemu, na podstawie otrzymanych danych. Przyczyną takiego rozwiązania jest pierwsze z założeń komunikacji opisanych w sekcji \ref{communication:broker}. Sprawia ono, że zmiana modelu musi być następstwem pewnej akcji wykonanej przez serwer wirtualizacji. Schemat klas przedstawia rysunek \ref{figure:architecture:model}.
+W~celu zarządzania systemem każdy z~nadzorców musi posiadać dokładną wiedzę o~jego aktualnym stanie. Informacje te przechowuje w~strukturze nazywanej dalej modelem systemu. Ważne jest, że klasy modelu nie wykonują żadnych akcji poza modyfikacją przechowywanych danych. Wszystkie metody służą jedynie do zmiany stanu przechowywanego modelu w~celu dopasowania go do rzeczywistego stanu systemu, na podstawie otrzymanych danych. Przyczyną takiego rozwiązania jest pierwsze z~założeń komunikacji opisanych w~sekcji \ref{communication:broker}. Sprawia ono, że zmiana modelu musi być następstwem pewnej akcji wykonanej przez serwer wirtualizacji. Schemat klas przedstawia rysunek \ref{figure:architecture:model}.
 
 \begin{figure}[ht]
   \centering
@@ -40,43 +40,43 @@ W celu zarządzania systemem każdy z nadzorców musi posiadać dokładną wiedz
   \label{figure:architecture:model}
 \end{figure}
 
-Główną klasą modelu jest \texttt{SystemModel} zawierający informacje o aktualnie działających serwerach wirtualizacji oraz aktywnych sesjach. Klasa \texttt{VirtualizationServer} modeluje pojedynczy serwer wirtualizacji, jego zasoby, maszyny wirtualne oraz obsługiwane sesje. Przechowuje również informacje wymagane do komunikacji z daną instancją serwera.
+Główną klasą modelu jest \texttt{SystemModel} zawierający informacje o~aktualnie działających serwerach wirtualizacji oraz aktywnych sesjach. Klasa \texttt{VirtualizationServer} modeluje pojedynczy serwer wirtualizacji, jego zasoby, maszyny wirtualne oraz obsługiwane sesje. Przechowuje również informacje wymagane do komunikacji z~daną instancją serwera.
 
-Klasa \texttt{Resources} oraz klasy pochodne opisują zasoby systemowe i są używane do przedstawienia zarówno zasobów maszyny, jak i całego serwera wirtualizacji. Klasa pochodna \texttt{\seqsplit{TemplateResources}} służy do przechowywania informacji o zasobach potrzebnych do utworzenia maszyny danego typu.
+Klasa \texttt{Resources} oraz klasy pochodne opisują zasoby systemowe i~są używane do przedstawienia zarówno zasobów maszyny, jak i~całego serwera wirtualizacji. Klasa pochodna \texttt{\seqsplit{TemplateResources}} służy do przechowywania informacji o~zasobach potrzebnych do utworzenia maszyny danego typu.
 
 \subsection{Nadzorca}
 \label{modules:overseer}
 
-Aplikacja mająca za zadanie obsługiwać komunikację z aplikacjami klienckimi oraz wysyłać polecenia do serwerów wirtualizacji.
-Udostępnia REST API (sekcja \ref{communication:api}), służące do komunikacji z aplikacjami klienckimi.
-Do komunikacji z serwerami wirtualizacji wykorzystuje kolejki wiadomości (sekcja \ref{modules:broker}).
+Aplikacja mająca za zadanie obsługiwać komunikację z~aplikacjami klienckimi oraz wysyłać polecenia do serwerów wirtualizacji.
+Udostępnia REST API (sekcja \ref{communication:api}), służące do komunikacji z~aplikacjami klienckimi.
+Do komunikacji z~serwerami wirtualizacji wykorzystuje kolejki wiadomości (sekcja \ref{modules:broker}).
 
-Nadzorca przechowuje wewnętrznie model systemu zawierający informację o działających serwerach wirtualizacji i stanie ich maszyn. Na podstawie tego modelu moduł stwierdza, do której maszyny przypisać nowo utworzoną sesję. Wewnętrzne procesy skupione są wokół zmian modelu. Jeżeli proces wysłał do serwera wirtualizacji prośbę o zmianę stanu, to dalsze przetwarzanie odbywa się, gdy stan modelu został zaktualizowany i na tej podstawie podejmowane są decyzje.
+Nadzorca przechowuje wewnętrznie model systemu zawierający informację o~działających serwerach wirtualizacji i~stanie ich maszyn. Na podstawie tego modelu moduł stwierdza, do której maszyny przypisać nowo utworzoną sesję. Wewnętrzne procesy skupione są wokół zmian modelu. Jeżeli proces wysłał do serwera wirtualizacji prośbę o~zmianę stanu, to dalsze przetwarzanie odbywa się, gdy stan modelu został zaktualizowany i~na tej podstawie podejmowane są decyzje.
 
-Dzięki zastosowaniu kolejek wiadomości (sekcja \ref{modules:broker}) oraz zasad komunikacji (sekcja \ref{communication:broker}) w systemie może istnieć więcej niż jeden nadzorca. Instancje nadzorców działają niezależnie od siebie i przechowują identyczny model systemu. Dzięki temu uzyskujemy retencję i możemy zmniejszyć obciążenie poszczególnych nadzorców.
+Dzięki zastosowaniu kolejek wiadomości (sekcja \ref{modules:broker}) oraz zasad komunikacji (sekcja \ref{communication:broker}) w~systemie może istnieć więcej niż jeden nadzorca. Instancje nadzorców działają niezależnie od siebie i~przechowują identyczny model systemu. Dzięki temu uzyskujemy retencję i~możemy zmniejszyć obciążenie poszczególnych nadzorców.
 
 \subsection{Serwer wirtualizacji}
 \label{modules:virtsrv}
 
-Zadaniem serwera wirtualizacji jest uruchamianie i zarządzanie maszynami wirtualnymi, z którymi łączy się użytkownik systemu. Komunikuje się on z nadzorcami i wykonuje operacje na maszynach wirtualnych zgodnie z żądaniami.
+Zadaniem serwera wirtualizacji jest uruchamianie i~zarządzanie maszynami wirtualnymi, z~którymi łączy się użytkownik systemu. Komunikuje się on z~nadzorcami i~wykonuje operacje na maszynach wirtualnych zgodnie z~żądaniami.
 
-Moduł ten nie jest w stanie funkcjonować samodzielnie. Z tego powodu aplikacja nie uruchomi się, jeżeli nie jest w stanie nawiązać połączenia z aplikacją nadzorczą. Aplikacja zakończy się, gdy ostatni nadzorca w systemie zakończy działanie oraz nie ma żadnych działających na niej sesji.
+Moduł ten nie jest w~stanie funkcjonować samodzielnie. Z~tego powodu aplikacja nie uruchomi się, jeżeli nie jest w~stanie nawiązać połączenia z~aplikacją nadzorczą. Aplikacja zakończy się, gdy ostatni nadzorca w~systemie zakończy działanie oraz nie ma żadnych działających na niej sesji.
 
 Serwer wirtualizacji jest częścią systemu, która przechowuje fizyczne zasoby udostępniane użytkownikom.
-System zaprojektowany jest w taki sposób, aby teoretycznie nie było ograniczenia na liczbę serwerów wirtualizacji działających jednocześnie.
+System zaprojektowany jest w~taki sposób, aby teoretycznie nie było ograniczenia na liczbę serwerów wirtualizacji działających jednocześnie.
 
 \subsection{Aplikacja kliencka}
 \label{modules:client}
 
-Aplikacja okienkowa umożliwiająca użytkownikowi autoryzację, uzyskanie sesji oraz automatyczne rozpoczęcie połączenia. Komunikuje się z nadzorcą za pomocą REST API (rozdział \ref{communication:api}).
+Aplikacja okienkowa umożliwiająca użytkownikowi autoryzację, uzyskanie sesji oraz automatyczne rozpoczęcie połączenia. Komunikuje się z~nadzorcą za pomocą REST API (rozdział \ref{communication:api}).
 
-Proces uzyskania sesji z perspektywy aplikacji klienckiej zawiera:
+Proces uzyskania sesji z~perspektywy aplikacji klienckiej zawiera:
 \begin{enumerate}
-  \item uzyskanie informacji o dostępnych typach i liczbie maszyn,
+  \item uzyskanie informacji o~dostępnych typach i~liczbie maszyn,
   \item wybór typu maszyny,
   \item oczekiwanie na utworzenie sesji,
   \item nawiązanie połączenia RDP,
-  \item utrzymanie i monitorowanie stanu połączenia,
+  \item utrzymanie i~monitorowanie stanu połączenia,
 \end{enumerate}
 
 \subsection{Panel administratora}
@@ -86,26 +86,26 @@ Prosta aplikacja internetowa umożliwiająca administratorowi systemu podgląd s
 \subsection{Broker wiadomości}
 \label{modules:broker}
 
-Komunikacja wewnątrz systemu, czyli pomiędzy serwerami wirtualizacji oraz nadzorcami, realizowana jest  poprzez kolejki wiadomości. W tym celu użyty został system RabbitMQ, który zajmuje się transportem wiadomości wewnątrz systemu oraz niezawodnością komunikacji między modułami.
+Komunikacja wewnątrz systemu, czyli pomiędzy serwerami wirtualizacji oraz nadzorcami, realizowana jest  poprzez kolejki wiadomości. W~tym celu użyty został system RabbitMQ, który zajmuje się transportem wiadomości wewnątrz systemu oraz niezawodnością komunikacji między modułami.
 
 Zdefiniowane zostały następujące kolejki wiadomości (numeracja odpowiada rysunkowi \ref{figure:architecture:system}):
 \begin{enumerate}[label=(\Roman*)]
-  \item \label{modules:broker:queue-virtsrv} Kolejka kończąca się na każdym z serwerów wirtualizacji powielająca wiadomości między nimi.
+  \item \label{modules:broker:queue-virtsrv} Kolejka kończąca się na każdym z~serwerów wirtualizacji powielająca wiadomości między nimi.
         Służy ona do wysyłania niespersonalizowanych próśb od nadzorców do serwerów wirtualizacji.
-  \item \label{modules:broker:queue-overseers} Kolejka kończąca się na każdym z nadzorców powielająca wiadomości między nimi.
-        Służy ona do przesyłania informacji do nadzorców o zmianach wewnątrz serwerów wirtualizacji.
+  \item \label{modules:broker:queue-overseers} Kolejka kończąca się na każdym z~nadzorców powielająca wiadomości między nimi.
+        Służy ona do przesyłania informacji do nadzorców o~zmianach wewnątrz serwerów wirtualizacji.
   \item \label{modules:broker:queue-exclusive} Kolejka kończąca się wyłącznie na pojedynczym serwerze wirtualizacji.
-        Liczba kolejek zgadza się z liczbą serwerów wirtualizacji aktywnych w systemie.
+        Liczba kolejek zgadza się z~liczbą serwerów wirtualizacji aktywnych w~systemie.
         Służą one do przesyłania spersonalizowanych wiadomości oraz sprawdzania, czy serwer wirtualizacji nadal pracuje po drugiej stronie.
         Wykorzystana została funkcjonalność kolejek na wyłączność (Exclusive Queue \parencite{xrdp-clients}).
   \item \label{modules:broker:queue-users} Kolejka kończąca się na aktualnie podłączonym do maszyny wirtualnej kliencie.
         Liczba kolejek odpowiada liczbie aktywnych użytkowników.
         Celem kolejki jest sprawdzenie, czy aplikacja kliencka jest nadal podłączona do wirtualnej maszyny (mechanizm Exclusive Queue).
-        W celach bezpieczeństwa będą one definiowane na oddzielnym procesie brokera, który będzie można w razie potrzeby udostępnić poza sieć lokalną.
+        W~celach bezpieczeństwa będą one definiowane na oddzielnym procesie brokera, który będzie można w~razie potrzeby udostępnić poza sieć lokalną.
 \end{enumerate}
 
 Powyższe 4 grupy kolejek umożliwią prawidłowe działanie systemu.
-W trakcie uruchamiania każdy z modułów tworzy kolejki, z których odbiera wiadomości.
+W~trakcie uruchamiania każdy z~modułów tworzy kolejki, z~których odbiera wiadomości.
 Jedynym wymogiem prawidłowego uruchomienia komunikacji jest proces brokera dostępny dla wszystkich serwerów wirtualizacji oraz nadzorców.
 
 \end{document}

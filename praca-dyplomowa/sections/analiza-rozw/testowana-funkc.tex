@@ -2,22 +2,22 @@
 
 \begin{document}
 
-Gotowy system poddany został testom akceptacyjnym mającym za zadanie sprawdzić poprawne działanie oraz spełnienie wymagań przedstawionych w rozdziałach \ref{requirements:functional} oraz \ref{requirements:nonfunctional}.
-W opisie testów jako standardowe uruchomienie systemu rozumiemy procedurę opisaną w sekcji \ref{system_startup.procedure}.
+Gotowy system poddany został testom akceptacyjnym mającym za zadanie sprawdzić poprawne działanie oraz spełnienie wymagań przedstawionych w~rozdziałach \ref{requirements:functional} oraz \ref{requirements:nonfunctional}.
+W~opisie testów jako standardowe uruchomienie systemu rozumiemy procedurę opisaną w~sekcji \ref{system_startup.procedure}.
 
 Wykonane zostały następujące scenariusze akceptacyjne:
 
-\subsection{Brak komunikacji z nadzorcą}
-Przy starcie samodzielnego serwera wirtualizacji i wykryciu braku komunikacji z jakimkolwiek nadzorcą (poprzez brokera wiadomości) serwer powinien poinformować o błędzie i zakończyć działanie.
+\subsection{Brak komunikacji z~nadzorcą}
+Przy starcie samodzielnego serwera wirtualizacji i~wykryciu braku komunikacji z~jakimkolwiek nadzorcą (poprzez brokera wiadomości) serwer powinien poinformować o~błędzie i~zakończyć działanie.
 
 Kroki:
 \begin{enumerate}
   \item Włącz wewnętrznego brokera wiadomości oraz serwer wirtualizacji.
-  \item Wyświetl błąd i zakończ działanie.
+  \item Wyświetl błąd i~zakończ działanie.
 \end{enumerate}
 
-\subsection{Utrata komunikacji z nadzorcą}
-Po poprawnym starcie systemu z pojedynczym nadzorcą oraz serwerem wirtualizacji, serwer powinien zakończyć pracę po wyłączeniu się ostatniego (jedynego) nadzorcy.
+\subsection{Utrata komunikacji z~nadzorcą}
+Po poprawnym starcie systemu z~pojedynczym nadzorcą oraz serwerem wirtualizacji, serwer powinien zakończyć pracę po wyłączeniu się ostatniego (jedynego) nadzorcy.
 
 Kroki:
 \begin{enumerate}
@@ -25,42 +25,42 @@ Kroki:
   \item Poczekaj na prawidłowy start systemu.
   \item Wyłącz nadzorcę lub brokery wiadomości.
   \item Poczekaj na wykrycie braku nadzorców (brak otrzymanych wiadomości).
-  \item Wyświetl błąd i zakończ działanie.
+  \item Wyświetl błąd i~zakończ działanie.
 \end{enumerate}
 
 \subsection{Standardowe użycie systemu przez użytkownika}
-Użytkownik podłącza się do systemu złożonego z pojedynczego nadzorcy oraz serwera wirtualizacji, gdzie działa przynajmniej jedna wolna maszyna.
-Użytkownik powinien prawidłowo otrzymać sesję, a po odłączeniu się od maszyny, powinna ona zostać wyłączona po 15 minutach (czas konfigurowalny).
+Użytkownik podłącza się do systemu złożonego z~pojedynczego nadzorcy oraz serwera wirtualizacji, gdzie działa przynajmniej jedna wolna maszyna.
+Użytkownik powinien prawidłowo otrzymać sesję, a~po odłączeniu się od maszyny, powinna ona zostać wyłączona po 15 minutach (czas konfigurowalny).
 
 Kroki:
 \begin{enumerate}
   \item Uruchom system standardową procedurą.
   \item Poczekaj na uruchomienie przynajmniej jednej maszyny wirtualnej.
-  \item Poproś o sesję poprzez aplikację kliencką.
+  \item Poproś o~sesję poprzez aplikację kliencką.
   \item Podłącz się poprzez RDP do uzyskanej maszyny.
-  \item Zakończ sesję z poziomu aplikacji.
+  \item Zakończ sesję z~poziomu aplikacji.
   \item Po określonym czasie maszyna powinna się wyłączyć.
 \end{enumerate}
 
 \subsection{Standardowe użycie systemu przez użytkownika przy awarii nadzorcy}
-Użytkownik podłącza się do systemu złożonego z dwóch nadzorców oraz jednego serwera wirtualizacji, gdzie działa przynajmniej jedna wolna maszyna.
-Użytkownik uzyskuje sesję, a w trakcie jej użytkowania następuje awaria nadzorcy.
-Po odłączeniu się od sesji i ponownej prośbie o sesję, w czasie krótszym niż czas wyłączenia maszyny, użytkownik powinien otrzymać ponownie tą samą maszynę.
+Użytkownik podłącza się do systemu złożonego z~dwóch nadzorców oraz jednego serwera wirtualizacji, gdzie działa przynajmniej jedna wolna maszyna.
+Użytkownik uzyskuje sesję, a~w~trakcie jej użytkowania następuje awaria nadzorcy.
+Po odłączeniu się od sesji i~ponownej prośbie o~sesję, w~czasie krótszym niż czas wyłączenia maszyny, użytkownik powinien otrzymać ponownie tą samą maszynę.
 
 Kroki:
 \begin{enumerate}
-  \item Uruchom system standardową procedurą z dwoma nadzorcami.
+  \item Uruchom system standardową procedurą z~dwoma nadzorcami.
   \item Poczekaj na uruchomienie przynajmniej jednej maszyny wirtualnej.
-  \item Poproś o sesję poprzez aplikację kliencką.
+  \item Poproś o~sesję poprzez aplikację kliencką.
   \item Podłącz się poprzez RDP do uzyskanej maszyny.
-  \item Wyłącz tego nadzorcę, z którym klient się komunikował.
-  \item Zakończ sesję z poziomu aplikacji.
-  \item Poproś ponownie o sesję poprzez aplikację kliencką (powinien uzyskać tą sama maszynę).
+  \item Wyłącz tego nadzorcę, z~którym klient się komunikował.
+  \item Zakończ sesję z~poziomu aplikacji.
+  \item Poproś ponownie o~sesję poprzez aplikację kliencką (powinien uzyskać tą sama maszynę).
   \item Podłącz się poprzez RDP do uzyskanej maszyny.
 \end{enumerate}
 
 \subsection{Podłączenie nowego serwera wirtualizacji}
-W trakcie działania systemu nowy serwer wirtualizacji powinien zostać włączony do modelu nadzorców oraz wyświetlony w panelu administratora.
+W~trakcie działania systemu nowy serwer wirtualizacji powinien zostać włączony do modelu nadzorców oraz wyświetlony w~panelu administratora.
 
 Kroki:
 \begin{enumerate}
@@ -68,11 +68,11 @@ Kroki:
   \item Poczekaj na prawidłowy start systemu.
   \item Włącz kolejną instancję serwera wirtualizacji.
   \item Poczekaj na aktualizację modelu.
-  \item Sprawdź w panelu administratora, czy dwa serwery sa w modelu.
+  \item Sprawdź w~panelu administratora, czy dwa serwery sa w~modelu.
 \end{enumerate}
 
 \subsection{Podłączenie nowego nadzorcy}
-W trakcie działania systemu nowy nadzorca powinien posiadać taki sam model, jak aktualnie działający
+W~trakcie działania systemu nowy nadzorca powinien posiadać taki sam model, jak aktualnie działający
 
 Kroki:
 \begin{enumerate}
@@ -85,7 +85,7 @@ Kroki:
 \end{enumerate}
 
 \subsection{Odnotowanie utraty serwera wirtualizacji}
-W trakcie działania systemu, przy utracie serwera wirtualizacji, nadzorcy powinni usunąć go z modelu.
+W~trakcie działania systemu, przy utracie serwera wirtualizacji, nadzorcy powinni usunąć go z~modelu.
 
 Kroki:
 \begin{enumerate}
@@ -97,13 +97,13 @@ Kroki:
 \end{enumerate}
 
 \subsection{Utrata komunikacji przy działającej sesji}
-W trakcie działania systemu, przy utracie ostatniego nadzorcy, serwer wirtualizacji powinien zakończyć działanie. Jeżeli serwer posiada działające sesje, przed zakończeniem pracy, musi poczekać na ich zakończenie.
+W~trakcie działania systemu, przy utracie ostatniego nadzorcy, serwer wirtualizacji powinien zakończyć działanie. Jeżeli serwer posiada działające sesje, przed zakończeniem pracy, musi poczekać na ich zakończenie.
 
 Kroki:
 \begin{enumerate}
   \item Uruchom system standardową procedurą.
   \item Poczekaj na prawidłowy start systemu.
-  \item Poproś o sesję poprzez aplikację kliencką.
+  \item Poproś o~sesję poprzez aplikację kliencką.
   \item Podłącz się poprzez RDP do uzyskanej maszyny.
   \item Wyłącz nadzorcę lub brokery wiadomości.
   \item Poczekaj na wykrycie braku nadzorców (brak otrzymanych wiadomości).
@@ -113,13 +113,13 @@ Kroki:
 \end{enumerate}
 
 \subsection{Odzyskanie komunikacji przy działającej sesji}
-W trakcie działania systemu, przy utracie ostatniego nadzorcy, serwer wirtualizacji powinien zakończyć działanie. Jeżeli serwer posiada działające sesje, przed zakończeniem pracy, musi poczekać na ich zakończenie. Jeżeli przed zakończeniem ostatniej sesji nastąpi przywrócenie komunikacji, serwer powinien kontynuować działanie po zakończeniu sesji.
+W~trakcie działania systemu, przy utracie ostatniego nadzorcy, serwer wirtualizacji powinien zakończyć działanie. Jeżeli serwer posiada działające sesje, przed zakończeniem pracy, musi poczekać na ich zakończenie. Jeżeli przed zakończeniem ostatniej sesji nastąpi przywrócenie komunikacji, serwer powinien kontynuować działanie po zakończeniu sesji.
 
 Kroki:
 \begin{enumerate}
   \item Uruchom system standardową procedurą.
   \item Poczekaj na prawidłowy start systemu.
-  \item Poproś o sesję poprzez aplikację kliencką.
+  \item Poproś o~sesję poprzez aplikację kliencką.
   \item Podłącz się poprzez RDP do uzyskanej maszyny.
   \item Wyłącz nadzorcę lub brokery wiadomości.
   \item Poczekaj na wykrycie braku nadzorców (brak otrzymanych wiadomości).

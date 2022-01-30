@@ -4,7 +4,7 @@
 \label{state_diagrams}
 
 \subsection{Maszyna wirtualna}
-Najważniejszym obiektem biznesowym w systemie jest maszyna wirtualna, do której będą podłączać się użytkownicy.
+Najważniejszym obiektem biznesowym w~systemie jest maszyna wirtualna, do której będą podłączać się użytkownicy.
 
 \begin{figure}[H]
   \centering
@@ -15,11 +15,11 @@ Najważniejszym obiektem biznesowym w systemie jest maszyna wirtualna, do które
 
 Maszyna, aby być całkowicie uruchomiona, musi zostać zaopatrzona we wszystkie konfiguracje.
 Stan \textit{Wolna} oznacza możliwość przypisania sesji.
-Po przypisaniu do sesji maszyna przechodzi w stan oczekiwania na użytkownika.
-Czas oczekiwania jest konfigurowalny, a po jego upłynięciu przechodzi w stan oczekiwania na wyłączenie.
-W tym stanie oczekuje na ponowne połączenie, pozwalając użytkownikowi na bezproblemowy powrót do sesji w przypadku nieoczekiwanego utracenia połączenia.
+Po przypisaniu do sesji maszyna przechodzi w~stan oczekiwania na użytkownika.
+Czas oczekiwania jest konfigurowalny, a~po jego upłynięciu przechodzi w~stan oczekiwania na wyłączenie.
+W~tym stanie oczekuje na ponowne połączenie, pozwalając użytkownikowi na bezproblemowy powrót do sesji w~przypadku nieoczekiwanego utracenia połączenia.
 Jeżeli użytkownik nie powróci do sesji, to system wyłącza maszynę.
-Maszyna jest w stanie \textit{Zajęta}, gdy aktualnie pracuje na niej użytkownik. Monitorowanie zajętości realizowane jest przy użyciu odpowiedniej kolejki wiadomości (rozdział \ref{modules:broker}, kolejka \ref{modules:broker:queue-users}).
+Maszyna jest w~stanie \textit{Zajęta}, gdy aktualnie pracuje na niej użytkownik. Monitorowanie zajętości realizowane jest przy użyciu odpowiedniej kolejki wiadomości (rozdział \ref{modules:broker}, kolejka \ref{modules:broker:queue-users}).
 
 \subsection{Serwer wirtualizacji}
 
@@ -32,11 +32,11 @@ Serwer wirtualizacji monitoruje zasoby zużywane przez uruchomione na nim maszyn
   \label{state_virtsrv}
 \end{figure}
 
-Przy starcie serwer wirtualizacji oczekuje na działającego w sieci nadzorcę.
-W przypadku jego braku serwer kończy działanie zwracając błąd.
+Przy starcie serwer wirtualizacji oczekuje na działającego w~sieci nadzorcę.
+W~przypadku jego braku serwer kończy działanie zwracając błąd.
 Serwer może mieć wolne zasoby na uruchomienie maszyny lub ich brak.
-Jednak ważniejszym stanem z perspektywy działania serwera są podłączeni do niego użytkownicy.
-W przypadku gdy podłączony jest do niego przynajmniej jeden użytkownik, serwer nie może poprawnie zakończyć pracy aż użytkownik nie skończy używać maszyny.
+Jednak ważniejszym stanem z~perspektywy działania serwera są podłączeni do niego użytkownicy.
+W~przypadku gdy podłączony jest do niego przynajmniej jeden użytkownik, serwer nie może poprawnie zakończyć pracy aż użytkownik nie skończy używać maszyny.
 
 \subsection{Użytkownik}
 
@@ -47,8 +47,8 @@ W przypadku gdy podłączony jest do niego przynajmniej jeden użytkownik, serwe
   \label{state_user}
 \end{figure}
 
-Użytkownik z perspektywy systemu po zalogowaniu może być w dwóch stanach: pracuje w ramach swojej sesji lub też nie.
-W stanie \textit{Połączony} aplikacja kliencka powiadamia serwer wirtualizacji, że ciągle jest obecny.
+Użytkownik z~perspektywy systemu po zalogowaniu może być w~dwóch stanach: pracuje w~ramach swojej sesji lub też nie.
+W~stanie \textit{Połączony} aplikacja kliencka powiadamia serwer wirtualizacji, że ciągle jest obecny.
 Przy zmianie stanu na inny informowanie musi ustać, aby serwer mógł wykryć odłączenie się użytkownika.
 
 \end{document}
