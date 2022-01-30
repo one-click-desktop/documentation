@@ -27,7 +27,7 @@ FreeRDP posiada liczne parametry do konfiguracji \parencite{freerdp-manual} uruc
 \subsection{Niezgodność stanu maszyny w systemie po interakcji z użytkownikiem}
 
 Aktualnie system zakłada, że tylko on może zmienić stan maszyny wirtualnej.
-Jakakolwiek wyłączenie maszyny przez użytkownika lub administratora wywoła niespójność modelu.
+Jakiekolwiek wyłączenie maszyny przez użytkownika lub administratora wywoła niespójność modelu.
 W najgorszym wypadku może spowodować to permanentne zajęcie zasobów w systemie i konieczność restartu serwera wirtualizacji, na którym doszło do błędu.
 W bibliotece libvirta od IDNT istnieje możliwość śledzenia stanów maszyn wirtualnych zaprezentowanym w dokumentacji libvirta \parencite{libvirt-vm-states}.
 W przypadku przejścia maszyny do innego stanu niż \textit{Running} możemy odpowiednio zmodyfikować nasz model odzwierciedlając rzeczywisty stan maszyn wirtualnych.
@@ -35,19 +35,19 @@ Konkretna implementacja tej zmiany wymaga jeszcze dokładnego przemyślenia.
 
 \subsection{Odporność systemu na ataki siłowe}
 
-W tym momencie system jest nie odporny na ataki siłowe zgadnięcia hasła.
-Przyjmie dowolnie dużo zapytań, jeżeli pozwolą mu na to zasoby.
+W tym momencie system jest nie odporny na ataki siłowego zgadnięcia hasła.
+Przyjmie on dowolnie dużo zapytań, jeżeli pozwolą mu na to zasoby.
 Prostym i wydajnym sposobem będzie wypisywanie informacji o nieudanym logowaniu do procesu sysloga.
-Jeżeli w tym wpisie będzie zawarta informacja o adresie wysyłającego zapytania można zastosować system fail2ban (\url{https://www.fail2ban.org/wiki/index.php/Main_Page}).
+Jeżeli w tym wpisie będzie zawarta informacja o adresie wysyłającego zapytania, to można zastosować system fail2ban (\url{https://www.fail2ban.org/wiki/index.php/Main_Page}).
 Zablokuje on z poziomu zapory sieciowej adres, który wysyła zbyt dużo błędnych prób logowania.
 
 \subsection{Publiczny dostęp do systemu}
 
-System w aktualnym stanie zakłada, że klienci sa w stanie skomunikować się z maszynami wirtualnymi za pomocą ich adresów lokalnych.
-Jeżeli system miałby być udostępniony publicznie, to należy udostępnić użytkownikom dostęp do takiej sieci przy pomocy protokołu VPN.
+System w aktualnym stanie zakłada, że klienci są w stanie skomunikować się z maszynami wirtualnymi za pomocą ich adresów lokalnych.
+Jeżeli system miałby być dostępny publicznie, to należy umożliwić użytkownikom dostęp do sieci, w której działają maszyny wirtualne, przy pomocy protokołu VPN.
 Problemem jest przekazywanie do aplikacji klienckiej adresów lokalnych maszyn wirtualnych.
 Aby rozszerzyć jego działanie poza siec lokalną  system musiałby posiadać jakąś wiedzę na temat tłumaczenia adresów lokalnych na publiczne.
-Pewna możliwością byłoby przechwytywanie odpowiedzi z adresami maszyn przez zewnętrzną aplikacje znająca takie tłumaczenia.
+Pewna możliwością byłoby przechwytywanie odpowiedzi z adresami maszyn przez zewnętrzną aplikację znająca takie tłumaczenia.
 Jednak zwiększyłaby ona złożoność systemu.
 
 \end{document}

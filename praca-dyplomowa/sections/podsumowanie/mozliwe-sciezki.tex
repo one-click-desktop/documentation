@@ -22,8 +22,8 @@ Dodanie wsparcia wymagałoby Vagrant Boxów posiadających skonfigurowany serwer
 Protokół ten umożliwia zdalne uruchamianie gier na komputerach wyposażonych w karty graficzne firmy NVIDIA.
 
 \subsection{Możliwość zachowania obrazu maszyny pomiędzy sesjami}
-Użytkownicy czasami potrzebują zainstalować tymczasowo dodatkowe oprogramowanie.
-Praktycznym rozwiązaniem będzie danie możliwości zapisania takiego stanu maszyny pomiędzy sesjami w postanie snapshota dysku wirtualnego \parencite{libvirt-snapshot}.
+Użytkownicy mogą potrzebować zainstalować dodatkowe oprogramowanie, które nie znajduje się w obrazie maszyny.
+Praktycznym rozwiązaniem będzie umożliwienie zapisania rozszerzonego obrazu maszyny pomiędzy sesjami w postaci snapshota dysku wirtualnego \parencite{libvirt-snapshot}.
 Taki snapshot można albo wysłać do użytkownika, albo zachować we wnętrzu systemu.
 Przy utworzeniu sesji użytkownik miałby możliwość utworzenia sesji z wcześniej odłożonego snapshota albo utworzyć nową z ogólnego obrazu.
 
