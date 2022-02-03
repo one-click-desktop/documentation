@@ -1,0 +1,17 @@
+\documentclass[../analiza-rozwiazania.tex]{subfiles}
+
+\begin{document}
+Po zmianie w~kodzie testy automatyczne często kończyły się błędem.
+Był to dla nas znak, aby sprawdzić co się dzieje i~wprowadzić odpowiednie poprawki.
+
+Próby wdrożenia systemu w~środowisku testowym przyniosły odkrycie wielu błędów logicznych w~naszych wstępnych pomysłach jak i~samej implementacji.
+Przykładowo zorientowaliśmy się, że serwer wirtualizacji wyłącza się w~przypadku braku adresu IP do komunikacji z~maszyną wirtualną.
+Mogliśmy zmienić serwer, aby ignorował taką sytuację, ale wtedy użytkownik nie mógłby się komunikować z~maszyną wirtualną.
+Podjęliśmy ostatecznie decyzję o~wyłączeniu takiej maszyny, zgłoszeniu błędu do logów i~wycofaniu jej z~modelu.
+Dodatkowo pomogło nam to też lepiej zrozumieć wymagania sprzętowe jak i~zależności naszego systemu.
+
+Przy wykonywaniu testów akceptacyjnych mieliśmy szansę dopracować stabilność oraz ponownie skonfrontować wstępne pomysły z~rzeczywistością.
+Po poprawkach błędów i~upewnieniu się, że wszystkie scenariusze akceptacyjne są już spełnione, system był już wystarczająco stabilny, aby można było z~niego korzystać.
+Zrozumieliśmy wtedy lepiej jakie rozwiązania nie są wygodne i~wymagają poprawek albo nawet przeprojektowania.
+Nasze przemyślenia o~nieudanych elementach systemu można znaleźć w~podsumowaniu (rozdział \ref{final_system_form}).
+\end{document}

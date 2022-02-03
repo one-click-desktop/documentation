@@ -1,0 +1,21 @@
+\documentclass[../wstep.tex]{subfiles}
+
+\begin{document}
+
+Podobnymi rozwiązaniami oferującymi możliwość zdalnej pracy przy użyciu wirtualnych pulpitów są między innymi \textit{Amazon WorkSpaces} (\url{https://aws.amazon.com/workspaces/}), \textit{Pararells RAS} (\url {https://www.parallels.com/products/ras/remote-application-server/}) oraz \textit{Cirtrix} (\url{https://www.citrix.com/pl-pl/}).
+Usługa \textit{Citrix Virtual Apps and Desktops} \parencite{citrix-daas} oferowana przez firmę Citrix jest bardzo podobna do naszego rozwiązania.
+Przy zakupie dostępu można wybrać czy interesuje nas udostępnianie całego pulpitu zdalnego jako serwisu (tzw. DaaS - Desktop as a~Service), czy zdalny dostęp do wybranego komputera.
+
+System oferowany przez Citrixa posiada zbiór komputerów łączonych w~klaster oraz aplikacje balansującą, która równomiernie rozkłada zużycie wszystkich maszyn w~klastrze.
+Możliwe jest skorzystanie z~gotowej infrastruktury zaoferowanej przez Citrixa albo wybudowanie własnego klastra.
+
+Jedną z~ważniejszych różnic pomiędzy Citrixem i~naszym systemem jest mniejsza wirtualizacja zasobów podłączonych do maszyny wirtualnej.
+W~naszym systemie możliwe jest bardziej statyczne przyporządkowanie zasobów (np. karta graficzna) co pozwala na uzyskanie lepszej wydajności do nietypowych zastosowań biurowych (np. symulacje numeryczne w~programach typu CAD).
+Możliwe jest przekazanie do maszyny wirtualnej dowolnego urządzenia PCI zdefiniowanego w~konfiguracji.
+Umożliwia to pracę z~bardzo nietypowymi urządzeniami, nawet zdalnie.
+
+Dodatkowo nasz system pozwala łatwo wykorzystać istniejące stacje robocze do stworzenia klastra.
+Konfiguracja każdego komputera w~klastrze może być ustawiona oddzielnie. System odpowiednio zarządzi różnymi typami maszyn.
+Może to obniżyć koszty, jeżeli pracownicy często zmieniają swój tryb pracy.
+
+\end{document}

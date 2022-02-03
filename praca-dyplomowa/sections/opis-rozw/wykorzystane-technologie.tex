@@ -1,0 +1,60 @@
+\documentclass[../opis-rozwiazania.tex]{subfiles}
+
+\begin{document}
+\label{technologies}
+
+\subsection{Technologie realizacji strony klienckiej}
+Realizacja panelu administracyjnego oraz aplikacji klienckiej, przez które użytkownicy i~administratorzy korzystają z~systemu, zostały wykonane przy użyciu platformy programistycznej Angular (\url{https://angular.io/}).
+Wykorzystaliśmy ją z~powodu znajomości technologii, co umożliwiło sprawną implementację aplikacji.
+W~każdym przypadku skorzystaliśmy z~języka TypeScript (\url{https://www.typescriptlang.org/}), który jest wykorzystywany przez Angulara oraz kompiluje się do JavaScriptu (\url{https://www.ecma-international.org/publications-and-standards/standards/ecma-262/}).
+
+Aplikacja kliencka uruchamiana jest na systemie operacyjnym użytkownika poprzez technologię Electron (\url{https://www.electronjs.org/}), która umożliwia wyświetlanie aplikacji internetowej w~postaci okna.
+Electron korzysta z~silnika Chromium w~celu uruchomienia aplikacji webowej jako aplikacji okienkowej. Uprościło to tworzenie aplikacji na wiele systemów operacyjnych.
+Dodatkowym plusem korzystania z~Electrona jest możliwość odwołania się do silnika NodeJS (\url{https://nodejs.org/en/}) w~celu dostępu do zasobów systemu operacyjnego.
+Wykorzystaliśmy go do uruchamiania podprocesu klienta RDP, aby po uzyskaniu sesji od razu zestawić połączenie z~wybraną maszyną wirtualną.
+
+Aby ułatwić implementację API (rozdział \ref{communication:api})) do komunikacji pomiędzy aplikacjami zewnętrznymi oraz nadzorcą, skorzystaliśmy z~generatora kodu OpenAPI Generator (\url{https://openapi-generator.tech/}).
+Dzięki niemu generowaliśmy gotowe szablony klas do komunikacji ze strony klienta oraz nadzorcy.
+Zminimalizowało to błędy związane z~implementacją API.
+
+\subsection{Technologie realizacji strony serwerowej}
+W~przypadku aplikacji nadzorcy oraz serwera wirtualizacji zdecydowaliśmy się na środowisko uruchomieniowe .NET 5.0 (\url{https://dotnet.microsoft.com/en-us/}) z~językiem C\# (\url{https://docs.microsoft.com/en-us/dotnet/csharp/})).
+Ekosystem .NET jest przez nas dobrze znany co przyśpiesza naszą pracę.
+Głównym ułatwieniem była duża baza bibliotek zgromadzona w~menadżerze pakietów Nuget (\url{https://www.nuget.org/}), do którego dodaliśmy też własne pakiety, aby wydzielić wspólną część kodu aplikacji serwerowych.
+
+Do zarządzania i~monitorowania maszyn wirtualnych skorzystaliśmy z~libvirta (\url{https://libvirt.org/}).
+W~serwerze wirtualizacji wykorzystaliśmy rozszerzoną przez nas bibliotekę odwołującą się do oryginalnych bibliotek libvirta.
+Był to najprostszy dla nas sposób do realizacji zarządzania maszynami wirtualnymi.
+Libvirt umożliwia współpracę z~technologią Vagrant (\url{https://www.vagrantup.com/}), która pozwala na proste powielanie maszyn wirtualnych z~wzorca dostarczonego przez użytkownika.
+Ułatwia to administratorom tworzenie obrazów uruchamianych systemów operacyjnych.
+
+Serwer wirtualizacji komunikuje się z~Vagrantem poprzez specjalnie przygotowany plik wykonywalny z~kodem w~Ruby (\url{https://www.ruby-lang.org/en/}).
+Vagrant wykonywany jest jako podproces serwera wirtualizacji w~postaci poleceń powłoki.
+Parametry przekazywane są poprzez zmienne środowiskowe ustawiane przez serwer wirtualizacji chwile przed uruchomieniem procesu.
+Do dodatkowych konfiguracji maszyn wirtualnych użyliśmy technologii Ansible (\url{https://www.ansible.com/}).
+Wybraliśmy ją, ponieważ jest znacznie mniej bezawaryjna niż konfigurowanie systemu przez skrypty powłoki oraz posiada predefiniowane akcje obudowujące standardowe wywołania systemowe.
+Skorzystaliśmy z~niej również do konfiguracji komputerów przed uruchomieniem systemu.
+
+Do komunikacji pomiędzy modułami po stronie serwerowej skorzystaliśmy z~asynchronicznego brokera wiadomości RabbitMQ (\url{https://www.rabbitmq.com/}).
+Umożliwił nam on bezproblemową implementacje komunikacji pomiędzy modułami nadzorcy i~serwera wirtualizacji.
+
+\subsection{Technologie testowania}
+Do testów jednostkowych aplikacji od strony klienckiej skorzystaliśmy z~platformy Jest (\url{https://jestjs.io/}).
+Ułatwia ona pisanie testów przy niepełnym obrazie systemu. Przy rozbudowanej komunikacji w~naszym systemie było to bardzo przydatne.
+W~przypadku aplikacji serwerowych skorzystaliśmy z~platformy NUnit (\url{https://nunit.org/}).
+Znaliśmy ją z~wcześniejszych projektów, więc mogliśmy od razu przystąpić do pracy.
+Do testów komunikacji poprzez brokera wiadomości oraz integracji z~libvirtem także skorzystaliśmy z~NUnita.
+
+Do testów integracyjnych aplikacji Angularowych korzystaliśmy z~platformy Cypress (\url{https://www.cypress.io/}).
+Zdecydowaliśmy się na nią, ponieważ wykonuje ona zrzut widoku podczas każdego kroku testów.
+Wcześniej znane nam rozwiązania nie posiadały takich funkcji, przez co bardzo trudno było szukać problemów w~testach.
+Dodatkowe testy API wystawianego przez aplikacje nadzorcy wykonaliśmy Postmanem (\url{https://www.postman.com/}).
+
+\subsection{Utrzymanie kodu}
+Do sprawnego zarządzania projektem wykorzystaliśmy strukturę wielu repozytoriów dostępnych na stronie github.
+Wspólne części kodu wydzielaliśmy w~postaci pakietów NPM (\url{https://www.npmjs.com/}) oraz Nuget.
+Aby zautomatyzować proces publikacji pakietów skorzystaliśmy ze środowiska ciągłej integracji Github Actions (\url{https://github.com/features/actions}).
+Umożliwiło to praktycznie bezproblemową realizację komunikacji pomiędzy nadzorcą, a~aplikacją kliencką i~panelem administratora.
+Tworzyliśmy automatycznie generowane pakiety z~częściową implementacją obiektów transportowych oraz struktury zapytań.
+
+\end{document}

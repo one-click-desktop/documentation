@@ -1,0 +1,34 @@
+\documentclass[../podsumowanie.tex]{subfiles}
+
+\begin{document}
+\label{future_directions}
+
+\subsection{Panel administratora}
+
+Funkcjonalność panelu administratora jest obecnie ograniczona. Pozwala on jedynie na podejrzenie stanu zasobów w~systemie. Informacja ta pozwala ocenić czy potrzebne jest uruchomienie nowych instancji serwera wirtualizacji. Jest to jednak jedyna dostępna informacja.
+
+Możliwym rozwinięciem jest udostępnienie wglądu w~cały model systemu przechowywany przez nadzorców. Umożliwi to ocenę stopnia zajętości maszyn każdego typu oraz ilości użytkowników systemu. Dodatkowo wgląd do stanu konkretnych maszyn i~sesji może ułatwić rozwiązywanie problemów.
+
+\subsection{Użycie konkretnych kart graficznych}
+
+W~konfiguracji typu maszyny wirtualnej możliwe jest jedynie wskazanie czy ma ona posiadać kartę graficzną na wyłączność. Oznacza to, że otrzymana karta graficzna nie jest sprecyzowana i~może być dowolną ze skonfigurowanych w~serwerze wirtualizacji.
+
+W~celu uniknięcia niespodzianek, co do modelu otrzymanej karty graficznej, preferowana byłaby możliwość sprecyzowania konkretnego modelu karty graficznej przekazywanej do maszyny danego typu. Możliwym sposobem osiągnięcia tej funkcjonalności jest rozszerzenie konfiguracji serwera wirtualizacji o~możliwość nadania identyfikatora przekazywanym kartom graficznym.
+
+\subsection{Wsparcie innych protokołów zdalnego pulpitu}
+
+Protokół RDP został wybrany ze względu na swoją popularność oraz łatwość użycia. Jednak pożądane byłoby wsparcie innych protokołów zdalnego pulpitu jak X2Go (\url{https://wiki.x2go.org/doku.php})
+Dodanie wsparcia wymagałoby Vagrant Boxów posiadających skonfigurowany serwer wszystkich wspieranych protokołów. Dodatkowym protokołem, którego wsparcie może być trudniejsze, jest NVIDIA GameStream (\url{https://www.nvidia.com/en-us/shield/support/shield-tv/gamestream/}).
+Protokół ten umożliwia zdalne uruchamianie gier na komputerach wyposażonych w~karty graficzne firmy NVIDIA.
+
+\subsection{Możliwość zachowania obrazu maszyny pomiędzy sesjami}
+Użytkownicy mogą potrzebować zainstalować dodatkowe oprogramowanie, które nie znajduje się w~obrazie maszyny.
+Praktycznym rozwiązaniem będzie umożliwienie zapisania rozszerzonego obrazu maszyny pomiędzy sesjami w~postaci snapshota dysku wirtualnego \parencite{libvirt-snapshot}.
+Taki snapshot można albo wysłać do użytkownika, albo zachować we wnętrzu systemu.
+Przy utworzeniu sesji użytkownik miałby możliwość utworzenia sesji z~wcześniej odłożonego snapshota albo utworzyć nową z~ogólnego obrazu.
+
+\subsection{Możliwość pracy na więcej niż jednej sesji}
+Praktycznym rozwiązanie byłoby korzystanie z~wielu sesji jednocześnie przy pomocy jednej aplikacji klienckiej.
+W~przypadku czasochłonnych obliczeń użytkownik nadal mógłby pracować na innej sesji wybranego typu.
+
+\end{document}
